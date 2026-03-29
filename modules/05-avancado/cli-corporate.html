@@ -1,54 +1,345 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI Corporativo — Claude Code Course</title>
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
-  <meta charset="UTF-8">
-  <title>CLI Corporativo — Claude Code Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>CLI Corporativo</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="active">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link active"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>CLI Corporativo</h1>
-    <p>Use o CLI do Claude Code em ambientes corporativos com proxies, SSO, políticas de segurança e restrições de rede.</p>
-    <pre><code>// Configuração de proxy corporativo
-export ANTHROPIC_API_URL="https://proxy.empresa.com"
-export ANTHROPIC_API_KEY="sk-ant-..."</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>// Configuração de certificados SSL
-export NODE_EXTRA_CA_CERTS="/path/to/corp-ca.crt"
-$ claude --no-update-check</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Configure o Claude Code para funcionar com o proxy da sua empresa.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/claude-code/corporate">Documentação oficial Anthropic — Corporate Setup</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/05-avancado/ide.html">Próximo módulo</a>
-  </main>
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">CLI Corporativo</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 5 — Avançado</span> › <span>CLI Corporativo</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 15</div>
+        <h1 class="module-title">CLI Corporativo</h1>
+        <p class="module-description">Claude Code em pipelines CI/CD, automação com scripts, pre-commit hooks e integrações corporativas — leve a IA para dentro do seu fluxo de engenharia.</p>
+        <span class="badge badge-part">Parte 5</span>
+      </div>
+
+      <section class="module-section">
+        <p class="intro-text">O verdadeiro poder do Claude Code aparece quando ele sai do uso interativo e passa a integrar pipelines automatizados. Revisões de código em PRs, análises de segurança noturnas, relatórios de sprint gerados automaticamente — tudo isso é possível com o CLI do Claude Code.</p>
+      </section>
+
+      <section class="module-section">
+        <h2>Claude Code em pipelines CI/CD</h2>
+        <p>Claude Code pode ser integrado diretamente em workflows do GitHub Actions. O caso de uso mais comum é o code review automático em pull requests:</p>
+        <div class="code-block-wrapper"><pre><code class="language-yaml"># .github/workflows/claude-review.yml
+name: Code Review com Claude
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Code Review com Claude
+        run: |
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          claude --output-format json \
+            "Revise estes arquivos modificados: $CHANGED
+             Aponte: bugs, problemas de segurança, violações de estilo.
+             Retorne JSON: { issues: [], score: 0-10 }" \
+            > review.json
+          cat review.json
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Automação com scripts</h2>
+        <p>Para além do CI/CD, Claude Code pode ser usado em scripts shell para automações recorrentes. Exemplo de script de revisão diária automatizada:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">#!/bin/bash
+# daily-review.sh — revisão diária automatizada
+
+CHANGED=$(git diff --name-only HEAD~1)
+echo "Arquivos modificados: $CHANGED"
+
+claude --output-format json "
+  Analise estes arquivos modificados: $CHANGED
+  Verifique:
+  1. Bugs potenciais
+  2. Violações de estilo
+  3. Problemas de segurança
+  Retorne JSON: { issues: [], score: 0-10 }
+" > review-$(date +%Y%m%d).json
+
+# Extrair score e notificar se baixo
+SCORE=$(cat review-$(date +%Y%m%d).json | jq '.score')
+if [ "$SCORE" -lt 7 ]; then
+  echo "Score abaixo de 7 — verificar review."
+fi</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Uso em pre-commit hooks</h2>
+        <p>Integrar Claude Code aos hooks do git permite verificação automática antes de cada commit, evitando que código problemático entre no repositório:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">#!/bin/bash
+# .git/hooks/pre-commit
+
+STAGED=$(git diff --cached --name-only)
+
+if echo "$STAGED" | grep -q "\.ts$"; then
+  echo "Verificando TypeScript com Claude..."
+  result=$(claude --output-format json \
+    "Verifique erros de TypeScript em: $STAGED" 2>/dev/null)
+  issues=$(echo $result | jq '.issues | length')
+
+  if [ "$issues" -gt 0 ]; then
+    echo "Claude encontrou $issues problemas. Verifique antes de commitar."
+    echo $result | jq '.issues[]'
+    exit 1
+  fi
+  echo "Nenhum problema encontrado."
+fi</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i> Para que o hook funcione, certifique-se de que ele tem permissão de execução: <code>chmod +x .git/hooks/pre-commit</code>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Flags essenciais para uso não-interativo</h2>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Flag</th>
+                <th>Descrição</th>
+                <th>Quando usar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>--output-format json</code></td>
+                <td>Retorna a resposta em JSON estruturado</td>
+                <td>Scripts que processam a saída</td>
+              </tr>
+              <tr>
+                <td><code>--no-auto-accept</code></td>
+                <td>Requer confirmação para cada ação</td>
+                <td>Ambientes de produção com supervisão</td>
+              </tr>
+              <tr>
+                <td><code>--dangerously-skip-permissions</code></td>
+                <td>Executa sem pedir confirmações</td>
+                <td>CI/CD totalmente automatizado</td>
+              </tr>
+              <tr>
+                <td><code>--no-update-check</code></td>
+                <td>Não verifica atualizações</td>
+                <td>Ambientes offline ou air-gapped</td>
+              </tr>
+              <tr>
+                <td><code>--model</code></td>
+                <td>Seleciona o modelo a usar</td>
+                <td>Otimização de custo em CI/CD</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Integrações corporativas</h2>
+        <p>Exemplos de integrações com ferramentas presentes no dia a dia de times de engenharia:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Integração com Jira — analisa e implementa ticket
+claude "analise o ticket PROJ-123 e implemente a solução descrita"
+
+# Notificação no Slack após análise
+claude --output-format text \
+  "resuma as mudanças do deploy de hoje em bullet points" | \
+  curl -s -X POST $SLACK_WEBHOOK \
+    -H 'Content-type: application/json' \
+    -d "{\"text\": \"$(cat)\"}"
+
+# Relatório semanal de atividade
+claude "gere um relatório semanal das modificações do git desta semana,
+  agrupado por área funcional" > relatorio-$(date +%V).md
+
+# Análise de performance de bundle
+claude --output-format json \
+  "analise este bundle-stats.json e aponte os maiores contribuidores para o tamanho" \
+  < bundle-stats.json | jq '.recommendations'</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Segurança em ambientes corporativos</h2>
+        <p>Ao usar Claude Code em produção e pipelines corporativos, siga estas boas práticas de segurança:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># NUNCA exponha API keys em scripts ou no repositório.
+# Use um secrets manager:
+ANTHROPIC_API_KEY=$(aws secretsmanager get-secret-value \
+  --secret-id claude-api-key \
+  --query SecretString \
+  --output text)
+
+# GitHub Actions: use secrets do repositório
+# ${{ secrets.ANTHROPIC_API_KEY }}
+
+# GitLab CI: use CI/CD variables
+# $ANTHROPIC_API_KEY
+
+# Vault (HashiCorp):
+ANTHROPIC_API_KEY=$(vault kv get -field=api_key secret/claude)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i> Nunca use <code>--dangerously-skip-permissions</code> em workflows que operam em repositórios de produção sem uma camada de revisão humana no pipeline.
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Casos de uso reais em empresas</h2>
+        <div class="use-cases-grid">
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-search"></i> Code Review em PRs</h3>
+            <p>Análise automática de cada pull request: bugs, segurança, cobertura de testes, violações de padrão.</p>
+          </div>
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-shield-check"></i> Análise de Segurança</h3>
+            <p>Varredura noturna do codebase buscando vulnerabilidades, secrets expostos e dependências desatualizadas.</p>
+          </div>
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-history"></i> Migração de Legado</h3>
+            <p>Refatoração de codebases legadas em escala — renomeação, modernização de padrões, adição de tipos.</p>
+          </div>
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-file-alt"></i> Geração de Docs</h3>
+            <p>Documentação automática de APIs, changelogs e relatórios de sprint gerados a partir do histórico git.</p>
+          </div>
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-bell"></i> Alertas Inteligentes</h3>
+            <p>Notificações no Slack/Teams quando análises detectam problemas acima de um threshold de severidade.</p>
+          </div>
+        </div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício: script de revisão automática em CI</h2>
+        <div class="exercise-body">
+          <div class="exercise-prompt">
+            <h3>Objetivo</h3>
+            <p>Criar um workflow do GitHub Actions que rode Claude Code em todo pull request, analise os arquivos modificados e poste um comentário no PR com o resultado da revisão em formato JSON.</p>
+          </div>
+          <div class="exercise-solution">
+            <h3>Solução</h3>
+            <div class="code-block-wrapper"><pre><code class="language-yaml"># .github/workflows/claude-pr-review.yml
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Review
+        id: review
+        run: |
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          claude --output-format json \
+            "Revise: $CHANGED. Retorne { score: 0-10, issues: [], summary: '' }" \
+            > review.json
+          echo "score=$(jq -r '.score' review.json)" >> $GITHUB_OUTPUT
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Post Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = JSON.parse(fs.readFileSync('review.json'));
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `**Claude Review — Score: ${review.score}/10**\n\n${review.summary}`
+            });</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/github-actions" target="_blank" rel="noopener" class="resource-link">Documentação oficial — GitHub Actions</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="plan-mode.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a> <a data-testid="btn-next" href="ide.html" class="btn btn-next">Próximo <i class="uil uil-arrow-right"></i></a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

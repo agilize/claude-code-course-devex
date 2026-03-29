@@ -1,78 +1,362 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursos &amp; Referências — Claude Code Course</title>
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
-  <meta charset="UTF-8">
-  <title>Recursos &amp; Referências — Claude Code Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>Recursos</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="active">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link active"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>Recursos &amp; Referências</h1>
-    <p>Compilação completa de Recursos para continuar seu aprendizado: documentação oficial, vídeos, comunidade e ferramentas.</p>
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">Recursos &amp; Referências</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 5 — Avançado</span> › <span>Recursos &amp; Referências</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+    <article class="module-body">
 
-    <h2>Documentação Oficial</h2>
-    <ul>
-      <li><a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code — Documentação Principal</a></li>
-      <li><a href="https://docs.anthropic.com/en/api/getting-started">Anthropic API Reference</a></li>
-      <li><a href="https://docs.anthropic.com/en/docs/about-claude/models">Modelos Claude — Lista completa</a></li>
-      <li><a href="https://docs.anthropic.com/en/docs/claude-code/hooks">Hooks Reference</a></li>
-      <li><a href="https://docs.anthropic.com/en/docs/claude-code/mcp">MCP Documentation</a></li>
-    </ul>
+      <div class="module-header">
+        <div class="module-number">Módulo 20</div>
+        <h1 class="module-title">Recursos &amp; Referências</h1>
+        <p class="module-description">Documentação oficial, SDKs, comunidade e ferramentas do ecossistema Anthropic — tudo que você precisa para continuar evoluindo com Claude Code.</p>
+        <span class="module-badge">Parte 5</span>
+      </div>
 
-    <section data-testid="resources-videos">
-      <h2>Vídeos &amp; Cursos</h2>
-      <ul>
-        <li><a href="https://www.youtube.com/anthropic">Canal oficial Anthropic no YouTube</a></li>
-        <li><a href="https://www.youtube.com/watch?v=claude-code-intro">Introdução ao Claude Code — Tutorial</a></li>
-        <li><a href="https://www.youtube.com/watch?v=claude-advanced">Claude Code Avançado — Workshop</a></li>
-      </ul>
-    </section>
+      <section class="content-section">
+        <h2>Documentação Oficial</h2>
+        <p>As fontes primárias de referência para Claude Code e a Claude API. Mantenha estes links acessíveis — são a referência mais confiável e atualizada.</p>
+        <div class="resources-grid">
+          <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-book-open"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Claude Code Docs</div>
+              <div class="resource-card-desc">Documentação completa do Claude Code — instalação, configuração, ferramentas, CLI, hooks e muito mais.</div>
+              <div class="resource-card-url">docs.anthropic.com</div>
+            </div>
+          </a>
+          <a href="https://docs.anthropic.com/en/api" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-server"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">API Reference</div>
+              <div class="resource-card-desc">Referência completa da Claude API — endpoints, parâmetros, modelos disponíveis e exemplos de uso.</div>
+              <div class="resource-card-url">docs.anthropic.com/en/api</div>
+            </div>
+          </a>
+          <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-plug"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">MCP Protocol</div>
+              <div class="resource-card-desc">Model Context Protocol — especificação oficial, guias de implementação e lista de servidores disponíveis.</div>
+              <div class="resource-card-url">modelcontextprotocol.io</div>
+            </div>
+          </a>
+          <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-github"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Claude Code no GitHub</div>
+              <div class="resource-card-desc">Repositório oficial — issues, changelog, releases e discussões sobre o desenvolvimento do Claude Code.</div>
+              <div class="resource-card-url">github.com/anthropics/claude-code</div>
+            </div>
+          </a>
+          <a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-database"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">MCP Servers Oficiais</div>
+              <div class="resource-card-desc">Coleção de servidores MCP mantidos oficialmente — filesystem, GitHub, Slack, PostgreSQL e outros.</div>
+              <div class="resource-card-url">github.com/modelcontextprotocol/servers</div>
+            </div>
+          </a>
+          <a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-cube"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Modelos Claude</div>
+              <div class="resource-card-desc">Lista completa de modelos disponíveis com capacidades, limites de contexto e recomendações de uso.</div>
+              <div class="resource-card-url">docs.anthropic.com</div>
+            </div>
+          </a>
+        </div>
+      </section>
 
-    <section data-testid="resources-community">
-      <h2>Comunidade</h2>
-      <ul>
-        <li><a href="https://discord.gg/anthropic">Discord oficial Anthropic</a></li>
-        <li><a href="https://github.com/anthropics/claude-code">GitHub — Claude Code</a></li>
-        <li><a href="https://reddit.com/r/ClaudeAI">Reddit r/ClaudeAI</a></li>
-        <li><a href="https://twitter.com/AnthropicAI">Twitter/X @AnthropicAI</a></li>
-      </ul>
-    </section>
+      <section class="content-section">
+        <h2>SDKs e Ferramentas</h2>
+        <p>SDKs oficiais para integrar Claude nas suas aplicações e ferramentas do ecossistema para automação e CI/CD.</p>
+        <div class="resources-grid">
+          <a href="https://github.com/anthropics/anthropic-sdk-typescript" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-brackets-curly"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">SDK TypeScript / JavaScript</div>
+              <div class="resource-card-desc">SDK oficial para Node.js, Deno e browsers. Suporta streaming, tool use, batch requests e muito mais.</div>
+              <div class="resource-card-url">github.com/anthropics/anthropic-sdk-typescript</div>
+            </div>
+          </a>
+          <a href="https://github.com/anthropics/anthropic-sdk-python" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-code-branch"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">SDK Python</div>
+              <div class="resource-card-desc">SDK oficial Python com suporte a async/await, streaming e todas as features da API v1.</div>
+              <div class="resource-card-url">github.com/anthropics/anthropic-sdk-python</div>
+            </div>
+          </a>
+          <a href="https://github.com/anthropics/claude-code-action" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-play-circle"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Claude Code Action</div>
+              <div class="resource-card-desc">GitHub Action oficial para integrar Claude Code em workflows de CI/CD — code review automático em PRs.</div>
+              <div class="resource-card-url">github.com/anthropics/claude-code-action</div>
+            </div>
+          </a>
+        </div>
+      </section>
 
-    <pre><code>// Atalho para acessar docs via CLI
-$ claude "como configurar MCP servers?"
-# Claude responde com base na documentação atual</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício Final</h3><p>Compartilhe o que aprendeu com sua equipe e contribua para a comunidade.</p></section>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/">Voltar ao início</a>
-  </main>
+      <section class="content-section" data-testid="resources-videos">
+        <h2>Cursos e Aprendizado</h2>
+        <p>Recursos para aprofundar seu conhecimento em Claude Code e desenvolvimento com IA da Anthropic.</p>
+        <div class="resources-grid">
+          <a href="https://www.anthropic.com/learn" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-graduation-cap"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Anthropic Learning Hub</div>
+              <div class="resource-card-desc">Hub oficial de aprendizado da Anthropic com guias, tutoriais e cursos sobre Claude e a API.</div>
+              <div class="resource-card-url">anthropic.com/learn</div>
+            </div>
+          </a>
+          <a href="https://www.youtube.com/@anthropic-ai" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-youtube"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Canal Anthropic no YouTube</div>
+              <div class="resource-card-desc">Demos, tutoriais e apresentações técnicas do canal oficial da Anthropic — atualizados regularmente.</div>
+              <div class="resource-card-url">youtube.com/@anthropic-ai</div>
+            </div>
+          </a>
+          <a href="https://github.com/search?q=awesome-claude-code" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-star"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Awesome Claude Code</div>
+              <div class="resource-card-desc">Coleções curadas pela comunidade de prompts, configs, integrações e exemplos avançados do Claude Code.</div>
+              <div class="resource-card-url">github.com</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="content-section" data-testid="resources-community">
+        <h2>Comunidade</h2>
+        <p>Onde encontrar suporte, trocar experiências e acompanhar novidades do ecossistema.</p>
+        <div class="resources-grid">
+          <a href="https://discord.gg/anthropic" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-discord"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Discord Oficial Anthropic</div>
+              <div class="resource-card-desc">Servidor Discord oficial com canais para Claude Code, API, MCP e suporte da equipe Anthropic.</div>
+              <div class="resource-card-url">discord.gg/anthropic</div>
+            </div>
+          </a>
+          <a href="https://reddit.com/r/ClaudeAI" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-reddit-alien-alt"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">Reddit r/ClaudeAI</div>
+              <div class="resource-card-desc">Comunidade Reddit ativa com discussões, dicas, workflows e comparações sobre Claude e Claude Code.</div>
+              <div class="resource-card-url">reddit.com/r/ClaudeAI</div>
+            </div>
+          </a>
+          <a href="https://github.com/anthropics" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-card-icon"><i class="uil uil-github"></i></div>
+            <div class="resource-card-content">
+              <div class="resource-card-title">GitHub Anthropic</div>
+              <div class="resource-card-desc">Organização oficial da Anthropic no GitHub — todos os repositórios públicos, SDKs e ferramentas.</div>
+              <div class="resource-card-url">github.com/anthropics</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>Referência rápida de comandos</h2>
+        <p>Os comandos mais importantes do Claude Code para consulta rápida.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Instalação e setup
+npm install -g @anthropic-ai/claude-code
+claude login
+claude --version
+
+# Sessão interativa
+claude                        # inicia sessão
+claude "sua pergunta"         # pergunta direta
+claude --model claude-opus-4-6 # escolhe modelo
+
+# Flags essenciais
+claude --verbose              # mostra chamadas de ferramentas
+claude --no-auto-accept       # review manual de cada ação
+claude --output-format json   # saída em JSON
+claude --dangerously-skip-permissions  # skip confirmações (cuidado)
+
+# Comandos de sessão (dentro da sessão)
+/status                       # tokens, modelo, custo
+/compact                      # compacta o contexto
+/model claude-haiku-4-5       # troca modelo
+/clear                        # limpa o contexto
+/help                         # lista comandos disponíveis
+
+# Passando input
+cat arquivo.ts | claude --stdin "explique este código"
+git diff | claude --stdin "revise este diff"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Estrutura de arquivos de configuração</h2>
+        <p>Todos os arquivos de configuração relevantes do Claude Code e onde encontrá-los.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text"># Configurações globais (afetam todas as sessões)
+~/.claude/settings.json       # configurações pessoais globais
+~/.claude/CLAUDE.md           # instruções globais (para todos os projetos)
+~/.claude/keybindings.json    # atalhos de teclado personalizados
+
+# Configurações do projeto (versionadas no repositório)
+.claude/settings.json         # configurações do projeto
+CLAUDE.md                     # instruções do projeto
+.claudeignore                 # arquivos ignorados pelo Claude
+
+# Histórico e sessões
+~/.claude/sessions/           # histórico de sessões anteriores
+~/.claude/logs/               # logs de atividade
+
+# Extensões IDE
+VS Code:     ~/.vscode/extensions/anthropic.claude-code-*
+JetBrains:   ~/.config/JetBrains/*/plugins/claude-code/</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Links dos módulos deste curso</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Módulo</th>
+                <th>Título</th>
+                <th>Link da doc oficial</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>01–03</td>
+                <td>Fundações &amp; CLAUDE.md</td>
+                <td><a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener">Overview</a></td>
+              </tr>
+              <tr>
+                <td>04–08</td>
+                <td>Configuração &amp; Tools</td>
+                <td><a href="https://docs.anthropic.com/en/docs/claude-code/settings" target="_blank" rel="noopener">Settings</a></td>
+              </tr>
+              <tr>
+                <td>09–11</td>
+                <td>Memória &amp; MCP</td>
+                <td><a href="https://docs.anthropic.com/en/docs/claude-code/memory" target="_blank" rel="noopener">Memory</a></td>
+              </tr>
+              <tr>
+                <td>12–14</td>
+                <td>Agentes &amp; Plan Mode</td>
+                <td><a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents" target="_blank" rel="noopener">Sub-agents</a></td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td>CLI Corporativo</td>
+                <td><a href="https://docs.anthropic.com/en/docs/claude-code/github-actions" target="_blank" rel="noopener">GitHub Actions</a></td>
+              </tr>
+              <tr>
+                <td>16</td>
+                <td>IDE Integration</td>
+                <td><a href="https://docs.anthropic.com/en/docs/claude-code/ide-integrations" target="_blank" rel="noopener">IDE Integrations</a></td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td>Seleção de Modelos</td>
+                <td><a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" rel="noopener">Models</a></td>
+              </tr>
+              <tr>
+                <td>18</td>
+                <td>Claude API &amp; SDK</td>
+                <td><a href="https://docs.anthropic.com/en/api" target="_blank" rel="noopener">API Reference</a></td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td>Boas Práticas</td>
+                <td><a href="https://docs.anthropic.com/en/docs/claude-code/best-practices" target="_blank" rel="noopener">Best Practices</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício Final</h2>
+        <p>Parabéns por concluir o curso. Para consolidar o aprendizado e contribuir com a comunidade:</p>
+        <ol>
+          <li><strong>Configure seu ambiente definitivo:</strong> Crie ou atualize o <code>CLAUDE.md</code> do seu projeto principal com tudo que aprendeu. Inclua stack, comandos, convenções, arquivos críticos e padrões.</li>
+          <li><strong>Explore um MCP server:</strong> Instale o MCP server do GitHub ou filesystem e configure-o no seu <code>settings.json</code>. Teste pelo menos uma operação via Claude.</li>
+          <li><strong>Compartilhe com sua equipe:</strong> Apresente 3 técnicas do curso para um colega de trabalho — CLAUDE.md, hooks ou agent teams. Documente os prompts que funcionaram melhor no seu contexto.</li>
+          <li><strong>Contribua:</strong> Se encontrar um bug no Claude Code ou tiver uma sugestão, abra uma issue no <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener">repositório oficial</a>.</li>
+        </ol>
+      </section>
+
+      <section class="resources-section">
+        <h2>Recursos adicionais</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener">Claude Code — Documentação Completa</a></li>
+          <li><a href="https://docs.anthropic.com/en/api" target="_blank" rel="noopener">Claude API Reference</a></li>
+          <li><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">Model Context Protocol</a></li>
+          <li><a href="https://github.com/anthropics" target="_blank" rel="noopener">Anthropic no GitHub</a></li>
+          <li><a href="https://discord.gg/anthropic" target="_blank" rel="noopener">Discord Oficial Anthropic</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="best-practices.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

@@ -1,56 +1,253 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seleção de Modelos — Claude Code Course</title>
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
-  <meta charset="UTF-8">
-  <title>Seleção de Modelos — Claude Code Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>Seleção de Modelos</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="active">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link active"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>Seleção de Modelos</h1>
-    <p>Escolha o Model certo para cada tarefa. Compare Claude Opus, Sonnet e Haiku: custo, velocidade, capacidade e casos de uso ideais.</p>
-    <pre><code>// Selecionar modelo via flag
-$ claude --model claude-opus-4-5 "tarefa complexa"
-$ claude --model claude-haiku-3-5 "tarefa simples"</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>// Configurar modelo padrão em settings.json
-{
-  "model": "claude-sonnet-4-5",
-  "smallModel": "claude-haiku-3-5"
-}</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Compare o desempenho dos modelos em uma tarefa de refatoração.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/about-claude/models">Documentação oficial Anthropic — Models</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/05-avancado/api-sdk.html">Próximo módulo</a>
-  </main>
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">Seleção de Modelos</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 5 — Avançado</span> › <span>Seleção de Modelos</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 17</div>
+        <h1 class="module-title">Seleção de Modelos</h1>
+        <p class="module-description">Como escolher o modelo certo para cada tarefa — Opus, Sonnet e Haiku, extended thinking, custos e estratégias de troca dinâmica.</p>
+        <span class="badge badge-part">Parte 5</span>
+      </div>
+
+      <section class="module-section">
+        <p class="intro-text">Escolher o modelo correto é uma das decisões mais impactantes para produtividade e custo. O Claude Code suporta toda a família de modelos Anthropic — cada um com perfil diferente de velocidade, capacidade e preço.</p>
+      </section>
+
+      <section class="module-section">
+        <h2>Modelos disponíveis</h2>
+        <p>Os três níveis da família Claude e seus casos de uso ideais:</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">claude-opus-4-6     — mais poderoso, mais lento, mais caro
+                      ideal: tarefas complexas, arquitetura, refatorações grandes
+
+claude-sonnet-4-6   — balanceado (padrão recomendado)
+                      ideal: desenvolvimento do dia a dia, code review, explicações
+
+claude-haiku-4-5    — mais rápido, mais barato
+                      ideal: tarefas simples, completions rápidas, CI/CD</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Comparativo de modelos</h2>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Velocidade</th>
+                <th>Custo relativo</th>
+                <th>Melhor para</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>claude-opus-4-6</code></td>
+                <td><span class="badge badge-warning">Lento</span></td>
+                <td><span class="badge badge-danger">Alto</span></td>
+                <td>Arquitetura, refatorações grandes, análise de segurança profunda</td>
+              </tr>
+              <tr>
+                <td><code>claude-sonnet-4-6</code></td>
+                <td><span class="badge badge-success">Médio</span></td>
+                <td><span class="badge badge-project">Médio</span></td>
+                <td>Features normais, bug fixing, code review, documentação</td>
+              </tr>
+              <tr>
+                <td><code>claude-haiku-4-5</code></td>
+                <td><span class="badge badge-success">Rápido</span></td>
+                <td><span class="badge badge-global">Baixo</span></td>
+                <td>Completions, reformatação, tarefas mecânicas, CI/CD cost-efficient</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Selecionando o modelo</h2>
+        <p>Diferentes formas de selecionar o modelo em uso:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Na sessão via flag
+claude --model claude-opus-4-6
+
+# Permanente no settings.json
+{ "model": "claude-sonnet-4-6" }
+
+# Trocando durante a sessão com slash command
+/model claude-haiku-4-5
+
+# Via variável de ambiente
+export ANTHROPIC_MODEL=claude-sonnet-4-6
+claude</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Configurando modelo padrão no settings.json</h2>
+        <p>Você pode definir um modelo padrão global e outro para tarefas rápidas (background agents):</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
+  "model": "claude-sonnet-4-6",
+  "smallModel": "claude-haiku-4-5"
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-info">
+          O campo <code>smallModel</code> é usado internamente pelo Claude Code para tarefas de baixo custo, como completions de linha e operações de background.
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Guia de seleção por tipo de tarefa</h2>
+        <div class="code-block-wrapper"><pre><code class="language-text">Opus:    arquitetura de sistema, migração de codebase inteira,
+         análise de segurança profunda, raciocínio complexo
+
+Sonnet:  features normais, bug fixing, code review,
+         documentação, explicações, refatorações médias
+
+Haiku:   completions rápidas, reformatação de código,
+         tarefas mecânicas repetitivas, pipelines CI/CD</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Extended Thinking</h2>
+        <p>Os modelos Opus e Sonnet suportam um modo de raciocínio aprofundado antes de responder. Ative via prompt natural:</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">Modelos suportam "extended thinking" — Claude pensa antes de responder.
+Ativar com: "pense profundamente antes de responder"
+Mais lento mas mais preciso em problemas complexos.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <p>Casos de uso ideais para extended thinking:</p>
+        <ul>
+          <li>Algoritmos com múltiplas abordagens possíveis</li>
+          <li>Decisões de arquitetura com trade-offs complexos</li>
+          <li>Debug de problemas difíceis de reproduzir</li>
+          <li>Análise de segurança em código crítico</li>
+        </ul>
+      </section>
+
+      <section class="module-section">
+        <h2>Custo estimado por tarefa</h2>
+        <p>Referência aproximada de custo por tipo de uso com Sonnet como base:</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">Sessão 1h desenvolvimento normal:  ~$0.10–$0.50  (Sonnet)
+Code review completo de PR:        ~$0.05–$0.20  (Sonnet)
+Refatoração de módulo grande:      ~$0.20–$1.00  (Opus)
+Pipeline CI/CD (análise rápida):   ~$0.01–$0.05  (Haiku)
+Agent team com 5 subagentes:       ~$0.50–$2.00  (Sonnet)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-warning">
+          <strong>Dica de custo:</strong> Use Haiku para tarefas repetitivas em CI/CD e reserve Opus para tarefas que realmente exigem raciocínio profundo. O Sonnet cobre ~80% dos casos de uso do dia a dia.
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Estratégia de troca dinâmica</h2>
+        <p>Em projetos grandes, trocar de modelo conforme a complexidade da tarefa pode reduzir custos significativamente sem perder qualidade:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Início do dia — planejamento com Opus
+claude --model claude-opus-4-6 "analise o estado do projeto e proponha arquitetura para a nova feature"
+
+# Implementação com Sonnet (padrão)
+claude "implemente a feature auth conforme planejado"
+
+# Tarefas rápidas com Haiku
+claude --model claude-haiku-4-5 "formate este arquivo JSON"
+claude --model claude-haiku-4-5 "renomeie todas as variáveis de snake_case para camelCase em utils.ts"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício: comparar modelos em uma tarefa de refatoração</h2>
+        <div class="exercise-body">
+          <div class="exercise-prompt">
+            <h3>Objetivo</h3>
+            <p>Compare o resultado de Sonnet vs Opus em uma tarefa de refatoração real:</p>
+            <ul>
+              <li>Execute a mesma instrução de refatoração com <code>--model claude-sonnet-4-6</code></li>
+              <li>Execute novamente com <code>--model claude-opus-4-6</code></li>
+              <li>Compare qualidade, tempo de resposta e custo via <code>/status</code></li>
+              <li>Identifique em qual tipo de tarefa a diferença é mais perceptível</li>
+            </ul>
+          </div>
+          <div class="exercise-solution">
+            <h3>Comandos</h3>
+            <div class="code-block-wrapper"><pre><code class="language-bash"># Sessão com Sonnet
+claude --model claude-sonnet-4-6 "refatore src/auth.ts para usar async/await e adicione tratamento de erros"
+/status
+
+# Nova sessão com Opus
+claude --model claude-opus-4-6 "refatore src/auth.ts para usar async/await e adicione tratamento de erros"
+/status
+
+# Verificar o modelo ativo na sessão
+/model</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+            <div class="callout callout-info">
+              Use <code>/status</code> ao final de cada sessão para ver tokens consumidos e custo estimado. Isso ajuda a calibrar sua escolha de modelo ao longo do tempo.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank" rel="noopener" class="resource-link">About Claude Models — Documentação Anthropic</a></li>
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/settings" target="_blank" rel="noopener" class="resource-link">Settings — model e smallModel</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="ide.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a> <a data-testid="btn-next" href="api-sdk.html" class="btn btn-next">Próximo <i class="uil uil-arrow-right"></i></a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

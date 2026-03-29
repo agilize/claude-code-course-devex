@@ -870,6 +870,287 @@ a.btn-next:hover {
   display: block;
 }
 
+/* ============================================================
+   Custom Components — permission-modes, tools-grid,
+   decision-tree, skill-catalog, use-cases-grid, hierarchy-diagram
+   ============================================================ */
+
+/* --- Permission Modes --- */
+.permission-modes {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.permission-mode {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.permission-mode.recommended {
+  border-left: 3px solid var(--accent);
+}
+
+.permission-mode.warning-mode {
+  border-left: 3px solid var(--warning);
+}
+
+.mode-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.mode-name {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.mode-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.recommended-badge {
+  background: rgba(var(--accent-rgb, 99, 102, 241), 0.15);
+  color: var(--accent);
+}
+
+.danger-badge {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.mode-description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* --- Tools Grid --- */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.tool-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tool-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.tool-name {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.tool-description {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* --- Decision Tree --- */
+.decision-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.decision-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.decision-condition {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.decision-arrow {
+  color: var(--text-muted);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.tool-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(var(--accent-rgb, 99, 102, 241), 0.15);
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tool-badge.preferred {
+  background: rgba(var(--accent-rgb, 99, 102, 241), 0.25);
+}
+
+/* --- Skill Catalog --- */
+.skill-catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.skill-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.skill-row:last-child {
+  border-bottom: none;
+}
+
+.skill-trigger {
+  font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  flex-shrink: 0;
+  min-width: 100px;
+}
+
+.skill-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* --- Use Cases Grid --- */
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.use-case-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.use-case-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.use-case-title {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.use-case-desc {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* --- Hierarchy Diagram --- */
+.hierarchy-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.hierarchy-level {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.hierarchy-level-1 {
+  border-left: 3px solid var(--accent);
+}
+
+.hierarchy-level-2 {
+  border-left: 3px solid var(--text-secondary);
+}
+
+.hierarchy-level-3 {
+  border-left: 3px solid var(--text-muted);
+}
+
+.hierarchy-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.hierarchy-content {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.hierarchy-content strong {
+  color: var(--text-primary);
+}
+
+.hierarchy-content p {
+  margin: 4px 0 0;
+}
+
+.hierarchy-arrow {
+  text-align: center;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
 /* Tablet (up to 1024px) */
 @media (max-width: 1024px) {
   .main-content {
@@ -879,6 +1160,11 @@ a.btn-next:hover {
     width: 220px;
   }
   .module-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Tools grid: 3 cols → 2 cols at tablet */
+  .tools-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -1143,6 +1429,52 @@ html {
   .module-meta {
     flex-wrap: wrap;
     gap: 6px;
+  }
+
+  /* --- Mobile: Permission Modes --- */
+  .permission-modes {
+    flex-direction: column;
+  }
+
+  .permission-mode {
+    flex: 1 1 auto;
+  }
+
+  /* --- Mobile: Tools Grid --- */
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* --- Mobile: Decision Tree --- */
+  .decision-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .decision-condition {
+    flex: none;
+  }
+
+  /* --- Mobile: Skill Catalog --- */
+  .skill-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .skill-trigger {
+    min-width: auto;
+  }
+
+  /* --- Mobile: Use Cases Grid --- */
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* --- Mobile: Hierarchy Diagram --- */
+  .hierarchy-level {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 

@@ -1,59 +1,375 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude API &amp; Agent SDK — Claude Code Course</title>
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
-  <meta charset="UTF-8">
-  <title>Claude API &amp; Agent SDK — Claude Code Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>API &amp; SDK</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="active">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link active"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>Claude API &amp; Agent SDK</h1>
-    <p>Use a API da Anthropic e o Agent SDK para construir aplicações programáticas com Claude. Aprenda autenticação, chamadas e streaming.</p>
-    <pre><code>import Anthropic from '@anthropic-ai/sdk'
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">Claude API & Agent SDK</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 5 — Avançado</span> › <span>Claude API & Agent SDK</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+    <article class="module-body">
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+      <div class="module-header">
+        <div class="module-number">Módulo 18</div>
+        <h1 class="module-title">Claude API & Agent SDK</h1>
+        <p class="module-description">Como usar a Claude API diretamente e o Agent SDK para construir suas próprias aplicações com IA — mensagens, streaming, tool use e agentes autônomos.</p>
+        <span class="badge badge-part">Parte 5</span>
+      </div>
+
+      <section class="module-section">
+        <p class="intro-text">Além do Claude Code CLI, você pode integrar o Claude diretamente em suas aplicações usando o SDK TypeScript ou Python. Esta abordagem é ideal quando você precisa de controle total sobre o fluxo, construir produtos próprios ou automatizar workflows complexos.</p>
+      </section>
+
+      <section class="module-section">
+        <h2>Instalação dos SDKs</h2>
+        <p>Instale o SDK oficial da Anthropic para sua linguagem:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># TypeScript / JavaScript
+npm install @anthropic-ai/sdk
+
+# Python
+pip install anthropic</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Claude API direta — primeira mensagem</h2>
+        <p>Integrando Claude diretamente em suas aplicações TypeScript:</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">import Anthropic from "@anthropic-ai/sdk";
+
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
 const message = await client.messages.create({
-  model: 'claude-opus-4-5',
+  model: "claude-sonnet-4-6",
   max_tokens: 1024,
-  messages: [{ role: 'user', content: 'Hello!' }]
-})</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>// Instalação do SDK
-$ npm install @anthropic-ai/sdk
-$ pip install anthropic</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Crie um script que usa a API para analisar código automaticamente.</p></section>
-    <a href="https://docs.anthropic.com/en/api/getting-started">Documentação oficial Anthropic — API Reference</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/05-avancado/best-practices.html">Próximo módulo</a>
-  </main>
+  messages: [{ role: "user", content: "Explique recursão" }],
+});
+
+console.log(message.content[0].text);</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <p>O mesmo em Python:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">import anthropic
+
+client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+
+message = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Explique recursão"}]
+)
+
+print(message.content[0].text)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Estrutura da resposta</h2>
+        <p>A resposta da API segue um schema consistente:</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Campo</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>id</code></td>
+                <td>string</td>
+                <td>Identificador único da mensagem</td>
+              </tr>
+              <tr>
+                <td><code>content</code></td>
+                <td>array</td>
+                <td>Blocos de conteúdo (texto, tool_use)</td>
+              </tr>
+              <tr>
+                <td><code>model</code></td>
+                <td>string</td>
+                <td>Modelo utilizado na resposta</td>
+              </tr>
+              <tr>
+                <td><code>stop_reason</code></td>
+                <td>string</td>
+                <td><code>end_turn</code>, <code>tool_use</code>, <code>max_tokens</code></td>
+              </tr>
+              <tr>
+                <td><code>usage</code></td>
+                <td>object</td>
+                <td><code>input_tokens</code> e <code>output_tokens</code> consumidos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Streaming</h2>
+        <p>Receba respostas em tempo real via streaming — essencial para UIs responsivas:</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">const stream = await client.messages.create({
+  model: "claude-sonnet-4-6",
+  max_tokens: 1024,
+  stream: true,
+  messages: [{ role: "user", content: "Explique O(n log n)" }],
+});
+
+for await (const chunk of stream) {
+  if (chunk.type === "content_block_delta") {
+    process.stdout.write(chunk.delta.text);
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-info">
+          Com streaming, o usuário vê o texto sendo gerado em tempo real, em vez de aguardar a resposta completa. Fundamental para chatbots e interfaces interativas.
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Conversa multi-turno</h2>
+        <p>Mantenha histórico de conversa passando o array de mensagens acumuladas:</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">const messages: Anthropic.MessageParam[] = [];
+
+// Primeiro turno
+messages.push({ role: "user", content: "O que é uma closure em JavaScript?" });
+const resp1 = await client.messages.create({ model: "claude-sonnet-4-6", max_tokens: 512, messages });
+messages.push({ role: "assistant", content: resp1.content });
+
+// Segundo turno — Claude lembra do contexto
+messages.push({ role: "user", content: "Dê um exemplo prático com contador" });
+const resp2 = await client.messages.create({ model: "claude-sonnet-4-6", max_tokens: 512, messages });
+console.log(resp2.content[0].text);</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Tool Use (function calling)</h2>
+        <p>Defina ferramentas que o Claude pode chamar durante a conversa para buscar dados ou executar ações:</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">const response = await client.messages.create({
+  model: "claude-sonnet-4-6",
+  tools: [{
+    name: "get_weather",
+    description: "Get current weather for a city",
+    input_schema: {
+      type: "object",
+      properties: {
+        city: { type: "string", description: "City name" }
+      },
+      required: ["city"]
+    }
+  }],
+  messages: [{ role: "user", content: "Qual o tempo em São Paulo?" }],
+});
+
+// Se Claude decidiu usar a tool:
+if (response.stop_reason === "tool_use") {
+  const toolUse = response.content.find(b => b.type === "tool_use");
+  const weatherData = await fetchWeather(toolUse.input.city);
+
+  // Retorne o resultado da tool de volta ao Claude
+  const finalResponse = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    messages: [
+      { role: "user", content: "Qual o tempo em São Paulo?" },
+      { role: "assistant", content: response.content },
+      { role: "user", content: [{ type: "tool_result", tool_use_id: toolUse.id, content: JSON.stringify(weatherData) }] },
+    ],
+  });
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>System prompt</h2>
+        <p>Defina o comportamento e personalidade do Claude com o campo <code>system</code>:</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">const response = await client.messages.create({
+  model: "claude-sonnet-4-6",
+  max_tokens: 1024,
+  system: `Você é um assistente de código especializado em TypeScript e Node.js.
+Sempre forneça exemplos práticos e explique o raciocínio por trás das suas sugestões.
+Use português brasileiro. Seja direto e objetivo.`,
+  messages: [{ role: "user", content: "Como implementar rate limiting em Express?" }],
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Agent SDK (@anthropic-ai/agent-sdk)</h2>
+        <p>Construa agentes autônomos com loop de raciocínio e execução de ferramentas integrado:</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">import { Agent } from "@anthropic-ai/agent-sdk";
+import fs from "fs";
+
+const agent = new Agent({
+  model: "claude-sonnet-4-6",
+  instructions: "Você é um assistente de desenvolvimento. Ajude com código TypeScript.",
+  tools: [
+    {
+      name: "read_file",
+      description: "Read a file from disk",
+      execute: async ({ path }) => fs.readFileSync(path, "utf-8"),
+    },
+    {
+      name: "write_file",
+      description: "Write content to a file",
+      execute: async ({ path, content }) => {
+        fs.writeFileSync(path, content, "utf-8");
+        return `File written: ${path}`;
+      },
+    },
+  ],
+});
+
+const result = await agent.run("Analise meu package.json e sugira atualizações de dependências");
+console.log(result.output);</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-info">
+          O Agent SDK lida automaticamente com o loop de tool use — Claude decide quando chamar ferramentas, executa-as e processa os resultados até chegar a uma resposta final.
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Diferença: API direta vs Agent SDK</h2>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Aspecto</th>
+                <th>API direta</th>
+                <th>Agent SDK</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Loop de tool use</td>
+                <td>Manual — você gerencia</td>
+                <td>Automático</td>
+              </tr>
+              <tr>
+                <td>Controle</td>
+                <td>Total</td>
+                <td>Abstraído</td>
+              </tr>
+              <tr>
+                <td>Código necessário</td>
+                <td>Mais verboso</td>
+                <td>Mais conciso</td>
+              </tr>
+              <tr>
+                <td>Ideal para</td>
+                <td>Integrações customizadas, controle fino</td>
+                <td>Agentes autônomos, prototipagem rápida</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício: script de análise de código com a API</h2>
+        <div class="exercise-body">
+          <div class="exercise-prompt">
+            <h3>Objetivo</h3>
+            <p>Crie um script Node.js que usa a API diretamente para analisar automaticamente um arquivo de código e retornar problemas encontrados:</p>
+            <ul>
+              <li>Leia um arquivo TypeScript do disco</li>
+              <li>Envie o conteúdo para a Claude API</li>
+              <li>Peça ao Claude para identificar bugs, code smells e melhorias</li>
+              <li>Salve o relatório em <code>analysis-report.json</code></li>
+            </ul>
+          </div>
+          <div class="exercise-solution">
+            <h3>Solução</h3>
+            <div class="code-block-wrapper"><pre><code class="language-typescript">import Anthropic from "@anthropic-ai/sdk";
+import fs from "fs";
+
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+async function analyzeFile(filePath: string) {
+  const code = fs.readFileSync(filePath, "utf-8");
+
+  const response = await client.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 2048,
+    system: "Você é um code reviewer especializado. Retorne SEMPRE JSON válido.",
+    messages: [{
+      role: "user",
+      content: `Analise este código TypeScript e retorne um JSON com:
+{ "bugs": [], "codeSmells": [], "suggestions": [], "score": 0-10 }
+
+\`\`\`typescript
+${code}
+\`\`\``
+    }],
+  });
+
+  const report = JSON.parse(response.content[0].text);
+  fs.writeFileSync("analysis-report.json", JSON.stringify(report, null, 2));
+  console.log(`Análise concluída. Score: ${report.score}/10`);
+  return report;
+}
+
+analyzeFile(process.argv[2] || "src/index.ts");</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/api" target="_blank" rel="noopener" class="resource-link">Claude API Reference — Documentação completa</a></li>
+          <li><a href="https://github.com/anthropics/anthropic-sdk-typescript" target="_blank" rel="noopener" class="resource-link">Anthropic SDK TypeScript — GitHub</a></li>
+          <li><a href="https://github.com/anthropics/anthropic-sdk-python" target="_blank" rel="noopener" class="resource-link">Anthropic SDK Python — GitHub</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="models.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a> <a data-testid="btn-next" href="best-practices.html" class="btn btn-next">Próximo <i class="uil uil-arrow-right"></i></a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

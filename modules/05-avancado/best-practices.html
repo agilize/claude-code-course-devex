@@ -1,56 +1,376 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boas Práticas &amp; Padrões — Claude Code Course</title>
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
-  <meta charset="UTF-8">
-  <title>Boas Práticas — Claude Code Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>Boas Práticas</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="active">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link active"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>Boas Práticas</h1>
-    <p>Consolidação das melhores Práticas para usar Claude Code no dia-a-dia: prompts eficientes, segurança, revisão de código e trabalho em equipe.</p>
-    <pre><code>// Boas práticas de prompt
-- Seja específico e forneça contexto
-- Use CLAUDE.md para padrões do projeto
-- Revise sempre antes de aprovar mudanças</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>// Segurança
-- Nunca commite chaves de API
-- Use .gitignore para arquivos sensíveis
-- Revise diffs antes de cada commit</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Audite seu workflow atual e identifique 3 melhorias com base nas boas práticas.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/claude-code/best-practices">Documentação oficial Anthropic — Best Practices</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/05-avancado/resources.html">Próximo módulo</a>
-  </main>
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">Boas Práticas &amp; Padrões</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 5 — Avançado</span> › <span>Boas Práticas</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 19</div>
+        <h1 class="module-title">Boas Práticas &amp; Padrões</h1>
+        <p class="module-description">CLAUDE.md eficaz, prompts de qualidade, padrões de uso diário, segurança e debug de sessões — tudo que separa um uso casual de um uso profissional do Claude Code.</p>
+        <span class="module-badge">Parte 5</span>
+      </div>
+
+      <section class="content-section">
+        <h2>CLAUDE.md eficaz</h2>
+        <p>O arquivo <code>CLAUDE.md</code> é o principal mecanismo para contextualizar o Claude sobre seu projeto. Um CLAUDE.md bem escrito pode reduzir drasticamente o tempo gasto explicando o projeto a cada sessão. A chave é ser específico e útil — não genérico.</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># O que INCLUIR no CLAUDE.md
+
+&#x2713; Stack técnico específico (ex: "Next.js 14 App Router + Prisma + PostgreSQL")
+&#x2713; Comandos do projeto (npm run dev, npm test, npm run build)
+&#x2713; Convenções de código (ex: "usamos kebab-case para arquivos, PascalCase para componentes")
+&#x2713; Arquivos críticos com propósito (ex: "src/lib/db.ts — cliente Prisma singleton")
+&#x2713; Exemplos de padrões usados (ex: "Server Actions em src/actions/")
+&#x2713; Restrições importantes (ex: "nunca modificar migrations existentes")
+
+# O que EVITAR no CLAUDE.md
+
+&#x2717; Secrets e API keys (use .env)
+&#x2717; Informações genéricas que Claude já sabe (ex: "JavaScript é case-sensitive")
+&#x2717; Instruções longas demais — Claude lê tudo, contexto tem custo
+&#x2717; Regras contraditorias ou desatualizadas</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Estrutura recomendada de CLAUDE.md</h2>
+        <p>Um template que funciona bem para a maioria dos projetos:</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># Projeto: [Nome]
+
+## Stack
+- Runtime: Node.js 20 + TypeScript 5
+- Framework: Next.js 14 (App Router)
+- DB: PostgreSQL via Prisma ORM
+- Testes: Vitest + Testing Library
+
+## Comandos
+- `npm run dev` — servidor de desenvolvimento (porta 3000)
+- `npm test` — roda testes com Vitest
+- `npm run db:push` — sincroniza schema Prisma
+- `npm run lint` — ESLint + Prettier
+
+## Convenções
+- Componentes: PascalCase em src/components/
+- Arquivos: kebab-case
+- Server Actions: src/actions/*.ts
+- Tipos compartilhados: src/types/index.ts
+
+## Arquivos Críticos
+- src/lib/db.ts — cliente Prisma (singleton, não reinstanciar)
+- src/lib/auth.ts — NextAuth config
+- src/middleware.ts — proteção de rotas
+
+## Padrões
+- Sempre usar Server Components por padrão
+- Client Components apenas quando necessário (useState, useEffect, eventos)
+- Erros: usar Result type de src/lib/result.ts</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Prompts eficazes</h2>
+        <p>A qualidade dos seus prompts determina diretamente a qualidade do output. Prompts vagos geram resultados genéricos; prompts específicos geram resultados precisos e acionáveis.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text"># Prompts ruins vs. bons
+
+&#x2717; "Melhore meu código"
+&#x2713; "Refatore src/auth.ts para usar async/await em vez de .then()/.catch()
+    e adicione tratamento de erros com Result type de src/lib/result.ts"
+
+&#x2717; "Faça testes"
+&#x2713; "Crie testes unitários para todas as funções exportadas em src/utils/format.ts
+    usando Vitest. Mock dependências externas. Cobertura mínima: 80%."
+
+&#x2717; "Isso está errado"
+&#x2713; "Este código tem N+1 query problem na linha 45 de src/api/users.ts.
+    Corrija usando include do Prisma para eager loading de posts."
+
+&#x2717; "Adicione autenticação"
+&#x2713; "Adicione autenticação JWT em src/api/middleware.ts. Use o padrão já
+    existente em src/api/auth.ts. Tokens expiram em 24h. Retorne 401 para
+    tokens inválidos com { error: 'Unauthorized' }."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Padrões de uso diário</h2>
+        <p>Uma rotina estruturada maximiza produtividade e minimiza desperdício de contexto. O contexto de uma sessão é um recurso finito — use com intencionalidade.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text"># Rotina recomendada
+
+Manhã — iniciar sessão limpa
+  claude "o que foi modificado ontem? resume o estado atual do projeto"
+  claude "qual é a tarefa prioritária de hoje?"
+
+Durante o trabalho — sessões focadas
+  Uma sessão por tarefa/feature quando possível
+  /compact ao contexto crescer demais (~70% da janela)
+  /status para monitorar tokens consumidos
+
+Antes de parar
+  claude "faça commit das mudanças com mensagem semântica"
+  claude "resume o que foi feito para retomar amanhã" > HANDOFF.md
+
+Revisão de PR
+  claude "revise este diff e aponte: bugs, edge cases, melhorias de performance"
+  git diff main..feature/branch | claude --stdin "revise este diff"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Gestão de contexto na prática</h2>
+        <p>Saber quando e como gerenciar o contexto de uma sessão é uma habilidade central para uso avançado do Claude Code.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Monitorando a sessão
+/status                    # tokens usados, modelo, custo estimado
+
+# Quando compactar
+/compact                   # resume a sessão mantendo contexto essencial
+# Use quando: tarefa longa, mudança de assunto, contexto &gt; 70% da janela
+
+# Quando reiniciar
+# Use nova sessão quando: comportamento estranho, tarefa completamente diferente,
+# bugs de raciocínio circulares
+
+# Passando contexto entre sessões
+claude "leia HANDOFF.md e retome de onde paramos"
+
+# Referenciando arquivos em vez de colar conteúdo
+# RUIM: colar 500 linhas de código no prompt
+# BOM:  "analise src/components/UserCard.tsx e sugira melhorias"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Segurança</h2>
+        <p>Claude Code tem acesso ao seu filesystem e pode executar comandos. Use com responsabilidade — especialmente em ambientes de produção ou ao trabalhar com dados sensíveis.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text"># Regras essenciais de segurança
+
+&#x2717; Nunca cole API keys, tokens ou senhas no prompt
+&#x2717; Não peça ao Claude para fazer push diretamente em main sem review
+&#x2717; Cuidado com --dangerously-skip-permissions em máquinas de produção
+&#x2717; Não aprovem ações destrutivas sem ler o diff (rm -rf, DROP TABLE, etc.)
+
+&#x2713; Use allow/deny lists em settings.json para restringir ferramentas
+&#x2713; Revise cada ação destrutiva antes de aprovar
+&#x2713; Use plan mode antes de mudanças grandes ou arriscadas
+&#x2713; Configure .claudeignore para excluir arquivos sensíveis
+&#x2713; Em CI/CD: use ANTHROPIC_API_KEY como secret do sistema, nunca hardcoded
+&#x2713; Prefira sessões com auto-accept DESLIGADO em produção</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Configurando allow/deny lists</h2>
+        <p>O <code>settings.json</code> permite controlar precisamente quais ferramentas e comandos Claude pode usar. Isso é especialmente importante em ambientes compartilhados ou sensíveis.</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Bash(git *)",
+      "Bash(npm run *)",
+      "Bash(npx *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)",
+      "Bash(sudo *)",
+      "WebFetch"
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Debug de sessões problemáticas</h2>
+        <p>Quando Claude não está se comportando como esperado, siga este processo de diagnóstico antes de desistir da sessão.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Diagnóstico de sessão
+
+# 1. Verifique o status da sessão
+/status
+
+# 2. Ative verbose para ver todas as chamadas de ferramentas
+claude --verbose
+
+# 3. Se o contexto estiver muito pesado
+/compact
+
+# 4. Se o comportamento for circular ou errado
+# Inicie nova sessão — não tente "corrigir" uma sessão com reasoning falho
+
+# 5. Se uma ferramenta específica não funcionar
+# Verifique settings.json e permissões
+cat ~/.claude/settings.json
+
+# 6. Se resultados forem inconsistentes entre sessões
+# Revise e atualize seu CLAUDE.md — pode estar desatualizado
+
+# Flags úteis para debug
+claude --verbose          # mostra cada chamada de tool
+claude --output-format json  # saída estruturada para scripts
+claude --no-auto-accept   # review manual de cada ação</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Padrão de revisão de código</h2>
+        <p>Claude Code é excelente para code review. Um fluxo estruturado garante reviews consistentes e úteis.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Review de um PR completo
+git diff main..HEAD | claude --stdin \
+  "Revise este diff. Foque em:
+   1. Bugs e edge cases não tratados
+   2. Problemas de segurança (SQL injection, XSS, auth bypass)
+   3. Performance (N+1 queries, loops desnecessários)
+   4. Conformidade com padrões do projeto (ver CLAUDE.md)
+   Formato: lista de issues por categoria, severidade (alta/média/baixa)"
+
+# Review de arquivo específico
+claude "revise src/api/payments.ts focando em segurança e tratamento de erros"
+
+# Review antes de cada commit (via hook)
+# Ver módulo 15 para integração com pre-commit hooks</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Trabalhando em equipe</h2>
+        <p>Quando múltiplos desenvolvedores usam Claude Code no mesmo projeto, algumas convenções evitam conflitos e garantem consistência.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text"># Boas práticas para times
+
+CLAUDE.md compartilhado no repositório
+  - Versionado junto ao código
+  - Revisado em PRs como qualquer outro arquivo
+  - Atualizado quando padrões mudam
+
+Separar configurações pessoais das do projeto
+  ~/.claude/settings.json  — configurações pessoais (não versionar)
+  .claude/settings.json    — configurações do projeto (versionar)
+
+Documentar decisões de arquitetura
+  "claude, por que foi escolhido X em vez de Y?" → save em ADR.md
+
+Compartilhar prompts que funcionam bem
+  Criar src/prompts/ com prompts reutilizáveis para tarefas comuns
+  Ex: prompts/review-security.md, prompts/generate-tests.md</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Comparativo de boas práticas</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Área</th>
+                <th>Prática ruim</th>
+                <th>Prática recomendada</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Prompts</td>
+                <td>Vagos, sem contexto</td>
+                <td>Específicos, com arquivo e linha</td>
+              </tr>
+              <tr>
+                <td>Contexto</td>
+                <td>Sessão de dias sem /compact</td>
+                <td>Sessões focadas por tarefa</td>
+              </tr>
+              <tr>
+                <td>Segurança</td>
+                <td>Auto-accept sempre ativo</td>
+                <td>Review manual em ações destrutivas</td>
+              </tr>
+              <tr>
+                <td>CLAUDE.md</td>
+                <td>Genérico ou inexistente</td>
+                <td>Específico ao projeto, atualizado</td>
+              </tr>
+              <tr>
+                <td>Debug</td>
+                <td>Continuar sessão problemática</td>
+                <td>Nova sessão + --verbose</td>
+              </tr>
+              <tr>
+                <td>Times</td>
+                <td>Cada dev com sua configuração</td>
+                <td>CLAUDE.md compartilhado no repo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício</h2>
+        <p>Audite seu setup atual do Claude Code em três etapas:</p>
+        <ol>
+          <li><strong>CLAUDE.md:</strong> Abra (ou crie) o <code>CLAUDE.md</code> do seu projeto principal. Verifique se contém stack, comandos, convenções e arquivos críticos. Remova informações genéricas que Claude já sabe.</li>
+          <li><strong>Segurança:</strong> Revise seu <code>settings.json</code> (em <code>~/.claude/</code> e <code>.claude/</code> do projeto). Adicione pelo menos uma regra de <code>deny</code> para comandos que nunca devem ser executados automaticamente no seu contexto.</li>
+          <li><strong>Prompt:</strong> Pegue um prompt que você usa frequentemente e reescreva-o seguindo o padrão: <em>ação + arquivo específico + critérios + formato de saída</em>. Compare os resultados antes e depois.</li>
+        </ol>
+      </section>
+
+      <section class="resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/best-practices" target="_blank" rel="noopener">Documentação oficial Anthropic — Best Practices</a></li>
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/memory" target="_blank" rel="noopener">Claude Code — Memory &amp; CLAUDE.md</a></li>
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/security" target="_blank" rel="noopener">Claude Code — Security</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="api-sdk.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a> <a data-testid="btn-next" href="resources.html" class="btn btn-next">Próximo <i class="uil uil-arrow-right"></i></a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

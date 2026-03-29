@@ -1,56 +1,297 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDE Integration — Claude Code Course</title>
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
-  <meta charset="UTF-8">
-  <title>IDE Integration — Claude Code Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>IDE Integration</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="active">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link active"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>IDE Integration</h1>
-    <p>Integre o Claude Code com seu IDE favorito: VS Code, JetBrains, Vim/Neovim. Aprenda a configurar extensões e fluxos de trabalho híbridos.</p>
-    <pre><code>// VS Code — abrir terminal integrado
-Ctrl+` → digitar: claude
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">IDE Integration</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 5 — Avançado</span> › <span>IDE Integration</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+    <article class="module-body">
 
-// Extensão Claude Code para VS Code
-ext install anthropic.claude-code</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>// JetBrains — plugin oficial
-Settings → Plugins → Claude Code
-# Disponível para IntelliJ, WebStorm, PyCharm</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Configure a integração do Claude Code no seu IDE preferido.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/claude-code/ide-integrations">Documentação oficial Anthropic — IDE Integrations</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/05-avancado/models.html">Próximo módulo</a>
-  </main>
+      <div class="module-header">
+        <div class="module-number">Módulo 16</div>
+        <h1 class="module-title">IDE Integration</h1>
+        <p class="module-description">Integração do Claude Code com VS Code, JetBrains e Web App — como usar Claude diretamente no seu editor com diff inline, atalhos nativos e fluxos híbridos.</p>
+        <span class="badge badge-part">Parte 5</span>
+      </div>
+
+      <section class="module-section">
+        <p class="intro-text">Claude Code não se limita ao terminal. As integrações com IDEs trazem o poder do Claude para dentro do editor onde você já passa a maior parte do tempo — com acesso ao arquivo aberto, seleção de código, diff inline e atalhos nativos.</p>
+      </section>
+
+      <section class="module-section">
+        <h2>VS Code — Extensão oficial</h2>
+        <p>A extensão oficial do Claude Code para VS Code, publicada pela Anthropic, é a forma mais integrada de usar Claude dentro do editor:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Instalar via linha de comando
+code --install-extension anthropic.claude-code
+
+# Ou buscar na aba Extensions (Ctrl+Shift+X):
+# "Claude Code" — publisher: Anthropic</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>Principais funcionalidades da extensão:</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Recurso</th>
+                <th>Como acessar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Chat panel integrado</td>
+                <td>Ícone Claude na barra lateral ou <code>Ctrl+Shift+C</code></td>
+              </tr>
+              <tr>
+                <td>Explicar / Corrigir / Refatorar seleção</td>
+                <td>Selecione código → clique direito → <em>Claude Code</em></td>
+              </tr>
+              <tr>
+                <td>Acesso ao arquivo atual</td>
+                <td>Claude lê automaticamente o arquivo aberto no editor</td>
+              </tr>
+              <tr>
+                <td>Diff view integrado</td>
+                <td>Mudanças sugeridas aparecem como diff antes de aplicar</td>
+              </tr>
+              <tr>
+                <td>Keybindings nativos</td>
+                <td>Configuráveis via <em>Keyboard Shortcuts</em> do VS Code</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Configuração no VS Code</h2>
+        <p>As principais configurações da extensão ficam no <code>settings.json</code> do VS Code:</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">// .vscode/settings.json (ou settings globais do VS Code)
+{
+  "claude-code.model": "claude-sonnet-4-6",
+  "claude-code.autoApprove": false,
+  "claude-code.theme": "dark",
+  "claude-code.showDiffBeforeApply": true,
+  "claude-code.contextLines": 10
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i> Mantenha <code>"autoApprove": false</code> para revisar cada mudança antes de aplicar — especialmente importante em projetos de produção.
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>JetBrains — IntelliJ, WebStorm, PyCharm</h2>
+        <p>O plugin oficial do Claude Code está disponível para toda a família JetBrains via o marketplace de plugins:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Via linha de comando (IntelliJ IDEA):
+# Não disponível via CLI — instalar pela UI
+
+# Na IDE:
+# Settings (Cmd+,) → Plugins → Marketplace
+# Buscar: "Claude Code" → Install
+
+# Ou via URL direto do marketplace:
+# https://plugins.jetbrains.com/plugin/claude-code</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>Funcionalidades disponíveis no plugin JetBrains:</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Recurso</th>
+                <th>Detalhe</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Chat panel integrado</td>
+                <td>Tool window lateral, igual ao VS Code</td>
+              </tr>
+              <tr>
+                <td>Contexto do arquivo ativo</td>
+                <td>Claude acessa o arquivo aberto no editor automaticamente</td>
+              </tr>
+              <tr>
+                <td>Integração com Run Configurations</td>
+                <td>Claude pode ler erros de run/debug direto do IDE</td>
+              </tr>
+              <tr>
+                <td>Acesso a ferramentas do IDE</td>
+                <td>Refatorações, renomeações e navegação integradas</td>
+              </tr>
+              <tr>
+                <td>Suporte a todos os IDEs JetBrains</td>
+                <td>IntelliJ IDEA, WebStorm, PyCharm, GoLand, Rider...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Web App — claude.ai/code</h2>
+        <p>A versão browser do Claude Code é acessível sem qualquer instalação, ideal para exploração e aprendizado:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Acesso direto:
+# https://claude.ai/code
+
+# Características:
+# - Sem acesso a filesystem local (usa sandbox isolado)
+# - Upload de arquivos para análise pontual
+# - Bom para: exploração, prototipagem, aprendizado
+# - Não requer npm, API key configurada localmente</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i> A Web App não tem acesso ao seu filesystem local. Para trabalho com projetos reais, use a extensão do VS Code, o plugin JetBrains ou o CLI no terminal.
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Quando usar cada interface</h2>
+        <p>A escolha certa depende do contexto de trabalho:</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Interface</th>
+                <th>Melhor para</th>
+                <th>Pontos fortes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>IDE (VS Code / JetBrains)</strong></td>
+                <td>Desenvolvimento ativo dia a dia</td>
+                <td>Contexto visual, diff inline, atalhos nativos</td>
+              </tr>
+              <tr>
+                <td><strong>Terminal (CLI)</strong></td>
+                <td>Automação, scripts, CI/CD, agent teams</td>
+                <td>Composabilidade com pipes, scripting, não-interativo</td>
+              </tr>
+              <tr>
+                <td><strong>Web App</strong></td>
+                <td>Aprendizado, prototipagem, sem setup</td>
+                <td>Zero instalação, sandbox seguro, acesso via browser</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Fluxo híbrido: IDE + Terminal</h2>
+        <p>O padrão mais produtivo combina IDE e terminal de forma complementar:</p>
+        <div class="use-cases-grid">
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-edit"></i> No IDE</h3>
+            <p>Editar arquivos individuais, pedir explicações sobre código selecionado, aplicar refatorações pontuais com diff visual.</p>
+          </div>
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-terminal"></i> No Terminal</h3>
+            <p>Tarefas multi-arquivo, agent teams, automações com pipes, geração de relatórios e integrações com outras ferramentas CLI.</p>
+          </div>
+          <div class="use-case-card">
+            <h3 class="use-case-title"><i class="uil uil-sync"></i> Combinado</h3>
+            <p>Use o terminal para coordenar operações grandes (ex: migração de módulo inteiro) e o IDE para revisar e ajustar os resultados arquivo a arquivo.</p>
+          </div>
+        </div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício: configurar a extensão VS Code</h2>
+        <div class="exercise-body">
+          <div class="exercise-prompt">
+            <h3>Objetivo</h3>
+            <p>Instalar a extensão oficial do Claude Code no VS Code, configurar o modelo padrão como <code>claude-sonnet-4-6</code>, desativar auto-approve e criar um atalho de teclado personalizado para abrir o chat panel.</p>
+          </div>
+          <div class="exercise-solution">
+            <h3>Solução</h3>
+            <div class="code-block-wrapper"><pre><code class="language-bash"># Passo 1 — Instalar a extensão
+code --install-extension anthropic.claude-code
+
+# Passo 2 — Adicionar ao settings.json (Cmd+Shift+P → "Open User Settings JSON")
+# {
+#   "claude-code.model": "claude-sonnet-4-6",
+#   "claude-code.autoApprove": false,
+#   "claude-code.showDiffBeforeApply": true
+# }
+
+# Passo 3 — Adicionar keybinding (Cmd+Shift+P → "Open Keyboard Shortcuts JSON")
+# [
+#   {
+#     "key": "ctrl+shift+c",
+#     "command": "claude-code.openChat"
+#   }
+# ]</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+            <p>Após configurar, teste selecionando um trecho de código no editor, clicando com o botão direito e escolhendo <em>Claude Code: Explain</em>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/ide-integrations" target="_blank" rel="noopener" class="resource-link">Documentação oficial — IDE Integrations</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="cli-corporate.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a> <a data-testid="btn-next" href="models.html" class="btn btn-next">Próximo <i class="uil uil-arrow-right"></i></a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

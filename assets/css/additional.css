@@ -853,10 +853,41 @@ a.btn-next:hover {
   font-size: 13px;
   max-width: 860px;
   margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 .site-footer a {
   color: var(--accent);
   text-decoration: none;
+}
+.site-footer .version-tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: var(--text-muted);
+}
+.sidebar-version {
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sidebar-version span {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
 }
 
 /* ============================================================

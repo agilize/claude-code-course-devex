@@ -725,6 +725,12 @@ a.btn-next:hover {
 .callout-info { border-color: var(--info); }
 
 /* Tables */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  margin: 20px 0;
+}
 .module-body table {
   width: 100%;
   border-collapse: collapse;
@@ -877,8 +883,29 @@ a.btn-next:hover {
   }
 }
 
-/* Prevent horizontal overflow globally */
-html, body {
+/* Prevent horizontal overflow — clip at html level only, body stays natural */
+html {
+  max-width: 100%;
+}
+/* All content must wrap within its container */
+.module-body,
+.module-body p,
+.module-body li,
+.module-body td,
+.module-body th,
+.callout {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+/* Inline code must not force the line wider than viewport */
+.module-body code:not(pre code) {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+/* Table wrapper: tables scroll inside their wrapper, not the page */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   max-width: 100%;
 }
 
@@ -1033,21 +1060,17 @@ html, body {
     font-size: 10px;
   }
 
-  /* Tables: wrap in scrollable container */
+  /* Tables: scroll inside .table-wrapper */
+  .table-wrapper {
+    margin: 12px 0;
+  }
   .module-body table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    white-space: normal;
-    max-width: 100%;
-    width: max-content;
+    min-width: 500px;
   }
   .module-body th,
   .module-body td {
     padding: 8px 10px;
     font-size: 13px;
-    white-space: nowrap;
-    min-width: 80px;
   }
 
   /* Callouts */

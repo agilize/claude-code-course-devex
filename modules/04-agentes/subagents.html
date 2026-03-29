@@ -60,79 +60,767 @@
       <div class="module-header">
         <div class="module-number">Módulo 13</div>
         <h1 class="module-title">Subagentes &amp; Agent Teams</h1>
-        <p class="module-description">Padrão de uso onde múltiplos agentes especializados trabalham em paralelo, cada um com contexto limpo, coordenados por um orquestrador.</p>
+        <p class="module-description">Dois conceitos distintos: Subagentes são instâncias isoladas do Claude (o primitivo). Agent Teams são o padrão arquitetural que organiza múltiplos subagentes coordenados para resolver tarefas complexas em paralelo.</p>
       </div>
 
-      <section class="content-section">
-        <h2>O que são Agent Teams</h2>
-        <p>Agent Teams é um padrão arquitetural onde múltiplos agentes especializados trabalham em paralelo, cada um com contexto limpo (~50–80k tokens), coordenados por um orquestrador na janela principal.</p>
-      </section>
+      <!-- ==================== PARTE 1: SUBAGENTES ==================== -->
 
       <section class="content-section">
-        <h2>Padrão orquestrador</h2>
-        <p>A estrutura hierárquica de um agent team:</p>
-        <div class="code-block-wrapper"><pre><code class="language-text">Orquestrador (janela principal)
-├── Mantém estado global (só paths, não conteúdo)
-├── Spawna agentes em waves
-├── Coleta resultados (só { status, file })
-└── Faz merge/integração ao final
+        <h2><i class="uil uil-robot"></i> Subagentes — O Primitivo</h2>
+        <p>Um <strong>subagente</strong> é uma instância separada e isolada do Claude. Ele tem contexto próprio, ferramentas próprias, e uma vida curta: nasce para executar uma tarefa, entrega o resultado, e termina. Não compartilha nenhum histórico com a sessão que o criou.</p>
 
-Agentes (janelas separadas, ~50-80k tokens)
-├── Recebem brief compacto
-├── Leem context de arquivos
-├── Executam tarefa específica
-└── Escrevem output em arquivo
-   └── Retornam só { status, file }</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div><strong>Analogia:</strong> Pense em um subagente como um freelancer contratado para uma tarefa específica. Você passa o briefing, ele executa, entrega o resultado — e vai embora. Não sabe nada sobre o restante do projeto.</div>
+        </div>
+
+        <h3>Como um subagente existe</h3>
+        <p>No Claude Code, subagentes são criados de duas formas:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Forma 1: Via Agent Tool (dentro de uma sessão Claude Code)
+# O próprio Claude spawna um subagente ao usar o Agent Tool.
+# O subagente roda em processo separado, com contexto limpo.
+
+# Forma 2: Via CLI — novo processo independente
+claude -p "Analise src/auth/ e liste todos os endpoints expostos.
+Escreva o resultado em analysis/auth-endpoints.json"
+# Roda como processo novo, sem herdar histórico de nenhuma sessão</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Características fundamentais de um subagente</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">CONTEXTO ISOLADO
+  Não vê o histórico da sessão principal
+  Não sabe o que outros subagentes estão fazendo
+  Começa sempre com contexto limpo (~0 tokens usados)
+
+FERRAMENTAS PRÓPRIAS
+  Pode ter permissões diferentes do orquestrador
+  Ex: somente leitura, ou somente bash, conforme necessário
+
+VIDA CURTA (TRANSIENTE)
+  Nasce → executa → morre
+  Não persiste entre chamadas
+  Estado só existe nos arquivos que ele cria
+
+RETORNO ESTRUTURADO
+  Deve retornar resultado compacto (paths, status, JSON pequeno)
+  NUNCA retornar conteúdo completo — isso desperdiça contexto do orquestrador</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Por que usar subagentes?</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">PROBLEMA SEM SUBAGENTES:
+  Tarefa grande → tudo na janela principal → contexto esgota → qualidade cai
+
+COM SUBAGENTES:
+  Tarefa grande → dividida em partes → cada parte tem contexto limpo
+  Janela principal fica leve → mantém qualidade por mais tempo
+
+BENEFÍCIOS CONCRETOS:
+  + Paralelismo: N agentes simultâneos = N× mais rápido
+  + Isolamento: erro em um não contamina outros
+  + Especialização: cada agente tem só o contexto que precisa
+  + Escala: projetos de qualquer tamanho sem degradação</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
       </section>
+
+      <!-- ==================== PARTE 2: AGENT TEAMS ==================== -->
 
       <section class="content-section">
-        <h2>Exemplo real — paralelizando análise de codebase</h2>
-        <p>Um caso prático de agent team para análise paralela de um projeto:</p>
-        <div class="code-block-wrapper"><pre><code class="language-text">Agente 1: analisa src/components/ → escreve analysis-components.json
-Agente 2: analisa src/api/        → escreve analysis-api.json
-Agente 3: analisa src/lib/        → escreve analysis-lib.json
-Agente 4: analisa tests/          → escreve analysis-tests.json
-Agente 5: analisa docs/           → escreve analysis-docs.json
+        <h2><i class="uil uil-users-alt"></i> Agent Teams — O Padrão Arquitetural</h2>
+        <p>Um <strong>agent team</strong> não é uma entidade — é um <em>padrão de design</em>. É a organização intencional de múltiplos subagentes com papéis definidos, coordenados por um orquestrador, para resolver uma tarefa que seria impossível ou ineficiente para um único agente.</p>
 
-Orquestrador: lê os 5 arquivos JSON → gera relatório final</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div><strong>Diferença chave:</strong> Subagente é a <em>peça</em>. Agent Team é o <em>padrão</em>. Você pode ter um subagente sem ter um agent team. Mas um agent team sempre é feito de subagentes.</div>
+        </div>
+
+        <h3>A diferença em uma frase</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">SUBAGENTE:
+  "Spawna um Claude isolado para fazer X"
+  Primitivo, singular, tático
+
+AGENT TEAM:
+  "Organize N subagentes especializados com papéis claros,
+   coordenados por um orquestrador, com protocolo de comunicação"
+  Padrão, plural, estratégico
+
+EXEMPLO:
+  Subagente: claude analisa auth/login.ts e reporta bugs
+  Agent Team: 5 agentes analisam cada módulo em paralelo,
+              1 orquestrador consolida os relatórios,
+              1 agente final gera o plano de correção</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Anatomia de um Agent Team</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">ORQUESTRADOR (janela principal ou agente dedicado)
+  Papel: coordena, não executa
+  Responsabilidades:
+    - Decompõe a tarefa em partes independentes
+    - Spawna subagentes com briefs compactos
+    - Monitora status (só paths/status, não conteúdo)
+    - Consolida resultados ao final
+    - Gerencia dependências entre waves
+
+WORKERS (subagentes especializados)
+  Papel: executam, não coordenam
+  Responsabilidades:
+    - Recebem brief compacto do orquestrador
+    - Leem contexto diretamente dos arquivos
+    - Executam tarefa específica e bem definida
+    - Escrevem output em arquivo determinístico
+    - Retornam só { status, output_file } ao orquestrador
+
+PROTOCOLO DE COMUNICAÇÃO
+  Canal de entrada: brief em texto (< 2k tokens idealmente)
+  Canal de saída:   arquivo no filesystem
+  Formato de retorno: JSON pequeno com status e paths</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
       </section>
+
+      <!-- ==================== PARTE 3: PADRÕES ARQUITETURAIS ==================== -->
 
       <section class="content-section">
-        <h2>Regras para agent teams eficientes</h2>
-        <div class="code-block-wrapper"><pre><code class="language-text">Máximo 5 agentes paralelos (evita rate limiting)
-Cada agente &lt; 100k tokens de contexto
-Retorno ao orquestrador: sempre só paths/status
-Agentes transientes: não dependem de sessão persistente
-Handoff via arquivos: output de um → input do próximo</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <h2><i class="uil uil-sitemap"></i> Padrões Arquiteturais</h2>
+        <p>Existem quatro padrões principais. Cada um serve a um tipo diferente de problema:</p>
+
+        <h3>Padrão 1: Orquestrador-Worker (mais comum)</h3>
+        <p>Um coordena, N executam em paralelo. Ideal para tarefas que podem ser divididas em partes independentes.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">Orquestrador
+├── Worker A → processa módulo-auth/
+├── Worker B → processa módulo-payments/
+├── Worker C → processa módulo-notifications/
+└── Worker D → processa módulo-reports/
+     ↓
+Orquestrador consolida os 4 resultados
+
+QUANDO USAR:
+  - Análise de código por módulo/diretório
+  - Geração de documentação por serviço
+  - Code review em paralelo
+  - Migração de múltiplos arquivos</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Padrão 2: Pipeline (waves sequenciais)</h3>
+        <p>Output de um vira input do próximo. Ideal quando cada etapa depende da anterior.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">Wave 1: ANALYST
+  Analisa requisitos → escreve spec.json
+
+Wave 2: DESIGNER (lê spec.json)
+  Cria arquitetura → escreve architecture.json
+
+Wave 3: IMPLEMENTER (lê architecture.json)
+  Implementa código → escreve src/feature.ts
+
+Wave 4: TESTER (lê src/feature.ts)
+  Gera testes → escreve tests/feature.test.ts
+
+QUANDO USAR:
+  - Fluxo design → implementação → teste
+  - ETL: extração → transformação → carga
+  - Pesquisa → síntese → relatório
+  - Revisão → correção → validação</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Padrão 3: Map-Reduce</h3>
+        <p>N agentes processam partes em paralelo (map), um agente consolida (reduce). Ideal para análises de grandes volumes.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">MAP PHASE (paralelo)
+  Agente 1: analisa 1000 logs jan/2024 → metrics-jan.json
+  Agente 2: analisa 1000 logs fev/2024 → metrics-feb.json
+  Agente 3: analisa 1000 logs mar/2024 → metrics-mar.json
+  Agente 4: analisa 1000 logs abr/2024 → metrics-apr.json
+
+REDUCE PHASE (sequencial)
+  Agente reducer: lê os 4 JSON → gera quarterly-report.pdf
+
+QUANDO USAR:
+  - Análise de logs/métricas por período
+  - Processamento de dataset particionado
+  - Audit de segurança em múltiplos endpoints
+  - Tradução de documentação por seção</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Padrão 4: Hierárquico (sub-orquestradores)</h3>
+        <p>Orquestrador principal spawna sub-orquestradores, que por sua vez spawnam workers. Para projetos de escala muito grande.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">Orquestrador Principal
+├── Sub-orquestrador: Backend
+│   ├── Worker: analisa API Gateway
+│   ├── Worker: analisa serviços Node.js
+│   └── Worker: analisa banco de dados
+├── Sub-orquestrador: Frontend
+│   ├── Worker: analisa componentes React
+│   ├── Worker: analisa estado (Redux)
+│   └── Worker: analisa rotas
+└── Sub-orquestrador: Infra
+    ├── Worker: analisa Docker/K8s
+    └── Worker: analisa CI/CD
+
+QUANDO USAR:
+  - Migração de monolito para microserviços
+  - Auditoria de segurança de sistema completo
+  - Análise de repositório com 50+ módulos
+  - Refatoração de plataforma inteira</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
       </section>
 
-      <section class="content-section">
-        <h2>Passagem de bastão (handoff) entre agentes</h2>
-        <p>Agentes podem trabalhar em sequência (waves), onde o output de um se torna o input do próximo:</p>
-        <div class="code-block-wrapper"><pre><code class="language-text">Wave 1: A1 → escreve design.json
-Wave 2: B1 lê design.json → produz component.html
-Wave 3: C1 lê component.html → escreve tests</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
-      </section>
+      <!-- ==================== PARTE 4: CASOS DE USO REAIS ==================== -->
 
       <section class="content-section">
-        <h2>Anti-padrões</h2>
-        <p>Erros comuns a evitar ao usar agent teams:</p>
-        <div class="code-block-wrapper"><pre><code class="language-text">[X] Agente retorna conteúdo completo ao orquestrador
-[X] Agente com brief de 10.000 tokens
-[X] 20 agentes em paralelo
-[X] Agente lê tudo do projeto para fazer tarefa simples
-[X] Orquestrador processa HTML/JSON completo inline</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <h2><i class="uil uil-briefcase-alt"></i> Casos de Uso Reais</h2>
+        <p>Situações concretas onde agent teams são a solução correta:</p>
+
+        <h3>Caso 1: Code Review de PR Grande</h3>
+        <p><strong>Cenário:</strong> PR com 40 arquivos modificados em 8 módulos diferentes. Revisar tudo em sequência levaria horas e o contexto esgotaria.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">PROMPT PARA O ORQUESTRADOR:
+"Este PR modifica 8 módulos. Spawne 8 agentes paralelos,
+um por módulo. Cada agente deve:
+1. Ler os arquivos modificados no módulo
+2. Verificar: lógica, segurança, performance, cobertura de testes
+3. Escrever review em reviews/module-{nome}.md
+4. Retornar { status, file, issues_count }
+
+Módulos: auth, payments, notifications, reports,
+         users, billing, webhooks, admin"
+
+EXECUÇÃO:
+  [paralelo] Agente auth        → reviews/module-auth.md
+  [paralelo] Agente payments    → reviews/module-payments.md
+  [paralelo] Agente notifications → reviews/module-notifications.md
+  ... (todos ao mesmo tempo)
+
+CONSOLIDAÇÃO:
+  Orquestrador lê 8 arquivos → reviews/summary.md
+  Prioriza issues por severidade → action-items.md
+
+GANHO: 8× mais rápido vs. revisão sequencial</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Caso 2: Migração de Codebase (Python 2 → Python 3)</h3>
+        <p><strong>Cenário:</strong> 200 arquivos .py para migrar. Impossível na janela principal.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">ESTRATÉGIA COM AGENT TEAM:
+  1. Orquestrador lista todos os .py e agrupa em batches de 20
+  2. Cada wave: 5 agentes × 20 arquivos = 100 arquivos por wave
+  3. Wave 1: lote 1-100 (5 agentes em paralelo)
+  4. Wave 2: lote 101-200 (5 agentes em paralelo)
+  5. Agente validador roda testes após cada wave
+
+BRIEF DO WORKER:
+"Migre os seguintes arquivos de Python 2 para Python 3:
+[lista de 20 arquivos]
+Regras: print statements, unicode strings, division,
+        iteritems/itervalues, xrange → range
+Escreva os arquivos migrados nos mesmos paths.
+Log de mudanças em migration/batch-{n}.json"
+
+RETORNO DO WORKER:
+{ "status": "success", "files_migrated": 20,
+  "log": "migration/batch-3.json" }</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Caso 3: Pesquisa Técnica Multidimensional</h3>
+        <p><strong>Cenário:</strong> Avaliar tecnologias para escolher o stack de um novo projeto.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">AGENTES ESPECIALIZADOS (paralelo):
+  Agente 1: pesquisa Next.js 16 → research/nextjs.md
+    (performance, ecosystem, limitações, casos de uso)
+
+  Agente 2: pesquisa SvelteKit → research/sveltekit.md
+    (performance, ecosystem, limitações, casos de uso)
+
+  Agente 3: pesquisa Remix → research/remix.md
+    (performance, ecosystem, limitações, casos de uso)
+
+  Agente 4: pesquisa Nuxt 4 → research/nuxt.md
+    (performance, ecosystem, limitações, casos de uso)
+
+AGENTE SINTETIZADOR (após todos completarem):
+  Lê os 4 arquivos → comparison-matrix.md
+  Cria tabela comparativa por critério:
+    [ performance, DX, ecosystem, team-fit, migration-cost ]
+
+RESULTADO: decisão fundamentada em paralelo, não sequencial</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Caso 4: Geração de Testes para Codebase sem Cobertura</h3>
+        <p><strong>Cenário:</strong> Projeto legado com 0% de cobertura. Precisa de testes urgente.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">WAVE 1 — ANÁLISE (paralelo):
+  Agente A: mapeia src/services/ → analysis/services.json
+    (lista funções, identifica inputs/outputs, dependências)
+  Agente B: mapeia src/utils/    → analysis/utils.json
+  Agente C: mapeia src/models/   → analysis/models.json
+
+WAVE 2 — GERAÇÃO DE TESTES (paralelo, usa output da wave 1):
+  Agente D: lê analysis/services.json → tests/services.test.ts
+    (gera unit tests com mocks, edge cases, error paths)
+  Agente E: lê analysis/utils.json    → tests/utils.test.ts
+  Agente F: lê analysis/models.json   → tests/models.test.ts
+
+WAVE 3 — VALIDAÇÃO:
+  Agente G: roda os testes, reporta failures → coverage-report.md
+
+GANHO: cobertura 0% → ~60% em uma sessão</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Caso 5: Auditoria de Segurança</h3>
+        <p><strong>Cenário:</strong> Auditoria completa antes de lançamento de produto financeiro.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">AGENTES ESPECIALIZADOS POR VETOR DE ATAQUE:
+  Agente SQL:     verifica todas as queries → audit/sql-injection.md
+  Agente Auth:    verifica autenticação/autorização → audit/auth.md
+  Agente Crypto:  verifica uso de criptografia → audit/crypto.md
+  Agente Deps:    verifica dependências com CVEs → audit/dependencies.md
+  Agente Secrets: verifica secrets hardcoded → audit/secrets.md
+  Agente API:     verifica endpoints expostos → audit/api-exposure.md
+
+CADA AGENTE RETORNA:
+{
+  "status": "complete",
+  "critical": 2,
+  "high": 5,
+  "medium": 8,
+  "report": "audit/sql-injection.md"
+}
+
+ORQUESTRADOR CONSOLIDA:
+  Lê 6 relatórios → audit/security-summary.md
+  Ordena por criticidade → audit/remediation-plan.md</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Caso 6: Documentação Técnica Paralela</h3>
+        <p><strong>Cenário:</strong> API com 15 endpoints, nenhum documentado.</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">AGENTES POR DOMÍNIO (paralelo):
+  Agente 1: documenta /auth/* (4 endpoints) → docs/api/auth.md
+  Agente 2: documenta /users/* (5 endpoints) → docs/api/users.md
+  Agente 3: documenta /payments/* (3 endpoints) → docs/api/payments.md
+  Agente 4: documenta /webhooks/* (3 endpoints) → docs/api/webhooks.md
+
+BRIEF PADRONIZADO (cada agente recebe):
+"Documente os endpoints listados abaixo.
+Para cada endpoint, inclua:
+- Descrição do propósito
+- Método HTTP e path
+- Headers necessários
+- Request body (schema JSON)
+- Response body (schema JSON, com exemplos)
+- Códigos de erro possíveis
+- Exemplo curl funcional
+Escreva em docs/api/{dominio}.md"
+
+AGENTE COMPILADOR:
+  Lê 4 arquivos → gera docs/api/README.md (índice + overview)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Caso 7: Feature Sprint de Ponta a Ponta</h3>
+        <p><strong>Cenário:</strong> Implementar uma feature completa envolvendo design, backend, frontend, segurança, testes e revisão. Parece o caso ideal para um agent team com papéis especializados — mas a realidade é mais nuançada.</p>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Análise crítica antes de prosseguir:</strong> Este é o caso mais sedutoramente óbvio para agent teams — e também o mais frequentemente mal aplicado. Veja por quê abaixo.
+          </div>
+        </div>
+
+        <h3>O que seduz nessa ideia</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">O RACIOCÍNIO INTUITIVO:
+  "Um time de desenvolvimento tem papéis especializados:
+   PM, designer, dev, QA, security. Agent teams também têm
+   papéis especializados. Logo, eu posso automatizar um sprint
+   inteiro com agent teams."
+
+PARECE PERFEITO:
+  Agente PM        → escreve spec
+  Agente Designer  → cria layout
+  Agente Backend   → implementa API
+  Agente Frontend  → implementa UI
+  Agente Security  → audita código
+  Agente QA        → escreve e roda testes</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Por que essa ideia funciona parcialmente — e onde quebra</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">PROBLEMA 1: INTERDEPENDÊNCIAS PROFUNDAS
+  Agent teams funcionam bem quando as partes são INDEPENDENTES.
+  Um sprint real é o oposto: cada papel depende profundamente do anterior.
+
+  PM muda requisito → Designer refaz layout → Dev refaz implementação
+  → QA refaz testes → Security re-audita
+
+  Uma mudança no começo invalida toda a cadeia.
+  Com agentes, isso significa reprocessar tudo — sem ganho real vs. linear.
+
+PROBLEMA 2: JULGAMENTO QUALITATIVO NÃO É PARALELIZÁVEL
+  "Este design faz sentido para o usuário?" — não é uma pergunta
+  que um agente responde com confiança. É julgamento humano.
+
+  "Esta arquitetura vai escalar?" — depende de contexto de negócio,
+  dívida técnica, capacidade do time, roadmap. Agentes não têm isso.
+
+  Onde há julgamento qualitativo, o humano é insubstituível.
+  Forçar um agente nessa posição produz output de aparência convincente
+  mas qualidade duvidosa.
+
+PROBLEMA 3: OUTPUT "COMPLETO" ≠ OUTPUT BOM
+  Um agente que escreve "todo o frontend" de uma feature produz código
+  funcional mas genérico, sem consideração de padrões do projeto,
+  decisões de DX anteriores, ou contexto do produto.
+
+  Um agente que revisa aspectos ESPECÍFICOS do frontend (a11y, perf,
+  segurança) é preciso, verificável, e genuinamente valioso.
+
+  REGRA: quanto mais genérica a tarefa, pior o agente.
+         quanto mais específica e verificável, melhor.
+
+PROBLEMA 4: A ITERAÇÃO É HUMANA
+  Software real não é waterfall. A spec muda.
+  O design é revisado. A implementação revela problemas na spec.
+
+  Agent teams são ótimos para tarefas one-shot bem definidas.
+  Para loops de iteração com feedback humano, a arquitetura
+  precisa de checkpoints explícitos — ou vira teatro.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>O que genuinamente funciona: a arquitetura híbrida</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">REGRA: use agentes onde a tarefa é ESPECÍFICA, VERIFICÁVEL e ONE-SHOT.
+       Use humanos onde há JULGAMENTO, ITERAÇÃO e CONTEXTO de negócio.
+
+SPRINT HÍBRIDO:
+
+  [HUMANO] Discovery e spec
+    PM humano define o requisito com clareza
+    → Sem agente aqui: o contexto de negócio é humano
+
+  [AGENTE] Researcher (one-shot, bem definido)
+    Tarefa: pesquisar como concorrentes implementam a feature
+    Input: spec.md escrita pelo PM humano
+    Output: research/competitive-analysis.md
+    → Bom para agente: tarefa específica, resultado verificável
+
+  [HUMANO] Decisão de arquitetura
+    → Sem agente aqui: trade-offs dependem de contexto do time
+
+  [AGENTES PARALELOS] Implementação
+    Agente Backend:  implementa API conforme spec aprovada → src/api/
+    Agente Frontend: implementa UI conforme spec aprovada → src/components/
+    → Funciona: partes independentes com spec clara e verificável
+
+  [AGENTES PARALELOS] Revisão especializada (o melhor uso)
+    Agente Security:     audita auth, SQL, XSS → audit/security.md
+    Agente Performance:  analisa bundle, queries → audit/perf.md
+    Agente A11y:         verifica acessibilidade → audit/a11y.md
+    → Excelente para agentes: verificável, específico, paralelizável
+
+  [HUMANO] Code review de arquitetura e produto
+    → Sem agente aqui: "faz sentido para o usuário?" é humano
+
+  [AGENTES] Geração de testes
+    Agente Unit Tests:        → tests/unit/
+    Agente Integration Tests: → tests/integration/
+    Agente E2E Tests:         → tests/e2e/
+    → Bom para agentes: derivado do código existente, verificável</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Sub-caso: TDD com Agent Pipeline (o melhor uso)</h3>
+        <p>Dentro do sprint, o ciclo TDD é o caso mais limpo para um agent pipeline. Cada wave tem input/output claro e o critério de sucesso é binário (testes passam ou não).</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">PRÉ-REQUISITO: spec humana clara e aprovada
+
+WAVE 1 — AGENTE SPEC-TO-BEHAVIORS
+  Input:  spec.md (escrito pelo humano)
+  Tarefa: converte requisitos em comportamentos testáveis
+  Output: .agent-work/behaviors.json
+  Formato:
+  {
+    "feature": "checkout-with-coupon",
+    "behaviors": [
+      { "id": "b1", "given": "carrinho com 3 itens",
+        "when": "cupom SAVE10 aplicado",
+        "then": "desconto de 10% calculado corretamente" },
+      { "id": "b2", "given": "cupom expirado",
+        "when": "usuário tenta aplicar",
+        "then": "erro 'Cupom expirado' com código 400" }
+    ]
+  }
+
+WAVE 2 — AGENTE RED (escreve testes que falham)
+  Input:  .agent-work/behaviors.json
+  Tarefa: escreve testes para cada behavior — todos devem FALHAR (RED)
+  Output: tests/checkout-coupon.test.ts
+  Regra:  NÃO implementar nenhuma lógica — só os testes
+
+WAVE 3 — AGENTE GREEN (implementa para passar)
+  Input:  tests/checkout-coupon.test.ts + behaviors.json
+  Tarefa: implementa o mínimo necessário para todos os testes passarem
+  Output: src/lib/coupon.ts + src/api/checkout/route.ts
+  Regra:  código pode ser "feio" — o objetivo é GREEN, não perfeito
+
+WAVE 4 — AGENTE REFACTOR (melhora sem quebrar)
+  Input:  src/lib/coupon.ts + tests existentes
+  Tarefa: refatora o código mantendo todos os testes passando
+  Output: src/lib/coupon.ts (reescrito) + log de mudanças
+  Regra:  SE algum teste quebrar, reverte e reporta
+
+CRITÉRIO OBJETIVO:
+  Cada wave tem critério de sucesso binário.
+  O pipeline é determinístico e verificável.
+  Agentes são perfeitos aqui.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Resumo: onde agentes entram no sprint</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">FASE DO SPRINT        AGENTE?   POR QUÊ
+
+Discovery/Requisitos  NÃO       Contexto de negócio é humano
+Arquitetura           NÃO       Trade-offs dependem do time/produto
+Researcher            SIM       Tarefa específica e verificável
+Implementação         PARCIAL   Sim se spec for clara e aprovada
+TDD pipeline          SIM       Critério binário, determinístico
+Revisão de segurança  SIM       Verificável, específico, paralelizável
+Revisão de perf/a11y  SIM       Idem
+Code review (produto) NÃO       "Faz sentido?" é julgamento humano
+Geração de testes     SIM       Derivado do código, verificável
+Documentação          SIM       Output estruturado e determinístico
+
+RESUMO: use agentes para AMPLIFICAR o time humano em tarefas
+específicas e verificáveis. Não tente substituir o time inteiro.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
       </section>
+
+      <!-- ==================== PARTE 5: PROTOCOLO DE COMUNICAÇÃO ==================== -->
+
+      <section class="content-section">
+        <h2><i class="uil uil-exchange"></i> Protocolo de Comunicação entre Agentes</h2>
+        <p>Agentes não falam diretamente entre si. Toda comunicação passa pelo filesystem. Isso é intencional: garante rastreabilidade, permite retry, e evita acoplamento.</p>
+
+        <h3>O contrato do brief (entrada do agente)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">BRIEF BOM (< 2k tokens):
+  1. Papel do agente (quem é)
+  2. Tarefa específica (o que fazer)
+  3. Paths de input (onde ler)
+  4. Path de output (onde escrever)
+  5. Formato de retorno esperado
+  6. Constraints (o que NÃO fazer)
+
+EXEMPLO DE BRIEF COMPACTO:
+"Você é um agente especialista em segurança.
+Tarefa: analise os arquivos em src/auth/ em busca de
+vulnerabilidades de autenticação (JWT inseguro, senhas
+em plaintext, tokens sem expiração, missing rate limiting).
+Input: leia src/auth/ (todos os .ts)
+Output: escreva findings em audit/auth-findings.json
+Formato: { issues: [{ file, line, severity, description }] }
+Não modifique nenhum arquivo — somente leitura."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>O contrato de retorno (saída do agente)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">RETORNO CORRETO (pequeno, estruturado):
+{
+  "status": "success",
+  "output_file": "audit/auth-findings.json",
+  "summary": "8 issues encontrados (2 critical, 3 high, 3 medium)"
+}
+
+RETORNO ERRADO (nunca faça isso):
+{
+  "status": "success",
+  "findings": [
+    { "file": "src/auth/jwt.ts", "line": 42, ... },
+    ... (200 linhas de conteúdo)
+  ]
+}
+
+POR QUÊ RETORNO COMPACTO É OBRIGATÓRIO:
+  O retorno do agente vai para o contexto do orquestrador.
+  Se 5 agentes retornam 5kb cada = 25kb no contexto principal.
+  Com 3 waves = 75kb desperdiçados só em retornos.
+  Mantenha retornos < 200 tokens por agente.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Handoff via arquivos — formato recomendado</h3>
+        <div class="code-block-wrapper"><pre><code class="language-json">// Exemplo: output do agente de análise → input do agente de implementação
+// Arquivo: analysis/component-spec.json
+
+{
+  "component": "UserDashboard",
+  "props": [
+    { "name": "userId", "type": "string", "required": true },
+    { "name": "onLogout", "type": "() => void", "required": true }
+  ],
+  "state": ["isLoading", "userData", "error"],
+  "api_calls": ["/api/users/{id}", "/api/users/{id}/stats"],
+  "design_tokens": ["card", "heading-lg", "btn-primary"],
+  "constraints": [
+    "Deve ser Server Component por padrão",
+    "Loading state obrigatório",
+    "Erro tratado com ErrorBoundary"
+  ]
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- ==================== PARTE 6: CONTEXT WINDOW ==================== -->
+
+      <section class="content-section">
+        <h2><i class="uil uil-calculator-alt"></i> Gerenciamento da Janela de Contexto</h2>
+        <p>Cada subagente tem sua própria janela de contexto. Saber calculá-la evita falhas silenciosas (agente que trunca output) e desperdício de tokens.</p>
+
+        <h3>Regra dos 70%</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">FÓRMULA DO CONTEXTO DE UM AGENTE:
+  contexto_total = brief + arquivos_lidos + histórico_da_tarefa + output_gerado
+
+EXEMPLO PRÁTICO:
+  Brief compacto:     ~1.500 tokens
+  5 arquivos .ts:     ~8.000 tokens (1.6k cada)
+  Análise gerada:     ~3.000 tokens
+  Total estimado:     ~12.500 tokens
+
+JANELA DISPONÍVEL: 200.000 tokens (Claude claude-sonnet-4-6)
+USAMOS:             12.500 tokens  (~6%)  ← confortável
+
+REGRA DOS 70%:
+  Mantenha cada agente abaixo de 70% da janela disponível.
+  Para 200k tokens → máximo ~140k por agente.
+  Acima disso: risco de truncamento e alucinações.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Leitura seletiva vs. leitura total</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># ERRADO: lê tudo cegamente (desperdiça contexto)
+"Leia todo o repositório e encontre os problemas de segurança"
+# → agente tenta ler 300 arquivos = contexto explode
+
+# CERTO: leitura cirúrgica
+"Use glob para listar apenas os arquivos em src/auth/*.ts e
+src/middleware/*.ts. Leia cada um seletivamente, focando em:
+imports de crypto, validação de tokens, e rate limiting."
+# → agente lê só os 8 arquivos relevantes
+
+# TÉCNICAS DE LEITURA SELETIVA:
+# 1. Glob para encontrar arquivos relevantes primeiro
+# 2. Grep para localizar padrões específicos
+# 3. Leitura por faixas de linhas (offset + limit)
+# 4. Leitura de funções específicas, não arquivos inteiros</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- ==================== PARTE 7: MELHORES PRÁTICAS ==================== -->
+
+      <section class="content-section">
+        <h2><i class="uil uil-check-circle"></i> Melhores Práticas</h2>
+
+        <h3>Decomposição de tarefas</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">ANTES DE CRIAR UM AGENT TEAM, pergunte:
+  1. A tarefa pode ser dividida em partes independentes?
+     → Se sim: candidata a paralelismo
+  2. Cada parte tem input e output bem definidos?
+     → Se sim: boa candidata para subagente
+  3. As partes têm dependências entre si?
+     → Se sim: use pipeline em vez de paralelo total
+  4. O resultado final requer consolidação?
+     → Se sim: reservar uma wave para o agente consolidador
+
+TAMANHO IDEAL DE TAREFA POR AGENTE:
+  - Granular o suficiente para caber em < 100k tokens
+  - Grande o suficiente para valer o overhead de criar um agente
+  - Bem delimitada: começo e fim claros</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Naming e organização de arquivos de output</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">CONVENÇÃO RECOMENDADA:
+  {pasta-do-projeto}/
+  ├── .agent-work/           ← pasta de trabalho dos agentes
+  │   ├── wave-1/
+  │   │   ├── agent-auth.json
+  │   │   ├── agent-payments.json
+  │   │   └── agent-users.json
+  │   ├── wave-2/
+  │   │   └── agent-consolidator.md
+  │   └── manifest.json      ← log de todas as waves
+
+POR QUÊ:
+  - Fácil de debugar: você vê o que cada agente produziu
+  - Determinístico: paths conhecidos antes de executar
+  - Limpo: não polui a estrutura principal do projeto
+  - Reprocessável: pode reprocessar um agente sem reprocessar todos</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Limites de paralelismo</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">LIMITES PRÁTICOS:
+  Máximo recomendado: 5 agentes simultâneos
+  Por quê: evita rate limiting da API Anthropic
+
+  Para mais de 5: use waves
+  Wave 1: agentes 1-5 (simultâneos)
+  Wave 2: agentes 6-10 (após wave 1 completar)
+  Wave 3: agentes 11-15 (após wave 2 completar)
+
+PARA PROJETOS CORPORATIVOS COM RATE LIMIT ALTO:
+  Consulte seus limites de API
+  Pode ser possível 10-20 paralelos com tier Enterprise</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Idempotência e reprocessamento</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">DESIGN IDEMPOTENTE:
+  Cada agente deve poder ser reprocessado sem efeitos colaterais.
+
+  CORRETO: agente sempre sobrescreve seu arquivo de output
+  ERRADO: agente appenda ao arquivo (re-run duplica dados)
+
+  CORRETO: brief inclui "sobrescreva se existir"
+  ERRADO: agente falha se arquivo já existe
+
+POR QUÊ IMPORTA:
+  Em redes reais, agentes falham.
+  Você precisa poder reprocessar só o agente que falhou,
+  sem reprocessar os 9 que funcionaram.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- ==================== PARTE 8: ANTI-PADRÕES ==================== -->
+
+      <section class="content-section">
+        <h2><i class="uil uil-times-circle"></i> Anti-padrões Críticos</h2>
+        <p>Estes erros aparecem com frequência e destroem a eficiência dos agent teams:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-text">ANTI-PADRÃO 1: RETORNO GORDO
+  [X] Agente retorna 50kb de conteúdo para o orquestrador
+  [X] Orquestrador pede "me devolva tudo que você encontrou"
+  [OK] Agente escreve em arquivo, retorna só o path
+
+ANTI-PADRÃO 2: BRIEF INFLADO
+  [X] Brief de 15.000 tokens com contexto desnecessário
+  [X] "Aqui está todo o código do projeto... agora faça X"
+  [OK] Brief compacto: papel, tarefa, paths, formato de output
+
+ANTI-PADRÃO 3: PARALELISMO CEGO
+  [X] Spawnar 20 agentes de uma vez
+  [X] Ignorar dependências entre tarefas
+  [OK] Máximo 5 paralelos, organizado em waves com dependências
+
+ANTI-PADRÃO 4: AGENTE GENERALISTA
+  [X] "Analise o projeto inteiro e faça o que precisar"
+  [X] Agente sem escopo definido que lê 200 arquivos
+  [OK] Agente com escopo preciso: "analise src/auth/*.ts"
+
+ANTI-PADRÃO 5: ORQUESTRADOR QUE PROCESSA
+  [X] Orquestrador lê e processa todos os outputs dos agentes inline
+  [X] "Me retorne os 5 arquivos completos que você leu"
+  [OK] Orquestrador delega consolidação para um agente dedicado
+
+ANTI-PADRÃO 6: AGENTE STATEFUL
+  [X] "Continue de onde você parou na última sessão"
+  [X] Agente que depende de variáveis da sessão anterior
+  [OK] Cada agente é transiente: recebe tudo no brief, escreve no disco
+
+ANTI-PADRÃO 7: DEPENDÊNCIAS OCULTAS
+  [X] Agente B começa antes do Agente A terminar (sem verificar)
+  [X] Assumir que arquivo de handoff existe sem checar status
+  [OK] Orquestrador verifica { status: "success" } antes de avançar a wave</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- ==================== EXERCÍCIOS ==================== -->
 
       <section data-testid="exercise" class="exercise-section">
-        <h2>Exercício</h2>
-        <p>Crie um prompt que instrua o Claude a usar 3 agentes paralelos para: (1) pesquisar melhores práticas de TypeScript, (2) pesquisar melhores práticas de React, (3) pesquisar melhores práticas de testes. Cada agente deve escrever seu resultado em um arquivo separado (ex: <code>best-practices-typescript.md</code>). O orquestrador só recebe os paths de volta — nunca o conteúdo completo. Por fim, consolide em um arquivo final.</p>
+        <h2>Exercícios Práticos</h2>
+
+        <h3>Exercício 1 — Pesquisa Paralela (iniciante)</h3>
+        <p>Escreva um prompt completo que instrua o Claude a usar <strong>3 subagentes paralelos</strong> para pesquisar melhores práticas de desenvolvimento. Cada agente deve pesquisar um domínio diferente (TypeScript, React, testes) e escrever um arquivo Markdown separado. O orquestrador consolida em um único guia.</p>
+        <p>Requisitos do prompt:</p>
+        <ul>
+          <li>Brief compacto por agente (máximo 500 tokens cada)</li>
+          <li>Paths de output determinísticos (<code>best-practices/typescript.md</code>, etc.)</li>
+          <li>Formato de retorno: <code>{ status, file, topics_covered }</code></li>
+          <li>Agente consolidador que lê os 3 arquivos e gera <code>best-practices/guide.md</code></li>
+          <li>Orquestrador NÃO recebe o conteúdo inline — só os paths</li>
+        </ul>
+
+        <h3>Exercício 2 — Pipeline de Feature (intermediário)</h3>
+        <p>Projete um agent team em 3 waves para implementar uma feature de "exportar dados para CSV" em um app Next.js:</p>
+        <ul>
+          <li><strong>Wave 1:</strong> Agente analista lê o schema do banco e os tipos TypeScript existentes, escreve <code>.agent-work/spec.json</code></li>
+          <li><strong>Wave 2:</strong> Agente implementador lê <code>spec.json</code>, cria <code>src/lib/export-csv.ts</code> e <code>app/api/export/route.ts</code>, retorna paths</li>
+          <li><strong>Wave 3:</strong> Agente de testes lê os dois arquivos criados, gera <code>tests/export-csv.test.ts</code></li>
+        </ul>
+        <p>Escreva os briefs de cada agente (máximo 500 tokens cada) e o prompt do orquestrador.</p>
+
+        <h3>Exercício 3 — Auditoria com Map-Reduce (avançado)</h3>
+        <p>Um monorepo tem 6 pacotes: <code>auth</code>, <code>users</code>, <code>payments</code>, <code>notifications</code>, <code>reports</code>, <code>admin</code>. Projete uma auditoria de performance:</p>
+        <ul>
+          <li>6 agentes mapeadores em paralelo, um por pacote — analisam bundle size, dependências desnecessárias, re-renders desnecessários, queries N+1</li>
+          <li>1 agente reducer que lê os 6 relatórios e cria um ranking priorizado de otimizações com esforço estimado</li>
+          <li>Especifique: formato do brief, formato do output de cada mapeador, estrutura do JSON de handoff para o reducer</li>
+        </ul>
+        <p>Bônus: como você lidaria com um agente que falha? Escreva a lógica de retry do orquestrador.</p>
       </section>
 
       <section class="resources-section">
         <h2>Recursos</h2>
         <ul class="resources-list">
           <li><a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents" target="_blank" rel="noopener">Documentação oficial Anthropic — Sub-agents</a></li>
+          <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/agentic-patterns" target="_blank" rel="noopener">Agentic Patterns — Anthropic Docs</a></li>
+          <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents — Anthropic Engineering Blog</a></li>
         </ul>
       </section>
 

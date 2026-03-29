@@ -1006,6 +1006,13 @@ a.btn-next:hover {
 .tool-icon {
   font-size: 20px;
   flex-shrink: 0;
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(247, 129, 102, 0.55));
+}
+
+html.light .tool-icon,
+html.light .hierarchy-icon {
+  filter: none;
 }
 
 .tool-name {
@@ -1173,6 +1180,8 @@ a.btn-next:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(247, 129, 102, 0.55));
 }
 
 .hierarchy-content {

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
 <body>
   <aside data-testid="sidebar" class="sidebar">
     <div class="sidebar-logo">
-      <a href="/" class="logo-link"><span class="logo-icon">⚡</span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
+      <a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
       <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
       <span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span>
     </div>
@@ -55,9 +56,9 @@
 
   <div class="main-content">
     <header class="mobile-header">
-      <button id="hamburger" class="hamburger">☰</button>
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
       <span class="mobile-title">CLAUDE.md</span>
-      <button data-testid="theme-toggle" class="theme-toggle">🌙</button>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
     </header>
 
     <div class="topbar">
@@ -66,17 +67,17 @@
       </nav>
       <div class="topbar-right">
         <div class="search-container">
-          <input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar...">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="<i class="uil uil-search"></i> Buscar...">
           <div data-testid="search-results" class="search-results"></div>
         </div>
-        <button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
       </div>
     </div>
 
     <article class="module-body">
       <div class="module-header">
         <div class="module-meta">
-          <span class="badge">⏱ ~20 min</span>
+          <span class="badge"><i class="uil uil-clock"></i> ~20 min</span>
           <span class="badge badge-iniciante">Iniciante</span>
           <span class="badge badge-part">Parte 1</span>
         </div>
@@ -109,7 +110,7 @@
         <p>Pense nele como um README, mas escrito especificamente para o Claude Code — quanto melhor documentado, menos você precisa explicar em cada nova sessão.</p>
 
         <div class="callout callout-tip">
-          <strong>💡 Dica:</strong> Um bom CLAUDE.md elimina a necessidade de repetir contexto a cada sessão. Em vez de começar cada conversa com "Este é um projeto Next.js com TypeScript e Prisma...", você escreve isso uma vez no CLAUDE.md e o Claude Code já sabe. É uma das formas mais eficazes de aumentar a qualidade das respostas sem custo adicional de tokens.
+          <strong><i class="uil uil-lightbulb-alt"></i> Dica:</strong> Um bom CLAUDE.md elimina a necessidade de repetir contexto a cada sessão. Em vez de começar cada conversa com "Este é um projeto Next.js com TypeScript e Prisma...", você escreve isso uma vez no CLAUDE.md e o Claude Code já sabe. É uma das formas mais eficazes de aumentar a qualidade das respostas sem custo adicional de tokens.
         </div>
       </section>
 
@@ -312,7 +313,7 @@ Além da documentação acima, sempre:
         </div>
 
         <div class="callout callout-info">
-          <strong>ℹ️ Info:</strong> O CLAUDE.md de projeto deve ser commitado no repositório e versionado junto com o código. Assim toda a equipe se beneficia do mesmo contexto. Use o CLAUDE.md global apenas para preferências pessoais que não devem ser compartilhadas com o time.
+          <strong><i class="uil uil-info-circle"></i> Info:</strong> O CLAUDE.md de projeto deve ser commitado no repositório e versionado junto com o código. Assim toda a equipe se beneficia do mesmo contexto. Use o CLAUDE.md global apenas para preferências pessoais que não devem ser compartilhadas com o time.
         </div>
       </section>
 
@@ -392,13 +393,13 @@ Além da documentação acima, sempre:
         </div>
 
         <div class="callout callout-tip">
-          <strong>💡 Dica:</strong> Trate o CLAUDE.md como código vivo. Quando o Claude Code fizer algo errado por falta de contexto, adicione aquela informação ao CLAUDE.md. Com o tempo, você terá um arquivo que captura todo o conhecimento importante do projeto de forma que o Claude Code entende perfeitamente.
+          <strong><i class="uil uil-lightbulb-alt"></i> Dica:</strong> Trate o CLAUDE.md como código vivo. Quando o Claude Code fizer algo errado por falta de contexto, adicione aquela informação ao CLAUDE.md. Com o tempo, você terá um arquivo que captura todo o conhecimento importante do projeto de forma que o Claude Code entende perfeitamente.
         </div>
       </section>
 
       <!-- Exercise -->
       <section data-testid="exercise" class="exercise-section">
-        <h3>🎯 Exercício Prático</h3>
+        <h3><i class="uil uil-crosshair"></i> Exercício Prático</h3>
         <p><strong>Exercício 1 — Criando seu primeiro CLAUDE.md de projeto</strong></p>
         <p>Crie um CLAUDE.md completo para um projeto existente (ou crie um projeto de exemplo), incluindo todas as seções principais.</p>
         <ol>
@@ -431,7 +432,7 @@ Além da documentação acima, sempre:
 
       <!-- Resources -->
       <section class="resources-section">
-        <h3>📚 Recursos</h3>
+        <h3><i class="uil uil-book-open"></i> Recursos</h3>
         <div class="resources-grid">
           <a href="https://docs.anthropic.com/en/docs/claude-code/memory" target="_blank" rel="noopener" class="resource-card resource-card-docs">
             <div class="resource-type">Docs</div>
@@ -452,7 +453,7 @@ Além da documentação acima, sempre:
       </section>
 
       <nav class="module-nav-bottom">
-        <button data-testid="btn-complete" class="btn btn-complete">✓ Marcar como concluído</button>
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
         <div class="nav-prev-next">
           <a data-testid="btn-prev" href="/modules/01-fundacoes/02-cli.html" class="btn btn-prev">← CLI Completo</a>
           <a data-testid="btn-next" href="/modules/02-config/tools.html" class="btn btn-next">Próximo: Ferramentas (Tools) →</a>

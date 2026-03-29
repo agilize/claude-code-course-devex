@@ -63,7 +63,7 @@
 
   function updateThemeToggle(theme) {
     const btn = document.querySelector('[data-testid="theme-toggle"]');
-    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    if (btn) btn.innerHTML = theme === 'dark' ? '<i class="uil uil-sun"></i>' : '<i class="uil uil-moon"></i>';
   }
 
   function toggleTheme() {
@@ -111,10 +111,10 @@
     if (btn) {
       if (p[moduleId]) {
         btn.classList.add('completed');
-        btn.textContent = '✓ Concluído!';
+        btn.innerHTML = '<i class="uil uil-check-circle"></i> Concluído!';
       } else {
         btn.classList.remove('completed');
-        btn.textContent = '✓ Marcar como concluído';
+        btn.innerHTML = '<i class="uil uil-check-circle"></i> Marcar como concluído';
       }
     }
   }
@@ -260,7 +260,7 @@
     // Set initial state
     if (isCompleted(mod.id)) {
       btn.classList.add('completed');
-      btn.textContent = '✓ Concluído!';
+      btn.innerHTML = '<i class="uil uil-check-circle"></i> Concluído!';
     }
     btn.addEventListener('click', () => toggleComplete(mod.id));
   }
@@ -283,11 +283,37 @@
     const themeBtn = document.querySelector('[data-testid="theme-toggle"]');
     if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
 
-    // Mobile sidebar toggle
+    // Mobile sidebar toggle with backdrop
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.querySelector('.sidebar');
     if (hamburger && sidebar) {
-      hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
+      // Create backdrop if not exists
+      let backdrop = document.querySelector('.sidebar-backdrop');
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.className = 'sidebar-backdrop';
+        document.body.appendChild(backdrop);
+      }
+      function openSidebar() {
+        sidebar.classList.add('open');
+        backdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+      });
+      backdrop.addEventListener('click', closeSidebar);
+      // Close sidebar when nav link clicked on mobile
+      sidebar.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) closeSidebar();
+        });
+      });
     }
   });
 

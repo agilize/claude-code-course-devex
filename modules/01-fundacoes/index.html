@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
 <body>
   <aside data-testid="sidebar" class="sidebar">
     <div class="sidebar-logo">
-      <a href="/" class="logo-link"><span class="logo-icon">⚡</span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
+      <a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
       <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
       <span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span>
     </div>
@@ -55,9 +56,9 @@
 
   <div class="main-content">
     <header class="mobile-header">
-      <button id="hamburger" class="hamburger">☰</button>
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
       <span class="mobile-title">O que é Claude Code</span>
-      <button data-testid="theme-toggle" class="theme-toggle">🌙</button>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
     </header>
 
     <div class="topbar">
@@ -66,17 +67,17 @@
       </nav>
       <div class="topbar-right">
         <div class="search-container">
-          <input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar...">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="<i class="uil uil-search"></i> Buscar...">
           <div data-testid="search-results" class="search-results"></div>
         </div>
-        <button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
       </div>
     </div>
 
     <article class="module-body">
       <div class="module-header">
         <div class="module-meta">
-          <span class="badge">⏱ ~15 min</span>
+          <span class="badge"><i class="uil uil-clock"></i> ~15 min</span>
           <span class="badge badge-iniciante">Iniciante</span>
           <span class="badge badge-part">Parte 1</span>
         </div>
@@ -119,49 +120,49 @@
             <tbody>
               <tr>
                 <td>Acesso ao filesystem</td>
-                <td class="cell-yes">✓ Total</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Total</td>
                 <td class="cell-no">✗ Nenhum</td>
                 <td>Parcial (no editor)</td>
               </tr>
               <tr>
                 <td>Executa comandos shell</td>
-                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Sim</td>
                 <td class="cell-no">✗ Não</td>
                 <td class="cell-no">✗ Não</td>
               </tr>
               <tr>
                 <td>Edição multi-arquivo</td>
-                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Sim</td>
                 <td class="cell-no">✗ Não</td>
-                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Sim</td>
               </tr>
               <tr>
                 <td>Hooks e automação</td>
-                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Sim</td>
                 <td class="cell-no">✗ Não</td>
                 <td class="cell-no">✗ Não</td>
               </tr>
               <tr>
                 <td>Subagentes paralelos</td>
-                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Sim</td>
                 <td class="cell-no">✗ Não</td>
                 <td class="cell-no">✗ Não</td>
               </tr>
               <tr>
                 <td>Integração com git</td>
-                <td class="cell-yes">✓ Nativa</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Nativa</td>
                 <td class="cell-no">✗ Não</td>
                 <td>Parcial</td>
               </tr>
               <tr>
                 <td>Contexto do projeto</td>
-                <td class="cell-yes">✓ Via CLAUDE.md</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> Via CLAUDE.md</td>
                 <td>Manual (paste)</td>
                 <td>Parcial (workspace)</td>
               </tr>
               <tr>
                 <td>Uso via terminal</td>
-                <td class="cell-yes">✓ CLI nativo</td>
+                <td class="cell-yes"><i class="uil uil-check"></i> CLI nativo</td>
                 <td class="cell-no">✗ Não</td>
                 <td class="cell-no">✗ Não</td>
               </tr>
@@ -201,7 +202,7 @@ claude</code></pre>
         </div>
 
         <div class="callout callout-info">
-          <strong>ℹ️ Info:</strong> Em ambientes corporativos com proxies ou registries privados, pode ser necessário configurar o npm para usar o registry correto. Use <code>npm config set registry &lt;url&gt;</code> ou configure via variáveis de ambiente. O Claude Code também suporta <code>ANTHROPIC_BASE_URL</code> para apontar para gateways de API internos.
+          <strong><i class="uil uil-info-circle"></i> Info:</strong> Em ambientes corporativos com proxies ou registries privados, pode ser necessário configurar o npm para usar o registry correto. Use <code>npm config set registry &lt;url&gt;</code> ou configure via variáveis de ambiente. O Claude Code também suporta <code>ANTHROPIC_BASE_URL</code> para apontar para gateways de API internos.
         </div>
       </section>
 
@@ -225,7 +226,7 @@ claude auth status</code></pre>
         </div>
 
         <div class="callout callout-warning">
-          <strong>⚠️ Atenção:</strong> NUNCA commite sua API key em repositórios. Use variáveis de ambiente ou arquivos <code>.env</code> listados no <code>.gitignore</code>. A API key começa com <code>sk-ant-</code> e deve ser tratada como uma senha — quem a tiver pode usar sua conta e incorrer em custos.
+          <strong><i class="uil uil-exclamation-triangle"></i> Atenção:</strong> NUNCA commite sua API key em repositórios. Use variáveis de ambiente ou arquivos <code>.env</code> listados no <code>.gitignore</code>. A API key começa com <code>sk-ant-</code> e deve ser tratada como uma senha — quem a tiver pode usar sua conta e incorrer em custos.
         </div>
       </section>
 
@@ -293,13 +294,13 @@ claude
         <p>O modelo usa essas ferramentas de forma encadeada: lê arquivos para entender o contexto, planeja a solução, escreve ou edita arquivos, executa testes — tudo de forma autônoma.</p>
 
         <div class="callout callout-tip">
-          <strong>💡 Dica:</strong> Para projetos complexos, sempre inicie a sessão pedindo ao Claude Code para "explorar o projeto e entender sua estrutura antes de fazer qualquer mudança". Isso garante que ele tenha contexto suficiente para tomar decisões melhores.
+          <strong><i class="uil uil-lightbulb-alt"></i> Dica:</strong> Para projetos complexos, sempre inicie a sessão pedindo ao Claude Code para "explorar o projeto e entender sua estrutura antes de fazer qualquer mudança". Isso garante que ele tenha contexto suficiente para tomar decisões melhores.
         </div>
       </section>
 
       <!-- Exercise -->
       <section data-testid="exercise" class="exercise-section">
-        <h3>🎯 Exercício Prático</h3>
+        <h3><i class="uil uil-crosshair"></i> Exercício Prático</h3>
         <p><strong>Primeira instalação e sessão</strong> — Instale o Claude Code, configure sua API key e execute seu primeiro comando para listar arquivos do diretório.</p>
         <ol>
           <li>Abra seu terminal</li>
@@ -317,7 +318,7 @@ claude
 
       <!-- Resources -->
       <section class="resources-section">
-        <h3>📚 Recursos</h3>
+        <h3><i class="uil uil-book-open"></i> Recursos</h3>
         <div class="resources-grid">
           <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener" class="resource-card resource-card-docs">
             <div class="resource-type">Docs</div>
@@ -343,7 +344,7 @@ claude
       </section>
 
       <nav class="module-nav-bottom">
-        <button data-testid="btn-complete" class="btn btn-complete">✓ Marcar como concluído</button>
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
         <div class="nav-prev-next">
           <a data-testid="btn-next" href="/modules/01-fundacoes/02-cli.html" class="btn btn-next">Próximo: CLI Completo →</a>
         </div>

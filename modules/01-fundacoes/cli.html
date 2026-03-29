@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/modules.css">
   <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/assets/css/additional.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
 <body>
   <aside data-testid="sidebar" class="sidebar">
     <div class="sidebar-logo">
-      <a href="/" class="logo-link"><span class="logo-icon">⚡</span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
+      <a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
       <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
       <span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span>
     </div>
@@ -55,9 +56,9 @@
 
   <div class="main-content">
     <header class="mobile-header">
-      <button id="hamburger" class="hamburger">☰</button>
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
       <span class="mobile-title">CLI Completo</span>
-      <button data-testid="theme-toggle" class="theme-toggle">🌙</button>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
     </header>
 
     <div class="topbar">
@@ -66,17 +67,17 @@
       </nav>
       <div class="topbar-right">
         <div class="search-container">
-          <input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar...">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="<i class="uil uil-search"></i> Buscar...">
           <div data-testid="search-results" class="search-results"></div>
         </div>
-        <button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
       </div>
     </div>
 
     <article class="module-body">
       <div class="module-header">
         <div class="module-meta">
-          <span class="badge">⏱ ~20 min</span>
+          <span class="badge"><i class="uil uil-clock"></i> ~20 min</span>
           <span class="badge badge-iniciante">Iniciante</span>
           <span class="badge badge-part">Parte 1</span>
         </div>
@@ -121,7 +122,7 @@ claude --file especificacao.md "implemente o que está descrito neste arquivo"</
         </div>
 
         <div class="callout callout-tip">
-          <strong>💡 Dica:</strong> O modo one-shot é perfeito para integrar Claude Code em scripts de automação e CI/CD pipelines. Use <code>--output-format json</code> para processar a resposta programaticamente com <code>jq</code> ou em linguagens de script.
+          <strong><i class="uil uil-lightbulb-alt"></i> Dica:</strong> O modo one-shot é perfeito para integrar Claude Code em scripts de automação e CI/CD pipelines. Use <code>--output-format json</code> para processar a resposta programaticamente com <code>jq</code> ou em linguagens de script.
         </div>
       </section>
 
@@ -218,7 +219,7 @@ claude --allowedTools Read  # apenas leitura, nunca modifica nada</code></pre>
         </div>
 
         <div class="callout callout-warning">
-          <strong>⚠️ Atenção:</strong> A flag <code>--dangerously-skip-permissions</code> desabilita todas as confirmações de segurança. O Claude Code pode deletar arquivos, executar comandos destrutivos e fazer alterações irreversíveis sem pedir sua aprovação. Use apenas em ambientes de desenvolvimento isolados ou containers descartáveis — NUNCA em produção ou em projetos com dados importantes.
+          <strong><i class="uil uil-exclamation-triangle"></i> Atenção:</strong> A flag <code>--dangerously-skip-permissions</code> desabilita todas as confirmações de segurança. O Claude Code pode deletar arquivos, executar comandos destrutivos e fazer alterações irreversíveis sem pedir sua aprovação. Use apenas em ambientes de desenvolvimento isolados ou containers descartáveis — NUNCA em produção ou em projetos com dados importantes.
         </div>
       </section>
 
@@ -255,7 +256,7 @@ claude --allowedTools Read  # apenas leitura, nunca modifica nada</code></pre>
         </div>
 
         <div class="callout callout-info">
-          <strong>ℹ️ Info:</strong> Use <code>/compact</code> quando a sessão ficar longa (mais de 30-40 trocas) ou quando você perceber que o Claude Code está "esquecendo" contexto anterior. O comando resume toda a conversa em um bloco denso, liberando espaço na janela de contexto para continuar trabalhando.
+          <strong><i class="uil uil-info-circle"></i> Info:</strong> Use <code>/compact</code> quando a sessão ficar longa (mais de 30-40 trocas) ou quando você perceber que o Claude Code está "esquecendo" contexto anterior. O comando resume toda a conversa em um bloco denso, liberando espaço na janela de contexto para continuar trabalhando.
         </div>
       </section>
 
@@ -352,13 +353,13 @@ Ctrl+K           # apagar da posição atual até o final da linha
         </div>
 
         <div class="callout callout-tip">
-          <strong>💡 Dica:</strong> Para prompts muito longos ou complexos, escreva-os em um editor de texto e passe via arquivo com <code>--file</code> ou via pipe: <code>cat meu-prompt.txt | claude</code>. Isso é especialmente útil para especificações detalhadas ou quando você precisa reusar o mesmo prompt.
+          <strong><i class="uil uil-lightbulb-alt"></i> Dica:</strong> Para prompts muito longos ou complexos, escreva-os em um editor de texto e passe via arquivo com <code>--file</code> ou via pipe: <code>cat meu-prompt.txt | claude</code>. Isso é especialmente útil para especificações detalhadas ou quando você precisa reusar o mesmo prompt.
         </div>
       </section>
 
       <!-- Exercise -->
       <section data-testid="exercise" class="exercise-section">
-        <h3>🎯 Exercício Prático</h3>
+        <h3><i class="uil uil-crosshair"></i> Exercício Prático</h3>
         <p><strong>Exercício 1 — Comparando modelos: qualidade vs velocidade</strong></p>
         <p>Execute a mesma pergunta com modelos diferentes e observe as diferenças em velocidade, detalhamento e qualidade da resposta.</p>
         <ol>
@@ -387,7 +388,7 @@ Ctrl+K           # apagar da posição atual até o final da linha
 
       <!-- Resources -->
       <section class="resources-section">
-        <h3>📚 Recursos</h3>
+        <h3><i class="uil uil-book-open"></i> Recursos</h3>
         <div class="resources-grid">
           <a href="https://docs.anthropic.com/en/docs/claude-code/cli-reference" target="_blank" rel="noopener" class="resource-card resource-card-docs">
             <div class="resource-type">Docs</div>
@@ -408,7 +409,7 @@ Ctrl+K           # apagar da posição atual até o final da linha
       </section>
 
       <nav class="module-nav-bottom">
-        <button data-testid="btn-complete" class="btn btn-complete">✓ Marcar como concluído</button>
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
         <div class="nav-prev-next">
           <a data-testid="btn-prev" href="/modules/01-fundacoes/" class="btn btn-prev">← O que é Claude Code</a>
           <a data-testid="btn-next" href="/modules/01-fundacoes/claude-md.html" class="btn btn-next">Próximo: CLAUDE.md →</a>

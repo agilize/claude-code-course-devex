@@ -715,6 +715,7 @@ a.btn-next:hover {
 
 /* Callouts */
 .callout {
+  display: block;
   padding: 14px 18px;
   border-radius: 8px;
   border-left: 3px solid;
@@ -725,6 +726,11 @@ a.btn-next:hover {
 }
 .callout strong {
   display: inline;
+}
+.callout code {
+  display: inline;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 .callout-tip { border-color: var(--success); }
 .callout-warning { border-color: var(--warning); }

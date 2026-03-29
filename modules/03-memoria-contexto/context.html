@@ -64,7 +64,8 @@
 
       <section class="content-section">
         <h2>Comandos de gestão</h2>
-        <table class="data-table">
+        <div class="table-wrapper">
+          <table class="data-table">
           <thead>
             <tr><th>Comando</th><th>Descrição</th></tr>
           </thead>
@@ -75,6 +76,7 @@
             <tr><td><code>/cost</code></td><td>Mostra custo acumulado da sessão</td></tr>
           </tbody>
         </table>
+        </div>
         <div class="code-block-wrapper"><pre><code class="language-bash"># Ver uso atual de tokens, modelo ativo e custo
 /status
 
@@ -90,7 +92,8 @@
 
       <section class="content-section">
         <h2>/compact vs /clear — quando usar cada um</h2>
-        <table class="data-table">
+        <div class="table-wrapper">
+          <table class="data-table">
           <thead>
             <tr><th>Comando</th><th>Comportamento</th><th>Quando usar</th></tr>
           </thead>
@@ -99,11 +102,13 @@
             <tr><td><code>/clear</code></td><td>Começa do zero, sem contexto anterior</td><td>Nova tarefa não relacionada</td></tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <section class="content-section">
         <h2>Estimando tokens</h2>
-        <table class="data-table">
+        <div class="table-wrapper">
+          <table class="data-table">
           <thead>
             <tr><th>Referência</th><th>Estimativa</th></tr>
           </thead>
@@ -114,11 +119,13 @@
             <tr><td>Sessão longa</td><td>≈ 50.000–200.000 tokens</td></tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <section class="content-section">
         <h2>Limites por modelo</h2>
-        <table class="data-table">
+        <div class="table-wrapper">
+          <table class="data-table">
           <thead>
             <tr><th>Modelo</th><th>Contexto máximo</th></tr>
           </thead>
@@ -128,6 +135,7 @@
             <tr><td><code>claude-haiku-4-5</code></td><td>200.000 tokens</td></tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <section class="content-section">

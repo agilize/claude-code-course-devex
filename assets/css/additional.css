@@ -897,10 +897,10 @@ html {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
-/* Inline code must not force the line wider than viewport */
+/* Inline code: only break truly long tokens, never break short strings like .env */
 .module-body code:not(pre code) {
-  word-break: break-all;
-  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 /* Table wrapper: tables scroll inside their wrapper, not the page */
 .table-wrapper {

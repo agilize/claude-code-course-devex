@@ -713,11 +713,6 @@ html.light .btn-ghost:hover {
   gap: 0.5rem;
 }
 
-.btn-complete::before {
-  content: "○";
-  font-size: 1rem;
-  line-height: 1;
-}
 
 .btn-complete:hover {
   border-color: var(--success);
@@ -732,9 +727,6 @@ html.light .btn-ghost:hover {
   font-weight: 500;
 }
 
-.btn-complete.completed::before {
-  content: "✓";
-}
 
 /* ---------------------------------------------------------------
    Button — Next Module
@@ -752,15 +744,6 @@ html.light .btn-ghost:hover {
   color: #ffffff;
 }
 
-.btn-next::after {
-  content: "→";
-  font-size: 1em;
-}
-
-.btn-prev::before {
-  content: "←";
-  font-size: 1em;
-}
 
 /* ---------------------------------------------------------------
    Badge

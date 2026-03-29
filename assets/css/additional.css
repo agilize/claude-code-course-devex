@@ -877,6 +877,11 @@ a.btn-next:hover {
   }
 }
 
+/* Prevent horizontal overflow globally */
+html, body {
+  max-width: 100%;
+}
+
 /* Mobile (up to 768px) */
 @media (max-width: 768px) {
   /* Sidebar: slide-in drawer */
@@ -1002,18 +1007,24 @@ a.btn-next:hover {
     margin: 24px 0 10px;
   }
 
-  /* Code blocks: horizontal scroll */
+  /* Code blocks: horizontal scroll, no negative margin */
   .code-block-wrapper {
-    margin: 12px -16px;
-    border-radius: 0;
+    margin: 12px 0;
+    border-radius: 8px;
+    max-width: 100%;
+    overflow: hidden;
   }
   .code-block-wrapper pre {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
+    border-radius: 8px;
     padding: 16px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+  .code-block-wrapper pre code {
+    white-space: pre;
+    word-break: normal;
+    overflow-wrap: normal;
   }
   .copy-btn {
     top: 6px;
@@ -1022,18 +1033,21 @@ a.btn-next:hover {
     font-size: 10px;
   }
 
-  /* Tables: horizontal scroll */
+  /* Tables: wrap in scrollable container */
   .module-body table {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
+    white-space: normal;
     max-width: 100%;
+    width: max-content;
   }
   .module-body th,
   .module-body td {
-    padding: 8px 12px;
+    padding: 8px 10px;
     font-size: 13px;
+    white-space: nowrap;
+    min-width: 80px;
   }
 
   /* Callouts */
@@ -1045,7 +1059,7 @@ a.btn-next:hover {
   /* Exercise */
   .exercise-section {
     padding: 18px 16px;
-    margin: 28px -16px;
+    margin: 28px 0;
     border-radius: 0;
     border-left: none;
     border-right: none;
@@ -1088,6 +1102,12 @@ a.btn-next:hover {
   /* Objectives box */
   .objectives-box {
     padding: 14px 16px;
+    overflow-x: hidden;
+  }
+  .objectives-box ul li,
+  .module-body li {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   /* Site footer */

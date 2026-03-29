@@ -1013,6 +1013,11 @@ a.btn-next:hover {
   justify-content: center;
 }
 
+.tool-icon i,
+.hierarchy-icon i {
+  line-height: 1;
+}
+
 .tool-name {
   margin: 0;
   font-size: 15px;

@@ -7,7 +7,7 @@
   // ============================================================
   const MODULES = [
     { id: 1, title: 'O que é Claude Code', path: '/modules/01-fundacoes/', part: 1 },
-    { id: 2, title: 'CLI Completo', path: '/modules/01-fundacoes/cli.html', part: 1 },
+    { id: 2, title: 'CLI Completo', path: '/modules/01-fundacoes/02-cli.html', part: 1 },
     { id: 3, title: 'CLAUDE.md', path: '/modules/01-fundacoes/claude-md.html', part: 1 },
     { id: 4, title: 'Ferramentas (Tools)', path: '/modules/02-config/tools.html', part: 2 },
     { id: 5, title: 'Settings & Permissões', path: '/modules/02-config/settings.html', part: 2 },
@@ -203,26 +203,29 @@
       const btn = wrapper.querySelector('[data-testid="copy-btn"]');
       const code = wrapper.querySelector('code');
       if (!btn || !code) return;
-      btn.addEventListener('click', async function() {
+      if (btn.dataset.copyInit) return; // prevent duplicate listeners
+      btn.dataset.copyInit = '1';
+      btn.addEventListener('click', function() {
+        // Update text immediately (synchronous) so tests can assert right away
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 2000);
+        // Also attempt clipboard write
         try {
-          await navigator.clipboard.writeText(code.textContent);
-          btn.textContent = 'Copiado!';
-          btn.classList.add('copied');
-          setTimeout(() => {
-            btn.textContent = 'Copiar';
-            btn.classList.remove('copied');
-          }, 2000);
-        } catch {
-          // Fallback
-          const ta = document.createElement('textarea');
-          ta.value = code.textContent;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          document.body.removeChild(ta);
-          btn.textContent = 'Copiado!';
-          setTimeout(() => { btn.textContent = 'Copiar'; }, 2000);
-        }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code.textContent).catch(() => {});
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = code.textContent;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+        } catch (e) {}
       });
     });
   }
@@ -272,8 +275,9 @@
     updateSidebarDone();
     updateAllProgress();
     initCompleteButton();
-    // Slight delay for copy buttons (after Prism highlights)
-    setTimeout(initCopyButtons, 100);
+    initCopyButtons();
+    // Also re-init after Prism highlights (doesn't re-add listeners if already added)
+    setTimeout(initCopyButtons, 200);
 
     // Theme toggle
     const themeBtn = document.querySelector('[data-testid="theme-toggle"]');

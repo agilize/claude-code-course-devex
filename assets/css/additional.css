@@ -1006,16 +1006,6 @@ a.btn-next:hover {
 .tool-icon {
   font-size: 20px;
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tool-icon i,
-.hierarchy-icon i {
-  line-height: 1;
 }
 
 .tool-name {

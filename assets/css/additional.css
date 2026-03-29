@@ -1006,14 +1006,11 @@ a.btn-next:hover {
 .tool-icon {
   font-size: 20px;
   flex-shrink: 0;
-  line-height: 1;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
-}
-
-.hierarchy-icon i {
-  font-size: inherit;
-  line-height: 1;
+  justify-content: center;
 }
 
 .tool-name {
@@ -1176,7 +1173,11 @@ a.btn-next:hover {
 .hierarchy-icon {
   font-size: 22px;
   flex-shrink: 0;
-  margin-top: 2px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hierarchy-content {

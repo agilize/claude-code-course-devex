@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Claude API &amp; Agent SDK — Claude Code Course</title>
+</head>
+<body>
+  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>API &amp; SDK</span></nav>
+  <aside data-testid="sidebar">
+    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
+    <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html">Módulo 2</a>
+    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
+    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
+    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
+    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
+    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
+    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
+    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
+    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
+    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
+    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
+    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
+    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
+    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
+    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
+    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
+    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="active">Módulo 18</a>
+    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
+    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  </aside>
+  <main>
+    <h1>Claude API &amp; Agent SDK</h1>
+    <p>Use a API da Anthropic e o Agent SDK para construir aplicações programáticas com Claude. Aprenda autenticação, chamadas e streaming.</p>
+    <pre><code>import Anthropic from '@anthropic-ai/sdk'
+
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const message = await client.messages.create({
+  model: 'claude-opus-4-5',
+  max_tokens: 1024,
+  messages: [{ role: 'user', content: 'Hello!' }]
+})</code></pre>
+    <button data-testid="copy-btn">Copiar</button>
+    <pre><code>// Instalação do SDK
+$ npm install @anthropic-ai/sdk
+$ pip install anthropic</code></pre>
+    <button data-testid="copy-btn">Copiar</button>
+    <section data-testid="exercise"><h3>Exercício</h3><p>Crie um script que usa a API para analisar código automaticamente.</p></section>
+    <a href="https://docs.anthropic.com/en/api/getting-started">Documentação oficial Anthropic — API Reference</a>
+    <button data-testid="btn-complete">Marcar como concluído</button>
+    <a data-testid="btn-next" href="/modules/05-avancado/best-practices.html">Próximo módulo</a>
+  </main>
+</body>
+</html>

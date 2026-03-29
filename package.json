@@ -1,0 +1,16 @@
+{
+  "name": "claude-code-course",
+  "version": "1.0.0",
+  "description": "Interactive Claude Code course — zero to hero",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:3000 cy:run"
+  },
+  "devDependencies": {
+    "cypress": "^13.0.0",
+    "serve": "^14.0.0",
+    "start-server-and-test": "^2.0.0"
+  }
+}

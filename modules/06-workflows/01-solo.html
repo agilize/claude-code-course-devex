@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W1: Claude Code Solo — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+    .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+    .three-col-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+    @media (max-width: 640px) {
+      .two-col-grid { grid-template-columns: 1fr; }
+      .three-col-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link active"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Claude Code Solo</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Claude Code Solo</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 23</div>
+        <h1 class="module-title">W1: Claude Code Solo</h1>
+        <p class="module-description">O workflow mais direto. Sem plugins, sem instalações adicionais. O desenvolvedor e o Claude Code como único par — com toda a disciplina de qualidade aplicada manualmente.</p>
+        <span class="module-badge">Parte 6</span>
+      </div>
+
+      <!-- Seção 1: Quando usar -->
+      <section class="content-section">
+        <h2><i class="uil uil-check-circle"></i> Quando usar</h2>
+        <p>O workflow Solo é o ponto de entrada natural para quem está começando com Claude Code ou para cenários onde a ausência de ferramentas externas é uma vantagem — não uma limitação. A escolha correta começa pelo entendimento do fit.</p>
+
+        <div class="two-col-grid">
+          <div style="background: var(--surface-2, #1a1a2e); border: 1px solid var(--success-border, #166534); border-radius: 8px; padding: 1.25rem;">
+            <h3 style="color: var(--success, #4ade80); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;"><i class="uil uil-check-circle"></i> Fit — Use quando</h3>
+            <ul style="margin: 0; padding-left: 1.25rem; line-height: 1.8;">
+              <li>Dev solo ou pequeno projeto pessoal</li>
+              <li>Prototipagem rápida ou POC</li>
+              <li>Feature isolada e bem definida</li>
+              <li>Refactoring pontual com escopo claro</li>
+              <li>Ambiente corporativo restrito (sem npm global)</li>
+              <li>Onboarding inicial no Claude Code</li>
+            </ul>
+          </div>
+          <div style="background: var(--surface-2, #1a1a2e); border: 1px solid var(--error-border, #7f1d1d); border-radius: 8px; padding: 1.25rem;">
+            <h3 style="color: var(--error, #f87171); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;"><i class="uil uil-times-circle"></i> Misfit — Evite quando</h3>
+            <ul style="margin: 0; padding-left: 1.25rem; line-height: 1.8;">
+              <li>Time com 3+ engenheiros paralelos</li>
+              <li>Múltiplos milestones interdependentes</li>
+              <li>Precisa de memória cross-session automatizada</li>
+              <li>Codebase com mais de 50 arquivos envolvidos</li>
+              <li>Necessita de sub-agentes paralelos</li>
+              <li>Contexto > 80K tokens recorrentemente</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Disciplina, não simplicidade</strong><br>
+            Solo não significa sem qualidade. Significa que você é o único orquestrador. Toda a disciplina — TDD, SOLID, OWASP, arquitetura hexagonal — é aplicada manualmente, via CLAUDE.md e prompts precisos. A ausência de automação não é licença para atalhos.
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção 2: Diagrama do workflow -->
+      <section class="content-section">
+        <h2><i class="uil uil-sitemap"></i> Diagrama do workflow</h2>
+        <p>O ciclo completo do W1 passa por seis etapas principais. O TDD loop e o testing gate são obrigatórios — não opcionais — independentemente do tamanho da feature.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart TD
+  A[Dev descreve feature/bug] --> B[Claude lê codebase\nMapeia impacto]
+  B --> C[PLAN.md — proposta de plano]
+  C --> D{Dev revisa plano}
+  D -->|Ajusta| C
+  D -->|Aprova| E[TDD Loop]
+  E --> E1[Red: escreve teste]
+  E1 --> E2[Green: implementa mínimo]
+  E2 --> E3[Refactor: limpa]
+  E3 --> E4{> 70K tokens?}
+  E4 -->|Sim| E5[/compact]
+  E5 --> E
+  E4 -->|Não| F[Auto-review]
+  F --> F1[Clean Code + SOLID]
+  F1 --> F2[OWASP scan]
+  F2 --> G[Testing Gate]
+  G --> G1[vitest unit]
+  G1 --> G2[vitest integration]
+  G2 --> G3[cypress run]
+  G3 --> G4{k6 load?}
+  G4 -->|Mudança de API| G5[k6 run]
+  G4 -->|Não necessário| H
+  G5 --> H[gh pr create]
+  H --> I[Deploy / Merge]
+          </div>
+          <p class="diagram-caption">Ciclo completo do W1. O loop TDD repete por iteração de funcionalidade; /compact é acionado quando o contexto ultrapassa 70K tokens.</p>
+        </div>
+      </section>
+
+      <!-- Seção 3: Passo a passo -->
+      <section class="content-section">
+        <h2><i class="uil uil-list-ul"></i> Passo a passo</h2>
+        <p>Cada fase tem entradas, saídas e comandos reais. Execute na ordem — pular fases acumula débito técnico que se paga com juros.</p>
+
+        <!-- Fase 1 -->
+        <div style="border-left: 3px solid var(--accent, #6366f1); padding-left: 1.25rem; margin: 1.5rem 0;">
+          <h3 style="margin-top: 0;">Fase 1 — Discovery</h3>
+          <p>Antes de qualquer implementação, o Claude precisa mapear o codebase. Isso é inegociável: um Claude sem contexto produz código que não se encaixa.</p>
+          <div class="code-block-wrapper"><pre><code class="language-bash"># Abre Claude Code na raiz do projeto
+claude
+
+# Prompt inicial — forneça contexto antes de pedir ação
+# "Leia os arquivos src/domain/, src/adapters/ e CLAUDE.md.
+#  Depois liste os arquivos que serão impactados por [feature X].
+#  Não escreva código ainda."</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+          <p><strong>Saída esperada:</strong> lista de arquivos impactados, dependências identificadas, riscos mapeados.</p>
+        </div>
+
+        <!-- Fase 2 -->
+        <div style="border-left: 3px solid var(--accent, #6366f1); padding-left: 1.25rem; margin: 1.5rem 0;">
+          <h3 style="margin-top: 0;">Fase 2 — Planning</h3>
+          <p>Crie o PLAN.md manualmente ou peça ao Claude para rascunhá-lo. Você revisa e aprova antes de qualquer linha de código ser escrita.</p>
+          <div class="code-block-wrapper"><pre><code class="language-bash"># Prompt para gerar PLAN.md
+# "Com base no mapeamento anterior, crie um PLAN.md com:
+#   - Objetivo em uma frase
+#   - Lista de arquivos a criar/modificar
+#   - Sequência de implementação (domain first)
+#   - Testes que precisam ser escritos
+#   - Riscos e mitigações
+#  Salve em PLAN.md na raiz."</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+          <p><strong>Gate de aprovação:</strong> leia o PLAN.md, faça ajustes, só avance quando o plano estiver correto. Plano errado = implementação errada.</p>
+        </div>
+
+        <!-- Fase 3 -->
+        <div style="border-left: 3px solid var(--accent, #6366f1); padding-left: 1.25rem; margin: 1.5rem 0;">
+          <h3 style="margin-top: 0;">Fase 3 — TDD Loop</h3>
+          <p>Red → Green → Refactor. O Claude escreve o teste antes da implementação. Se o teste não falha primeiro, o teste está errado.</p>
+          <div class="code-block-wrapper"><pre><code class="language-bash"># Prompt para iniciar TDD
+# "Seguindo o PLAN.md, escreva APENAS o teste unitário para
+#  [UseCase X]. Use vitest. O arquivo deve ser
+#  src/domain/__tests__/[use-case].unit.test.ts.
+#  Não implemente o use case ainda."
+
+# Verificar que o teste falha (RED)
+npx vitest run src/domain/__tests__/[use-case].unit.test.ts
+
+# Prompt para implementação mínima (GREEN)
+# "Agora implemente o mínimo necessário em
+#  src/domain/[use-case].ts para os testes passarem.
+#  Sem over-engineering."
+
+npx vitest run src/domain/__tests__/[use-case].unit.test.ts
+
+# Prompt para refactor (REFACTOR)
+# "Refatore src/domain/[use-case].ts aplicando SOLID:
+#  - S: responsabilidade única
+#  - D: dependa de interfaces, não implementações concretas
+#  Execute os testes depois de cada mudança."
+
+npx vitest run src/domain/__tests__/[use-case].unit.test.ts</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+        </div>
+
+        <!-- Fase 4 -->
+        <div style="border-left: 3px solid var(--accent, #6366f1); padding-left: 1.25rem; margin: 1.5rem 0;">
+          <h3 style="margin-top: 0;">Fase 4 — Auto-review</h3>
+          <p>Antes de qualquer teste de integração, instrua o Claude a revisar o código produzido. Esta é a fase mais subestimada — e a que mais pega bugs sutis.</p>
+          <div class="code-block-wrapper"><pre><code class="language-bash"># Prompt de auto-review
+# "Revise os arquivos modificados nesta sessão e verifique:
+#   1. SOLID: alguma violação?
+#   2. OWASP A01-A10: algum vetor de ataque presente?
+#      - A01: controle de acesso adequado?
+#      - A03: algum input sem validação/parametrização?
+#      - A07: autenticação e sessão seguros?
+#   3. Clean Code: funções > 20 linhas? Nomes obscuros?
+#   4. Arquitetura hexagonal: domain tem dependência de infra?
+#  Liste os problemas encontrados antes de corrigir."</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+        </div>
+
+        <!-- Fase 5 -->
+        <div style="border-left: 3px solid var(--accent, #6366f1); padding-left: 1.25rem; margin: 1.5rem 0;">
+          <h3 style="margin-top: 0;">Fase 5 — Testing Gate</h3>
+          <p>Todos os quatro níveis devem passar antes do PR. Não existe "só unit tests por enquanto".</p>
+          <div class="code-block-wrapper"><pre><code class="language-bash"># Unit tests — domínio isolado
+npx vitest run --testPathPattern='*.unit.test'
+
+# Integration tests — com DB real (Docker)
+docker compose up -d db
+npx vitest run --testPathPattern='*.integration.test'
+
+# E2E — jornadas críticas
+npx cypress run --headless
+
+# Load test — obrigatório se houve mudança de API
+k6 run k6/load.js
+
+# Stress test — novo endpoint ou rota crítica
+k6 run k6/stress.js
+
+# Audit de segurança de dependências
+npm audit --audit-level=high</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+        </div>
+
+        <!-- Fase 6 -->
+        <div style="border-left: 3px solid var(--accent, #6366f1); padding-left: 1.25rem; margin: 1.5rem 0;">
+          <h3 style="margin-top: 0;">Fase 6 — Deploy</h3>
+          <p>PR criado via CLI com descrição gerada pelo Claude. Merge após CI verde.</p>
+          <div class="code-block-wrapper"><pre><code class="language-bash"># Cria branch de feature
+git checkout -b feat/[feature-name]
+git add -p   # revisão interativa — nunca git add .
+git commit -m "feat: [descrição concisa da mudança]"
+
+# Prompt para descrição do PR
+# "Gere uma descrição de PR em markdown para as mudanças
+#  desta sessão. Inclua: motivação, mudanças, como testar,
+#  checklist de segurança OWASP."
+
+gh pr create --title "feat: [feature-name]" --body "$(cat pr-description.md)"
+
+# Acompanhar CI
+gh pr checks --watch</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+        </div>
+      </section>
+
+      <!-- Seção 4: CLAUDE.md mínimo para W1 -->
+      <section class="content-section">
+        <h2><i class="uil uil-file-alt"></i> CLAUDE.md mínimo para W1</h2>
+        <p>Este é o CLAUDE.md de referência para o workflow Solo. As diretivas aqui substituem instruções ad hoc em cada prompt — codifique uma vez, aplique sempre. Adapte ao stack do seu projeto.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># CLAUDE.md — W1: Claude Code Solo
+
+## Stack
+- Runtime: Node.js 22 + TypeScript 5 strict mode
+- Framework: (adapte ao seu projeto)
+- ORM: Prisma / TypeORM
+- Testes: Vitest (unit + integration) + Cypress (E2E)
+- Load: k6
+
+## Comandos principais
+```bash
+npm run dev        # desenvolvimento local
+npm run test:unit  # npx vitest run --testPathPattern='*.unit.test'
+npm run test:int   # npx vitest run --testPathPattern='*.integration.test'
+npm run test:e2e   # npx cypress run --headless
+npm run build      # build de produção
+npm audit          # auditoria de segurança
+```
+
+## Arquitetura: Hexagonal (Ports & Adapters)
+- src/domain/        — entidades, use cases, value objects (SEM imports de infra)
+- src/ports/         — interfaces (IUserRepository, IMailService, etc.)
+- src/adapters/      — implementações concretas (HTTP, DB, Mail)
+- src/app/           — composição de dependências (DI container)
+
+Regra absoluta: domain NUNCA importa de adapters.
+Dependa de interfaces (ports), nunca de implementações concretas.
+
+## SOLID — diretivas obrigatórias
+- S: cada classe/função tem UMA razão para mudar
+- O: use strategy/decorator para variações, não if/else
+- L: subtipos substituem base sem quebrar comportamento
+- I: interfaces pequenas e específicas — nunca interface "God"
+- D: construtor recebe interfaces, nunca instancia dependências diretamente
+
+## TDD — sequência obrigatória
+1. Escreve o TESTE primeiro (deve falhar — RED)
+2. Implementa o MÍNIMO para passar (GREEN)
+3. Refatora sem quebrar (REFACTOR)
+NUNCA implementar sem teste existente e falhando primeiro.
+
+## OWASP Top 10 — checklist de cada feature
+- A01: toda rota verifica autenticação + autorização (RBAC)
+- A02: secrets apenas em env vars — nunca hardcoded
+- A03: queries sempre parametrizadas — proibido string concatenation
+- A04: threat model na fase de design
+- A06: npm audit como gate pré-PR
+- A07: JWT validado em cada request; tokens expiram em 15min (access) / 7d (refresh)
+
+## Context window discipline
+- Máximo de 80K tokens ativos no orquestrador
+- Execute /compact entre fases (após planning, após implementação, após review)
+- Handoffs via PLAN.md e CONTEXT.md — nunca in-memory
+- Destrua a sessão após cada fase completa se contexto > 60K
+
+## Proibições
+- Nunca usar `any` em TypeScript
+- Nunca fazer `git add .` — sempre `git add -p`
+- Nunca implementar sem teste falhando primeiro
+- Nunca commitar com npm audit de alta severidade aberto
+- Nunca fazer strings SQL por concatenação</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+      </section>
+
+      <!-- Seção 5: TDD neste workflow -->
+      <section class="content-section">
+        <h2><i class="uil uil-sync"></i> Como aplicar TDD neste workflow</h2>
+        <p>TDD em pair programming com Claude Code tem uma dinâmica específica: o Claude escreve tanto o teste quanto a implementação — mas em fases separadas, com validação humana entre elas. A instrução abaixo é o prompt exato que dispara o ciclo correto.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Instrução exata para o Claude</strong><br>
+            Adicione ao CLAUDE.md ou use como prompt a cada nova funcionalidade:<br>
+            <em>"Para cada funcionalidade que implementares: (1) escreva o teste unitario primeiro e confirme que ele falha; (2) implemente o minimo necessario para o teste passar; (3) refatore aplicando SOLID. Mostre o resultado de cada etapa antes de avancar."</em>
+          </div>
+        </div>
+
+        <h3>Exemplo concreto: JWT Authentication</h3>
+        <p>Feature: adicionar autenticacao JWT com refresh token ao dominio de usuarios.</p>
+
+        <p><strong>Passo 1 — Claude escreve o teste (RED)</strong></p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// src/domain/__tests__/auth.unit.test.ts
+import { describe, it, expect, vi } from 'vitest'
+import { AuthService } from '../auth.domain'
+import type { ITokenRepository } from '../../ports/ITokenRepository'
+import type { IUserRepository } from '../../ports/IUserRepository'
+
+describe('AuthService', () => {
+  const mockUserRepo: IUserRepository = {
+    findByEmail: vi.fn(),
+    save: vi.fn(),
+  }
+  const mockTokenRepo: ITokenRepository = {
+    save: vi.fn(),
+    findByRefreshToken: vi.fn(),
+    revoke: vi.fn(),
+  }
+
+  it('should return access and refresh tokens on valid credentials', async () => {
+    const hashedPassword = '$2b$10$validhash'
+    mockUserRepo.findByEmail = vi.fn().mockResolvedValue({
+      id: 'user-123',
+      email: 'dev@example.com',
+      passwordHash: hashedPassword,
+      role: 'developer',
+    })
+
+    const sut = new AuthService(mockUserRepo, mockTokenRepo)
+    const result = await sut.login('dev@example.com', 'correct-password')
+
+    expect(result.accessToken).toBeDefined()
+    expect(result.refreshToken).toBeDefined()
+    expect(result.expiresIn).toBe(900) // 15 minutos
+  })
+
+  it('should throw UnauthorizedError on invalid password', async () => {
+    mockUserRepo.findByEmail = vi.fn().mockResolvedValue({
+      id: 'user-123',
+      email: 'dev@example.com',
+      passwordHash: '$2b$10$validhash',
+      role: 'developer',
+    })
+
+    const sut = new AuthService(mockUserRepo, mockTokenRepo)
+    await expect(sut.login('dev@example.com', 'wrong-password'))
+      .rejects.toThrow('UnauthorizedError')
+  })
+
+  it('should throw UnauthorizedError on unknown email', async () => {
+    mockUserRepo.findByEmail = vi.fn().mockResolvedValue(null)
+
+    const sut = new AuthService(mockUserRepo, mockTokenRepo)
+    await expect(sut.login('unknown@example.com', 'any-password'))
+      .rejects.toThrow('UnauthorizedError')
+  })
+})</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Confirmar RED — deve falhar (AuthService nao existe ainda)
+npx vitest run src/domain/__tests__/auth.unit.test.ts
+# FAIL: Cannot find module '../auth.domain'</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+
+        <p><strong>Passo 2 — Claude implementa o dominio (GREEN)</strong></p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// src/domain/auth.domain.ts
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import type { IUserRepository } from '../ports/IUserRepository'
+import type { ITokenRepository } from '../ports/ITokenRepository'
+
+export class UnauthorizedError extends Error {
+  constructor() { super('UnauthorizedError'); this.name = 'UnauthorizedError' }
+}
+
+export interface AuthResult {
+  accessToken: string
+  refreshToken: string
+  expiresIn: number
+}
+
+export class AuthService {
+  constructor(
+    private readonly userRepo: IUserRepository,    // D: depende de interface
+    private readonly tokenRepo: ITokenRepository,  // D: depende de interface
+  ) {}
+
+  async login(email: string, password: string): Promise&lt;AuthResult&gt; {
+    const user = await this.userRepo.findByEmail(email)
+    if (!user) throw new UnauthorizedError()
+
+    const valid = await bcrypt.compare(password, user.passwordHash)
+    if (!valid) throw new UnauthorizedError()
+
+    const accessToken = jwt.sign(
+      { sub: user.id, role: user.role },
+      process.env.JWT_SECRET!,
+      { expiresIn: '15m' }
+    )
+    const refreshToken = crypto.randomUUID()
+
+    await this.tokenRepo.save({ userId: user.id, refreshToken })
+
+    return { accessToken, refreshToken, expiresIn: 900 }
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Confirmar GREEN — todos os testes devem passar
+npx vitest run src/domain/__tests__/auth.unit.test.ts
+# PASS: 3 tests passed</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+
+        <p><strong>Passo 3 — Claude refatora para SOLID (REFACTOR)</strong></p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Melhorias SOLID aplicadas pelo Claude no refactor:
+// S: extrair geração de tokens para TokenFactory (responsabilidade única)
+// O: comportamento de login extensível via strategy (ex: OAuth2) sem alterar AuthService
+// I: IUserRepository e ITokenRepository separados (interface segregation)
+
+// src/domain/token.factory.ts — S: responsabilidade única de geração
+import jwt from 'jsonwebtoken'
+
+export class TokenFactory {
+  createAccessToken(userId: string, role: string): string {
+    return jwt.sign(
+      { sub: userId, role },
+      process.env.JWT_SECRET!,
+      { expiresIn: '15m' }
+    )
+  }
+
+  createRefreshToken(): string {
+    return crypto.randomUUID()
+  }
+}
+
+// auth.domain.ts atualizado — delega geração ao TokenFactory
+export class AuthService {
+  constructor(
+    private readonly userRepo: IUserRepository,
+    private readonly tokenRepo: ITokenRepository,
+    private readonly tokenFactory: TokenFactory,  // D: injetado
+  ) {}
+
+  async login(email: string, password: string): Promise&lt;AuthResult&gt; {
+    const user = await this.userRepo.findByEmail(email)
+    if (!user) throw new UnauthorizedError()
+
+    const valid = await bcrypt.compare(password, user.passwordHash)
+    if (!valid) throw new UnauthorizedError()
+
+    const accessToken = this.tokenFactory.createAccessToken(user.id, user.role)
+    const refreshToken = this.tokenFactory.createRefreshToken()
+
+    await this.tokenRepo.save({ userId: user.id, refreshToken })
+
+    return { accessToken, refreshToken, expiresIn: 900 }
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Confirmar que refactor nao quebrou nada
+npx vitest run src/domain/__tests__/auth.unit.test.ts
+# PASS: 3 tests passed (com TokenFactory mockado)</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+      </section>
+
+      <!-- Seção 6: Context Window Discipline -->
+      <section class="content-section">
+        <h2><i class="uil uil-setting"></i> Context Window Discipline</h2>
+        <p>O limite pratico do Claude Code como orquestrador é 80K tokens ativos. Acima disso, a qualidade das respostas degrada — o modelo começa a "esquecer" arquivos lidos no inicio da sessao e produz código inconsistente com o codebase.</p>
+
+        <h3>Quando executar /compact</h3>
+        <div class="three-col-grid">
+          <div style="background: var(--surface-2, #1a1a2e); border: 1px solid var(--border, #2a2a3e); border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem; color: var(--accent, #6366f1); margin-bottom: 0.5rem;"><i class="uil uil-analytics"></i></div>
+            <strong>Threshold de tokens</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted, #888); margin: 0.5rem 0 0;">Contexto ultrapassa 70K tokens durante o TDD loop</p>
+          </div>
+          <div style="background: var(--surface-2, #1a1a2e); border: 1px solid var(--border, #2a2a3e); border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem; color: var(--accent, #6366f1); margin-bottom: 0.5rem;"><i class="uil uil-layers-alt"></i></div>
+            <strong>Entre fases grandes</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted, #888); margin: 0.5rem 0 0;">Apos planning concluido; antes de iniciar implementacao</p>
+          </div>
+          <div style="background: var(--surface-2, #1a1a2e); border: 1px solid var(--border, #2a2a3e); border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 2rem; color: var(--accent, #6366f1); margin-bottom: 0.5rem;"><i class="uil uil-shield-check"></i></div>
+            <strong>Pre-review</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted, #888); margin: 0.5rem 0 0;">Antes de iniciar a fase de auto-review OWASP+SOLID</p>
+          </div>
+        </div>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Verificar uso atual de tokens (estimativa via /status se disponivel)
+# No Claude Code, use o comando built-in:
+/compact
+
+# O Claude resumira o contexto atual mantendo apenas
+# o essencial — arquivos modificados, decisoes tomadas,
+# proximo passo. Estado de longa duracao vai para arquivos.</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+
+        <h3>Template CONTEXT.md para handoff entre sessoes</h3>
+        <p>Quando a sessao termina antes da feature ficar pronta, o CONTEXT.md e o passaporte da proxima sessao. Sem ele, a proxima sessao recomeça do zero.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># CONTEXT.md — Handoff de Sessao
+
+## Feature em andamento
+[Nome da feature — ex: JWT Authentication]
+
+## Estado atual
+- Fase: [Discovery | Planning | TDD Loop | Auto-review | Testing Gate | Deploy]
+- Ultimo commit: [hash] — [mensagem]
+- Testes passando: [X unit, Y integration, Z e2e]
+
+## Arquivos modificados nesta sessao
+- src/domain/auth.domain.ts — AuthService implementado (GREEN)
+- src/domain/token.factory.ts — TokenFactory extraido (REFACTOR)
+- src/ports/ITokenRepository.ts — interface criada
+- src/domain/__tests__/auth.unit.test.ts — 3 testes, todos passando
+
+## Decisoes tomadas
+- Optamos por TokenFactory separado (SOLID-S) em vez de metodo privado
+- JWT expira em 15min (access) e refresh e UUID v4 sem expiracao automatica
+- Refresh token revogado no DB ao usar (one-time use)
+
+## Proximo passo
+Implementar o adapter HTTP: src/adapters/http/auth.routes.ts
+Teste de integracao: src/adapters/__tests__/auth.integration.test.ts
+Deve cobrir: POST /auth/login, POST /auth/refresh, POST /auth/logout
+
+## Blockers / Riscos
+- Nenhum blocker identificado
+- Risco: JWT_SECRET nao configurado em .env.test — verificar antes dos integration tests
+
+## Como retomar
+```bash
+claude
+# "Leia CONTEXT.md, PLAN.md e os arquivos listados em 'Arquivos modificados'.
+#  Estamos na fase de Testing Gate. Escreva o teste de integracao
+#  para auth.routes.ts conforme descrito em Proximo passo."
+```</code></pre><button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button></div>
+      </section>
+
+      <!-- Seção 7: Armadilhas -->
+      <section class="content-section">
+        <h2><i class="uil uil-exclamation-triangle"></i> Armadilhas</h2>
+        <p>Tres armadilhas recorrentes no W1. Cada uma tem um padrao de sintoma, uma causa raiz e uma correcao especifica.</p>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Armadilha 1 — Implementacao sem contexto do codebase</strong><br>
+            <strong>Sintoma:</strong> Claude gera codigo funcionalmente correto mas que duplica funcionalidade existente, usa convencoes erradas ou viola a arquitetura do projeto.<br>
+            <strong>Causa:</strong> O primeiro prompt pedia implementacao direta sem dar contexto. O Claude inventou uma estrutura plausivel mas incompativel.<br>
+            <strong>Correcao:</strong> Faca a Fase 1 (Discovery) obrigatoria. Prompt padrao: <em>"Leia os arquivos relevantes e mapeie o impacto. NAO escreva codigo ainda."</em> Codifique isso no CLAUDE.md como diretiva.
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Armadilha 2 — Contexto degradado por falta de /compact</strong><br>
+            <strong>Sintoma:</strong> Nas iteracoes 4-5 do TDD loop, o Claude comeca a esquecer arquivos lidos no inicio da sessao, repete decisoes ja tomadas ou gera codigo inconsistente com o que foi implementado antes.<br>
+            <strong>Causa:</strong> Contexto acima de 80K tokens sem compactacao. O modelo nao descarta tokens — eles ficam presentes mas com peso de atencao reduzido.<br>
+            <strong>Correcao:</strong> Execute <code>/compact</code> ao cruzar 70K tokens e sempre entre fases grandes (planning → implementacao, implementacao → review). Adicione ao CLAUDE.md: <em>"Execute /compact entre fases e quando contexto ultrapassar 70K tokens."</em>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Armadilha 3 — Implementacao antes do teste (TDD invertido)</strong><br>
+            <strong>Sintoma:</strong> O Claude entrega codigo que funciona mas os testes escritos depois passam mesmo com bugs sutis — porque foram escritos para descrever o comportamento do codigo, nao o comportamento esperado.<br>
+            <strong>Causa:</strong> O prompt nao exigiu RED primeiro. O Claude otimiza para entregar valor rapido e pula o RED naturalmente se nao houver instrucao explicita.<br>
+            <strong>Correcao:</strong> Torne o RED verificavel: <em>"Escreva o teste, execute-o, mostre a saida de falha, so entao implemente."</em> Sem ver a saida de falha, o ciclo TDD nao ocorreu. Adicione ao CLAUDE.md como diretiva implicita de qualquer implementacao.
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+  <h2><i class="uil uil-shield-check"></i> Hooks neste workflow</h2>
+  <p>No W1 Solo, os hooks são a única camada determinística de qualidade — não há processo externo validando. Configure em <code>.claude/settings.json</code>:</p>
+
+  <div class="callout callout-info">
+    <i class="uil uil-info-circle"></i>
+    <div><strong>Por que hooks aqui:</strong> No workflow solo, você é o único orquestrador. Hooks substituem o code-reviewer humano e garantem que nenhum código quebrado ou inseguro avança.</div>
+  </div>
+
+  <h3>settings.json mínimo para W1</h3>
+  <div class="code-block-wrapper"><pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{"type": "command", "command": "node scripts/quality-gate.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""}]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "node scripts/bash-guard.mjs"}]
+      }
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <h3>O que o quality-gate.mjs verifica</h3>
+  <table class="data-table">
+    <thead><tr><th>Gate</th><th>Trigger</th><th>O que bloqueia</th></tr></thead>
+    <tbody>
+      <tr><td>Secret detection</td><td>qualquer Write/Edit</td><td>API keys, passwords, tokens no código</td></tr>
+      <tr><td>ESLint + tsc</td><td>.ts/.js modificado</td><td>erros de tipo + violations de linting</td></tr>
+      <tr><td>vitest run</td><td>qualquer source file</td><td>testes falhando após a mudança</td></tr>
+      <tr><td>npm audit</td><td>package.json modificado</td><td>vulnerabilidades high/critical</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warning">
+    <i class="uil uil-exclamation-triangle"></i>
+    <div><strong>Limitação:</strong> Hooks garantem que os testes passam — não que foram escritos antes da implementação. O TDD order depende do CLAUDE.md e da sua disciplina. O hook fecha o gate de qualidade, não ensina o processo.</div>
+  </div>
+
+  <p>O script <code>scripts/quality-gate.mjs</code> está documentado em detalhe no <a href="/modules/06-workflows/00-fundamentos.html#hooks">Módulo 22 — Fundamentos</a>.</p>
+</section>
+
+    </article>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

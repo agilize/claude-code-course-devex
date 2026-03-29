@@ -1,0 +1,438 @@
+{
+  "part": 2,
+  "title": "Configuração & Customização",
+  "modules": [
+    {
+      "id": 4,
+      "slug": "ferramentas-builtin",
+      "path": "modules/04-ferramentas-builtin",
+      "title": "Ferramentas Built-in (Tools)",
+      "description": "Conheça as ferramentas nativas que o Claude Code usa automaticamente para ler, escrever, buscar e executar — e entenda como ele decide qual usar.",
+      "sections": [
+        {
+          "type": "intro",
+          "content": "O Claude Code não age no escuro. Ele possui um conjunto de ferramentas integradas que usa de forma autônoma para realizar tarefas. Entender essas ferramentas é fundamental para saber o que o Claude pode e não pode fazer."
+        },
+        {
+          "type": "tool-list",
+          "title": "Catálogo de ferramentas",
+          "tools": [
+            {
+              "name": "Read",
+              "description": "Lê arquivos do sistema. Claude decide quando usar com base no contexto da conversa.",
+              "icon": "file-text"
+            },
+            {
+              "name": "Write",
+              "description": "Cria ou sobrescreve arquivos. Usado quando o arquivo ainda não existe ou precisa de reescrita total.",
+              "icon": "file-plus"
+            },
+            {
+              "name": "Edit",
+              "description": "Edições precisas: recebe old_string → new_string. Preserva formatação e indentação. Preferível ao Write para modificações parciais.",
+              "icon": "edit"
+            },
+            {
+              "name": "Bash",
+              "description": "Executa comandos shell e exibe o output. É a ferramenta mais poderosa — e que requer mais cuidado com permissões.",
+              "icon": "terminal"
+            },
+            {
+              "name": "Grep",
+              "description": "Busca conteúdo dentro de arquivos. Funciona como ripgrep internamente. Ideal para encontrar onde uma função ou variável é usada.",
+              "icon": "search"
+            },
+            {
+              "name": "Glob",
+              "description": "Encontra arquivos por padrão de nome. Suporta padrões como **/*.ts e src/**/*.jsx.",
+              "icon": "folder-search"
+            },
+            {
+              "name": "LS",
+              "description": "Lista o conteúdo de um diretório. Usado para entender a estrutura do projeto.",
+              "icon": "list"
+            },
+            {
+              "name": "Agent",
+              "description": "Spawna subagentes para tarefas complexas e independentes. Cada subagente tem seu próprio contexto.",
+              "icon": "cpu"
+            },
+            {
+              "name": "WebFetch",
+              "description": "Busca o conteúdo de uma URL. Permite ao Claude ler documentação, APIs públicas e páginas web.",
+              "icon": "globe"
+            },
+            {
+              "name": "WebSearch",
+              "description": "Realiza buscas na web. Útil para pesquisar soluções, documentação e informações atualizadas.",
+              "icon": "search-globe"
+            },
+            {
+              "name": "TodoWrite / TodoRead",
+              "description": "Gerencia uma lista interna de tarefas dentro da sessão. Ajuda o Claude a organizar trabalho em múltiplos passos.",
+              "icon": "check-square"
+            },
+            {
+              "name": "NotebookEdit",
+              "description": "Edita células de Jupyter Notebooks (.ipynb). Para projetos de data science e ML.",
+              "icon": "book-open"
+            }
+          ]
+        },
+        {
+          "type": "code-block",
+          "title": "Permissões por ferramenta — settings.json",
+          "language": "json",
+          "code": "// .claude/settings.json — controle granular de permissões\n{\n  \"permissions\": {\n    \"allow\": [\n      \"Bash(git status)\",\n      \"Bash(npm run *)\",\n      \"Read(*)\",\n      \"Write(src/**)\"\n    ],\n    \"deny\": [\n      \"Bash(rm -rf *)\",\n      \"Bash(curl *)\"\n    ]\n  }\n}"
+        },
+        {
+          "type": "decision-tree",
+          "title": "Como Claude escolhe a ferramenta certa",
+          "nodes": [
+            { "condition": "Precisa ler um arquivo", "tool": "Read" },
+            { "condition": "Precisa modificar parte de um arquivo", "tool": "Edit (preferencial)" },
+            { "condition": "Precisa criar um arquivo novo", "tool": "Write" },
+            { "condition": "Precisa de informação do sistema", "tool": "Bash" },
+            { "condition": "Busca arquivo por nome/padrão", "tool": "Glob" },
+            { "condition": "Busca texto dentro de arquivos", "tool": "Grep" },
+            { "condition": "Tarefa complexa e independente", "tool": "Agent" }
+          ]
+        },
+        {
+          "type": "exercise",
+          "data-testid": "exercise",
+          "title": "Exercício: observe o Claude em ação",
+          "prompt": "Pedir ao Claude: \"liste todos os arquivos TypeScript no projeto e me diga quantas linhas cada um tem\"",
+          "goal": "Observe como o Claude usa Glob para encontrar os .ts files e Bash (wc -l) para contar as linhas — tudo automaticamente, sem você precisar especificar as ferramentas."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "settings-permissoes",
+      "path": "modules/05-settings-permissoes",
+      "title": "Settings & Permissões",
+      "description": "Configure o comportamento do Claude Code globalmente e por projeto. Controle permissões, modelos, temas e variáveis de ambiente.",
+      "sections": [
+        {
+          "type": "intro",
+          "content": "O settings.json é o painel de controle do Claude Code. Você pode ter configurações globais que se aplicam a todos os projetos, e configurações por projeto que sobrescrevem as globais."
+        },
+        {
+          "type": "file-locations",
+          "title": "Onde ficam os arquivos de configuração",
+          "locations": [
+            {
+              "path": "~/.claude/settings.json",
+              "scope": "Global",
+              "description": "Aplica-se a todos os projetos. Suas preferências pessoais."
+            },
+            {
+              "path": "<projeto>/.claude/settings.json",
+              "scope": "Projeto",
+              "description": "Aplica-se apenas a este projeto. Pode ser commitado no repositório."
+            }
+          ]
+        },
+        {
+          "type": "code-block",
+          "title": "Estrutura completa do settings.json",
+          "language": "json",
+          "code": "{\n  \"model\": \"claude-sonnet-4-6\",\n  \"theme\": \"dark\",\n  \"autoApprove\": false,\n  \"permissions\": {\n    \"allow\": [\n      \"Read(*)\",\n      \"Write(src/**)\",\n      \"Bash(npm run *)\",\n      \"Bash(git *)\"\n    ],\n    \"deny\": [\n      \"Bash(rm -rf *)\",\n      \"Bash(sudo *)\",\n      \"WebFetch(*)\"\n    ]\n  },\n  \"env\": {\n    \"NODE_ENV\": \"development\"\n  },\n  \"hooks\": {\n    \"PreToolUse\": [],\n    \"PostToolUse\": [],\n    \"SessionStart\": [],\n    \"UserPromptSubmit\": []\n  }\n}"
+        },
+        {
+          "type": "permission-modes",
+          "title": "Modos de permissão",
+          "modes": [
+            {
+              "name": "Default",
+              "description": "Confirma ações destrutivas antes de executar. Equilíbrio entre agilidade e segurança.",
+              "recommended": true
+            },
+            {
+              "name": "Plan mode",
+              "description": "O Claude só planeja e descreve o que faria — não executa nada. Útil para revisar antes de agir.",
+              "recommended": false
+            },
+            {
+              "name": "Auto-accept",
+              "description": "Aceita e executa tudo sem confirmação. Ativar com --dangerously-skip-permissions.",
+              "recommended": false,
+              "warning": "Use apenas em ambientes controlados e descartáveis."
+            }
+          ]
+        },
+        {
+          "type": "code-block",
+          "title": "Padrões de permissão com wildcards",
+          "language": "text",
+          "code": "\"Bash(*)\"          — qualquer comando bash\n\"Bash(git *)\"      — qualquer comando git\n\"Read(*)\"          — ler qualquer arquivo\n\"Write(src/**)\"    — escrever apenas em src/\n\"Bash(npm run *)\"  — qualquer npm run script"
+        },
+        {
+          "type": "callout",
+          "variant": "warning",
+          "content": "Cuidado com permissões muito amplas em projetos de produção. Use allow/deny granular para evitar que o Claude execute operações destrutivas acidentalmente."
+        },
+        {
+          "type": "exercise",
+          "data-testid": "exercise",
+          "title": "Exercício: configurar permissões do projeto",
+          "prompt": "Criar .claude/settings.json com permissões que: permitam git, npm run scripts e leitura total, mas bloqueiem rm, curl e sudo.",
+          "solution": "{\n  \"permissions\": {\n    \"allow\": [\n      \"Read(*)\",\n      \"Bash(git *)\",\n      \"Bash(npm run *)\"\n    ],\n    \"deny\": [\n      \"Bash(rm *)\",\n      \"Bash(curl *)\",\n      \"Bash(sudo *)\"\n    ]\n  }\n}"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "skills-slash-commands",
+      "path": "modules/06-skills-slash-commands",
+      "title": "Skills (Slash Commands)",
+      "description": "Crie comandos /custom para automatizar tarefas repetitivas. Skills são prompts reutilizáveis que ficam disponíveis em qualquer sessão do Claude Code.",
+      "sections": [
+        {
+          "type": "intro",
+          "content": "Skills são atalhos para prompts que você usa com frequência. Em vez de digitar o mesmo prompt detalhado toda vez, você cria um arquivo SKILL.md e chama com /nome-do-skill."
+        },
+        {
+          "type": "file-structure",
+          "title": "Estrutura de diretórios",
+          "tree": "~/.claude/skills/\n└── review-pr/\n    └── SKILL.md\n\n.claude/skills/        ← específico do projeto\n└── daily-review/\n    └── SKILL.md"
+        },
+        {
+          "type": "code-block",
+          "title": "Formato do SKILL.md",
+          "language": "markdown",
+          "code": "---\nname: review-pr\ndescription: Review a pull request for code quality, security, and best practices\ntrigger: /review-pr\n---\n\n# Review PR\n\nAnalise o PR atual ou o número fornecido: $ARGUMENTS\n\nVerifique:\n1. Qualidade do código (clean code, SOLID)\n2. Possíveis bugs ou edge cases\n3. Segurança (SQL injection, XSS, secrets)\n4. Performance\n5. Testes adequados\n6. Documentação\n\nFormate a revisão com severidade: CRITICAL, MAJOR, MINOR, INFO."
+        },
+        {
+          "type": "usage-examples",
+          "title": "Como usar skills no terminal",
+          "language": "bash",
+          "code": "/review-pr              # review PR atual\n/review-pr 123          # review PR #123\n/review-pr --security   # foco em segurança"
+        },
+        {
+          "type": "skill-catalog",
+          "title": "Skills úteis para o dia a dia",
+          "skills": [
+            { "trigger": "/commit", "description": "Gera mensagem de commit semântico baseada nas mudanças staged" },
+            { "trigger": "/test", "description": "Gera testes unitários para o arquivo ou função atual" },
+            { "trigger": "/explain", "description": "Explica o arquivo ou função selecionada em linguagem clara" },
+            { "trigger": "/refactor", "description": "Refatora o código com boas práticas (SOLID, clean code)" },
+            { "trigger": "/docs", "description": "Gera documentação JSDoc/TSDoc para funções e classes" },
+            { "trigger": "/optimize", "description": "Analisa e otimiza performance do código atual" }
+          ]
+        },
+        {
+          "type": "code-block",
+          "title": "Skill com $ARGUMENTS e variáveis",
+          "language": "markdown",
+          "code": "---\nname: add-tests\ndescription: Adiciona testes para o arquivo especificado\n---\n\nLeia o arquivo: $ARGUMENTS\n\nCrie testes unitários completos:\n- Happy path\n- Edge cases\n- Error handling\n\nUse Jest/Vitest. Salve em __tests__/[filename].test.ts"
+        },
+        {
+          "type": "scope-comparison",
+          "title": "Skills globais vs. de projeto",
+          "rows": [
+            {
+              "path": "~/.claude/skills/",
+              "scope": "Global",
+              "available": "Todos os projetos"
+            },
+            {
+              "path": ".claude/skills/",
+              "scope": "Projeto",
+              "available": "Apenas este projeto (pode ser commitado)"
+            }
+          ]
+        },
+        {
+          "type": "exercise",
+          "data-testid": "exercise",
+          "title": "Exercício: criar skill /daily-review",
+          "prompt": "Criar uma skill /daily-review que: lê os últimos commits do dia, lista arquivos modificados, e gera um resumo do que foi feito.",
+          "solution": "---\nname: daily-review\ndescription: Gera resumo das atividades do dia\ntrigger: /daily-review\n---\n\n# Daily Review\n\nExecute os seguintes passos:\n\n1. Rode `git log --since='00:00' --oneline --author=$(git config user.email)` para listar commits de hoje\n2. Rode `git diff --name-only HEAD~$(git log --since='00:00' --oneline | wc -l | tr -d ' ') HEAD` para ver arquivos modificados\n3. Com base nos commits e arquivos, gere um resumo executivo de:\n   - O que foi implementado hoje\n   - Quantos commits foram feitos\n   - Quais áreas do código foram afetadas\n   - Possíveis pendências ou próximos passos"
+        },
+        {
+          "type": "resources",
+          "links": [
+            {
+              "text": "Documentação oficial — Slash Commands",
+              "url": "https://docs.anthropic.com/en/docs/claude-code/slash-commands"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "hooks",
+      "path": "modules/07-hooks",
+      "title": "Hooks",
+      "description": "Automatize comportamentos com scripts que executam em resposta a eventos do Claude Code — antes e depois de cada ferramenta, no início de sessão e muito mais.",
+      "sections": [
+        {
+          "type": "intro",
+          "content": "Hooks são scripts que o Claude Code executa automaticamente em resposta a eventos. Eles permitem criar pipelines de automação: logar operações, rodar linters, enviar notificações, injetar contexto e até bloquear ações potencialmente perigosas."
+        },
+        {
+          "type": "hook-types",
+          "title": "Tipos de hooks disponíveis",
+          "hooks": [
+            {
+              "name": "PreToolUse",
+              "description": "Executa antes de usar uma ferramenta. Pode bloquear a execução retornando exit code 1.",
+              "can_block": true
+            },
+            {
+              "name": "PostToolUse",
+              "description": "Executa após o uso de uma ferramenta. Recebe o resultado como variável.",
+              "can_block": false
+            },
+            {
+              "name": "SessionStart",
+              "description": "Executa ao iniciar uma nova sessão do Claude Code.",
+              "can_block": false
+            },
+            {
+              "name": "SessionEnd",
+              "description": "Executa ao encerrar a sessão.",
+              "can_block": false
+            },
+            {
+              "name": "UserPromptSubmit",
+              "description": "Executa ao submeter um prompt. Pode modificar ou enriquecer o contexto.",
+              "can_block": false
+            },
+            {
+              "name": "Stop",
+              "description": "Executa quando o Claude termina de gerar uma resposta.",
+              "can_block": false
+            }
+          ]
+        },
+        {
+          "type": "code-block",
+          "title": "Configuração de hooks no settings.json",
+          "language": "json",
+          "code": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"echo 'Executando: $TOOL_INPUT' >> ~/.claude/logs/bash.log\"\n          }\n        ]\n      }\n    ],\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"echo 'Arquivo escrito: $TOOL_RESULT' >> ~/.claude/logs/writes.log\"\n          }\n        ]\n      }\n    ],\n    \"SessionStart\": [\n      {\n        \"matcher\": \"startup\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"echo '=== Nova sessão: $(date) ===' >> ~/.claude/logs/sessions.log\"\n          }\n        ]\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "code-block",
+          "title": "Hook com bloqueio (PreToolUse)",
+          "language": "json",
+          "code": "{\n  \"PreToolUse\": [\n    {\n      \"matcher\": \"Bash\",\n      \"hooks\": [\n        {\n          \"type\": \"command\",\n          \"command\": \"node ~/.claude/hooks/check-dangerous-commands.js\"\n        }\n      ]\n    }\n  ]\n}"
+        },
+        {
+          "type": "callout",
+          "variant": "info",
+          "content": "O script retorna exit code 0 para permitir a operação ou exit code 1 para bloqueá-la. Isso permite criar guardas de segurança customizados."
+        },
+        {
+          "type": "variables-table",
+          "title": "Variáveis disponíveis nos hooks",
+          "variables": [
+            { "name": "$TOOL_NAME", "description": "Nome da ferramenta sendo usada (Bash, Write, etc.)" },
+            { "name": "$TOOL_INPUT", "description": "Input enviado para a ferramenta" },
+            { "name": "$TOOL_RESULT", "description": "Resultado retornado (disponível apenas em PostToolUse)" },
+            { "name": "$SESSION_ID", "description": "Identificador único da sessão atual" },
+            { "name": "$PROJECT_ROOT", "description": "Caminho absoluto do diretório do projeto" }
+          ]
+        },
+        {
+          "type": "use-cases",
+          "title": "Casos de uso reais",
+          "cases": [
+            {
+              "title": "Log de auditoria",
+              "description": "Logar todos os comandos bash executados pelo Claude para compliance e debugging."
+            },
+            {
+              "title": "Lint automático",
+              "description": "Rodar ESLint automaticamente após cada Write em arquivos .ts ou .tsx."
+            },
+            {
+              "title": "Git commit automático",
+              "description": "Auto-commit após certas operações de escrita em arquivos de configuração."
+            },
+            {
+              "title": "Notificações",
+              "description": "Notificar no Slack ou Discord quando uma tarefa longa for concluída."
+            },
+            {
+              "title": "Injeção de contexto",
+              "description": "Adicionar informações da empresa, sprint atual ou dados de ambiente no SessionStart."
+            }
+          ]
+        },
+        {
+          "type": "exercise",
+          "data-testid": "exercise",
+          "title": "Exercício: hook de formatação automática",
+          "prompt": "Criar hook PostToolUse que roda prettier --write automaticamente após cada Write em arquivos .ts ou .tsx.",
+          "solution": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Write\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"if [[ '$TOOL_INPUT' == *.ts || '$TOOL_INPUT' == *.tsx ]]; then npx prettier --write \\\"$TOOL_INPUT\\\"; fi\"\n          }\n        ]\n      }\n    ]\n  }\n}"
+        },
+        {
+          "type": "resources",
+          "links": [
+            {
+              "text": "Documentação oficial — Hooks",
+              "url": "https://docs.anthropic.com/en/docs/claude-code/hooks"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "keybindings",
+      "path": "modules/08-keybindings",
+      "title": "Keybindings",
+      "description": "Domine os atalhos de teclado padrão e crie keybindings customizados para turbinar sua produtividade no Claude Code.",
+      "sections": [
+        {
+          "type": "intro",
+          "content": "O Claude Code possui um REPL interativo com atalhos de teclado nativos. Além dos defaults, você pode criar bindings customizados — incluindo chord bindings (sequências de teclas) — para disparar skills e comandos com uma combinação."
+        },
+        {
+          "type": "keybindings-table",
+          "title": "Atalhos padrão no REPL",
+          "bindings": [
+            { "keys": "Ctrl+C", "action": "Cancela operação atual" },
+            { "keys": "Ctrl+D", "action": "Encerra a sessão" },
+            { "keys": "Ctrl+L", "action": "Limpa a tela" },
+            { "keys": "↑ / ↓", "action": "Navega pelo histórico de prompts" },
+            { "keys": "Ctrl+R", "action": "Busca no histórico de prompts" },
+            { "keys": "Tab", "action": "Autocomplete de paths e nomes de arquivos" },
+            { "keys": "Shift+Enter", "action": "Insere nova linha no prompt (multi-linha)" },
+            { "keys": "Esc Esc", "action": "Ativa modo vim (se configurado)" }
+          ]
+        },
+        {
+          "type": "code-block",
+          "title": "Configurando keybindings customizados (~/.claude/keybindings.json)",
+          "language": "json",
+          "code": "{\n  \"bindings\": [\n    {\n      \"keys\": \"ctrl+shift+c\",\n      \"command\": \"/clear\",\n      \"description\": \"Limpar contexto\"\n    },\n    {\n      \"keys\": \"ctrl+shift+r\",\n      \"command\": \"/review-pr\",\n      \"description\": \"Review PR atual\"\n    },\n    {\n      \"keys\": \"ctrl+shift+t\",\n      \"command\": \"/test\",\n      \"description\": \"Gerar testes\"\n    }\n  ]\n}"
+        },
+        {
+          "type": "code-block",
+          "title": "Chord bindings — sequência de teclas",
+          "language": "json",
+          "code": "{\n  \"bindings\": [\n    {\n      \"keys\": \"ctrl+k ctrl+c\",\n      \"command\": \"/commit\",\n      \"description\": \"Commit com mensagem gerada\"\n    }\n  ]\n}"
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "content": "Chord bindings são sequências onde você pressiona uma combinação de teclas, solta, e pressiona outra. Inspirados no modelo do VS Code (Ctrl+K → Ctrl+C)."
+        },
+        {
+          "type": "resources",
+          "links": [
+            {
+              "text": "Documentação oficial — Keyboard Shortcuts",
+              "url": "https://docs.anthropic.com/en/docs/claude-code/keyboard-shortcuts"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

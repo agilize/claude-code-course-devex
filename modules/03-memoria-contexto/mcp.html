@@ -1,51 +1,211 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MCP Servers — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>MCP Servers</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="active">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon">⚡</span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link active"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>MCP Servers</h1>
-    <p>O Model Context Protocol (MCP) permite integrar ferramentas externas ao Claude Code. Aprenda a configurar e usar MCP servers.</p>
-    <pre><code>// Adicionar MCP server via CLI
-$ claude mcp add github-mcp --transport stdio
-$ claude mcp add postgres-mcp --transport http</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>// Configuração no settings.json
-{
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger">☰</button><span class="mobile-title">MCP Servers</span><button data-testid="theme-toggle" class="theme-toggle">🌙</button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 3</span> › <span>MCP Servers</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button></div>
+    </div>
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 11</div>
+        <h1 class="module-title">MCP Servers</h1>
+        <p class="module-description">Model Context Protocol — protocolo padrão aberto para conectar LLMs a ferramentas externas. Permite que Claude acesse bancos de dados, APIs, sistemas de arquivos remotos, e muito mais.</p>
+      </div>
+
+      <section class="content-section">
+        <h2>Configuração em settings.json</h2>
+        <p>Adicione servidores MCP na chave <code>mcpServers</code> do seu <code>settings.json</code>:</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
   "mcpServers": {
-    "github": { "command": "npx", "args": ["@modelcontextprotocol/server-github"] }
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/user/Documents"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_..."
+      }
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "postgresql://..."
+      }
+    }
   }
-}</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Configure o MCP server do GitHub para seu projeto.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/claude-code/mcp">Documentação oficial Anthropic — MCP</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/04-agentes/agent-tool.html">Próximo módulo</a>
-  </main>
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Servidores MCP oficiais (Anthropic)</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Pacote</th><th>Descrição</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>@modelcontextprotocol/server-filesystem</code></td><td>Acesso a arquivos locais</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-github</code></td><td>GitHub API (issues, PRs, repos)</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-postgres</code></td><td>PostgreSQL queries</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-sqlite</code></td><td>SQLite queries</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-fetch</code></td><td>HTTP requests</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-brave-search</code></td><td>Brave Search API</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-puppeteer</code></td><td>Controle de browser</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-slack</code></td><td>Slack API</td></tr>
+            <tr><td><code>@modelcontextprotocol/server-memory</code></td><td>Memória KV persistente</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="content-section">
+        <h2>Adicionando MCP server via CLI</h2>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Adicionar servidor filesystem
+claude mcp add filesystem npx @modelcontextprotocol/server-filesystem ~/docs
+
+# Adicionar servidor github
+claude mcp add github npx @modelcontextprotocol/server-github
+
+# Listar servidores configurados
+claude mcp list
+
+# Remover servidor
+claude mcp remove filesystem
+
+# Adicionar servidor remoto via HTTP
+claude mcp add --transport http vercel https://mcp.vercel.com</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Criando seu próprio MCP server (TypeScript)</h2>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
+const server = new Server({
+  name: "meu-server",
+  version: "1.0.0",
+}, {
+  capabilities: { tools: {} }
+});
+
+// Registrar ferramenta
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  tools: [{
+    name: "consultar_api",
+    description: "Consulta nossa API interna",
+    inputSchema: {
+      type: "object",
+      properties: {
+        endpoint: { type: "string" },
+        params: { type: "object" }
+      }
+    }
+  }]
+}));
+
+// Implementar ferramenta
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  if (request.params.name === "consultar_api") {
+    const result = await fetch(
+      `https://api.minha-empresa.com/${request.params.arguments.endpoint}`
+    );
+    return { content: [{ type: "text", text: JSON.stringify(await result.json()) }] };
+  }
+});
+
+const transport = new StdioServerTransport();
+await server.connect(transport);</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Servidores MCP populares da comunidade</h2>
+        <table class="data-table">
+          <thead>
+            <tr><th>Servidor</th><th>Descrição</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Vercel MCP</td><td>Deployments, logs, projetos Vercel</td></tr>
+            <tr><td>Linear MCP</td><td>Issues e projetos Linear</td></tr>
+            <tr><td>Jira MCP</td><td>Tickets Atlassian</td></tr>
+            <tr><td>Figma MCP</td><td>Design tokens e componentes</td></tr>
+            <tr><td>AWS MCP</td><td>Recursos AWS</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício</h2>
+        <p>Configure o servidor <code>@modelcontextprotocol/server-filesystem</code> para acessar <code>~/Documents</code> e peça ao Claude: "liste todos os PDFs em meus documentos". Observe como o Claude usa a ferramenta MCP para executar a tarefa.</p>
+      </section>
+
+      <section class="resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/mcp" target="_blank" rel="noopener">Documentação oficial Anthropic — MCP</a></li>
+          <li><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">Model Context Protocol — especificação oficial</a></li>
+          <li><a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener">MCP Servers oficiais no GitHub</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete">✓ Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="context.html" class="btn btn-prev">← Anterior</a> <a data-testid="btn-next" href="/modules/04-agentes/agent-tool.html" class="btn btn-next">Próximo →</a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

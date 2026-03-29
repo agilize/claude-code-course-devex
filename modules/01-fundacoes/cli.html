@@ -2,46 +2,428 @@
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CLI Completo — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>CLI Completo</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html" class="active">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link"><span class="logo-icon">⚡</span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html" class="nav-link active"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>CLI Completo</h1>
-    <p>Domine a interface de linha de comando do CLI do Claude Code. Aprenda todos os flags, comandos e opções disponíveis.</p>
-    <pre><code>$ claude --print "gere um README"
-$ claude --output-format json
-$ claude --max-turns 10</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>$ claude --allowedTools "Read,Write,Bash"
-$ claude --disableAutoUpdate</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Use o CLI em modo não-interativo para gerar código.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/claude-code/cli-reference">Documentação oficial Anthropic — CLI Reference</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/01-fundacoes/claude-md.html">Próximo módulo</a>
-  </main>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger">☰</button>
+      <span class="mobile-title">CLI Completo</span>
+      <button data-testid="theme-toggle" class="theme-toggle">🌙</button>
+    </header>
+
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <a href="/modules/01-fundacoes/">Parte 1 — Fundações</a> › <span>CLI Completo</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button>
+      </div>
+    </div>
+
+    <article class="module-body">
+      <div class="module-header">
+        <div class="module-meta">
+          <span class="badge">⏱ ~20 min</span>
+          <span class="badge badge-iniciante">Iniciante</span>
+          <span class="badge badge-part">Parte 1</span>
+        </div>
+        <h1>CLI Completo</h1>
+        <p class="subtitle">Domine todos os modos de uso, flags, comandos slash e atalhos do terminal do Claude Code</p>
+        <div class="objectives-box">
+          <h4>Objetivos</h4>
+          <ul>
+            <li>Conhecer todos os modos de invocação do Claude Code (interativo, one-shot, pipe)</li>
+            <li>Usar as principais flags de linha de comando</li>
+            <li>Dominar os comandos slash built-in no REPL</li>
+            <li>Entender os três modos de permissão</li>
+            <li>Configurar variáveis de ambiente essenciais</li>
+            <li>Usar atalhos de teclado para aumentar produtividade</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section: Modos de uso -->
+      <section class="module-section">
+        <h2>Modos de uso</h2>
+        <p>O Claude Code pode ser invocado de quatro formas principais, cada uma adequada a um caso de uso diferente. Entender quando usar cada modo é fundamental para maximizar sua produtividade.</p>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># 1. Modo interativo (REPL) — sessão contínua com histórico e contexto acumulado
+claude
+
+# 2. Modo one-shot — uma única pergunta, resposta e encerra
+claude "explique este código"
+claude "crie um componente React de botão com TypeScript"
+claude "qual é a diferença entre Promise.all e Promise.allSettled?"
+
+# 3. Pipe input — envia conteúdo via stdin
+cat arquivo.py | claude "revise este código e sugira melhorias"
+git diff HEAD~1 | claude "escreva um commit message para este diff"
+cat error.log | claude "o que causou este erro?"
+
+# 4. Com arquivo de entrada
+claude --file problema.txt
+claude --file especificacao.md "implemente o que está descrito neste arquivo"</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 Dica:</strong> O modo one-shot é perfeito para integrar Claude Code em scripts de automação e CI/CD pipelines. Use <code>--output-format json</code> para processar a resposta programaticamente com <code>jq</code> ou em linguagens de script.
+        </div>
+      </section>
+
+      <!-- Section: Flags principais -->
+      <section class="module-section">
+        <h2>Flags principais</h2>
+        <p>As flags permitem personalizar o comportamento do Claude Code para cada invocação. As mais importantes controlam modelo, contexto, formato de saída e permissões.</p>
+
+        <h3>Seleção de modelo</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Opus — mais capaz, mais lento, mais caro. Para tarefas complexas de arquitetura.
+claude --model claude-opus-4-5
+
+# Sonnet — equilíbrio ideal entre qualidade e velocidade. Padrão recomendado.
+claude --model claude-sonnet-4-6
+
+# Haiku — mais rápido, mais barato. Para tarefas simples e repetitivas.
+claude --model claude-haiku-4-5
+
+# Definir modelo padrão via variável de ambiente (evita digitar toda vez)
+export CLAUDE_MODEL=claude-sonnet-4-6</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Velocidade</th>
+                <th>Custo</th>
+                <th>Melhor para</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>claude-opus-4-5</code></td>
+                <td>Lento</td>
+                <td>Alto ($$$)</td>
+                <td>Arquitetura, refactoring complexo, análise profunda</td>
+              </tr>
+              <tr>
+                <td><code>claude-sonnet-4-6</code></td>
+                <td>Médio</td>
+                <td>Médio ($$)</td>
+                <td>Desenvolvimento diário, debugging, features</td>
+              </tr>
+              <tr>
+                <td><code>claude-haiku-4-5</code></td>
+                <td>Rápido</td>
+                <td>Baixo ($)</td>
+                <td>Perguntas simples, formatação, tarefas repetitivas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Flags de contexto e output</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Adicionar diretório inteiro ao contexto (útil para monorepos)
+claude --add-dir ./src
+claude --add-dir ./packages/ui --add-dir ./packages/api
+
+# Formato de saída
+claude --output-format text     # texto simples (padrão)
+claude --output-format json     # JSON estruturado (bom para scripts)
+claude --output-format stream-json  # JSON streamado linha por linha
+
+# Exemplo: processar saída JSON com jq
+claude --output-format json "liste as funções exportadas em src/utils.ts" | jq '.message'
+
+# Output detalhado para debugging
+claude --verbose "por que este teste está falhando?"</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Flags de permissão</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Padrão: confirma ações potencialmente destrutivas (deletar arquivos, etc)
+claude
+
+# Plan mode: apenas planeja, não executa nenhuma ação
+# Ótimo para entender o que será feito antes de autorizar
+claude --no-auto-accept
+
+# CUIDADO: aceita TUDO automaticamente sem pedir confirmação
+# Use apenas em ambientes controlados (CI, containers, projetos descartáveis)
+claude --dangerously-skip-permissions
+
+# Definir ferramentas permitidas explicitamente
+claude --allowedTools Read,Write,Bash
+claude --allowedTools Read  # apenas leitura, nunca modifica nada</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="callout callout-warning">
+          <strong>⚠️ Atenção:</strong> A flag <code>--dangerously-skip-permissions</code> desabilita todas as confirmações de segurança. O Claude Code pode deletar arquivos, executar comandos destrutivos e fazer alterações irreversíveis sem pedir sua aprovação. Use apenas em ambientes de desenvolvimento isolados ou containers descartáveis — NUNCA em produção ou em projetos com dados importantes.
+        </div>
+      </section>
+
+      <!-- Section: Comandos slash -->
+      <section class="module-section">
+        <h2>Comandos slash no REPL</h2>
+        <p>Dentro do modo interativo (REPL), você pode usar comandos especiais prefixados com <code>/</code> para controlar a sessão. Esses comandos são executados localmente, sem consumir tokens da API.</p>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Ajuda e informações
+/help              # lista todos os comandos disponíveis
+/status            # mostra status da sessão (tokens usados, modelo, custo estimado)
+/cost              # mostra custo acumulado da sessão atual
+/model             # troca o modelo durante a sessão
+
+# Gerenciamento de contexto
+/clear             # limpa todo o histórico da conversa (contexto zerado)
+/compact           # comprime o contexto mantendo apenas o essencial
+                   # útil quando a sessão fica muito longa e o contexto enche
+
+# Memória persistente
+/memory            # abre o arquivo de memória para edição
+                   # conteúdo persiste entre sessões
+
+# Ferramentas de desenvolvimento
+/review            # inicia um review de Pull Request
+                   # pode aceitar número ou URL do PR
+
+# Exemplo de uso do /compact
+# Após uma sessão longa de debugging:
+> /compact
+# Claude resume o contexto em um sumário e continua de onde parou</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>ℹ️ Info:</strong> Use <code>/compact</code> quando a sessão ficar longa (mais de 30-40 trocas) ou quando você perceber que o Claude Code está "esquecendo" contexto anterior. O comando resume toda a conversa em um bloco denso, liberando espaço na janela de contexto para continuar trabalhando.
+        </div>
+      </section>
+
+      <!-- Section: Modos de permissão -->
+      <section class="module-section">
+        <h2>Modos de permissão</h2>
+        <p>O Claude Code tem três modos de operação em relação a permissões, que determinam como ele lida com ações que afetam seu sistema.</p>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Modo</th>
+                <th>Flag</th>
+                <th>Comportamento</th>
+                <th>Quando usar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Default</strong></td>
+                <td><em>(sem flag)</em></td>
+                <td>Confirma ações destrutivas (delete, overwrite)</td>
+                <td>Desenvolvimento diário — equilíbrio entre agilidade e segurança</td>
+              </tr>
+              <tr>
+                <td><strong>Plan only</strong></td>
+                <td><code>--no-auto-accept</code></td>
+                <td>Mostra o plano mas não executa nada</td>
+                <td>Revisar o que será feito antes de autorizar em projetos críticos</td>
+              </tr>
+              <tr>
+                <td><strong>Auto-accept</strong></td>
+                <td><code>--dangerously-skip-permissions</code></td>
+                <td>Executa tudo sem confirmação</td>
+                <td>CI/CD pipelines, containers descartáveis, demos automatizadas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Variáveis de ambiente -->
+      <section class="module-section">
+        <h2>Variáveis de ambiente</h2>
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Obrigatória: chave de API da Anthropic
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+
+# Opcional: modelo padrão (evita usar --model toda vez)
+export CLAUDE_MODEL="claude-sonnet-4-6"
+
+# Opcional: para usar com proxies ou gateways corporativos
+export ANTHROPIC_BASE_URL="https://seu-gateway.empresa.com"
+
+# Opcional: desabilitar telemetria de uso
+export CLAUDE_TELEMETRY_DISABLED=true
+
+# Configuração persistente em ~/.zshrc ou ~/.bashrc
+cat >> ~/.zshrc << 'EOF'
+# Claude Code
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+export CLAUDE_MODEL="claude-sonnet-4-6"
+EOF
+source ~/.zshrc</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+      </section>
+
+      <!-- Section: Atalhos de teclado -->
+      <section class="module-section">
+        <h2>Atalhos de teclado no REPL</h2>
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Controle de execução
+Ctrl+C    # cancela a ação em andamento (Claude para de digitar/executar)
+Ctrl+D    # encerra a sessão REPL (equivalente a /exit)
+
+# Navegação no histórico
+↑ (seta cima)    # prompt anterior no histórico da sessão
+↓ (seta baixo)   # próximo prompt no histórico
+
+# Edição de texto
+Tab              # autocomplete de caminhos de arquivo
+Ctrl+A           # ir para o início da linha
+Ctrl+E           # ir para o final da linha
+Ctrl+U           # apagar da posição atual até o início da linha
+Ctrl+K           # apagar da posição atual até o final da linha
+
+# Formatação de prompts longos
+# Use \ + Enter para continuar o prompt na próxima linha:
+> Analise o arquivo src/auth.ts \
+  e identifique possíveis vulnerabilidades de segurança</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>💡 Dica:</strong> Para prompts muito longos ou complexos, escreva-os em um editor de texto e passe via arquivo com <code>--file</code> ou via pipe: <code>cat meu-prompt.txt | claude</code>. Isso é especialmente útil para especificações detalhadas ou quando você precisa reusar o mesmo prompt.
+        </div>
+      </section>
+
+      <!-- Exercise -->
+      <section data-testid="exercise" class="exercise-section">
+        <h3>🎯 Exercício Prático</h3>
+        <p><strong>Exercício 1 — Comparando modelos: qualidade vs velocidade</strong></p>
+        <p>Execute a mesma pergunta com modelos diferentes e observe as diferenças em velocidade, detalhamento e qualidade da resposta.</p>
+        <ol>
+          <li>Abra dois terminais lado a lado</li>
+          <li>No primeiro, execute: <code>claude --model claude-haiku-4-5 "qual a diferença entre var, let e const em JavaScript? Dê exemplos práticos."</code></li>
+          <li>No segundo, execute: <code>claude --model claude-sonnet-4-6 "qual a diferença entre var, let e const em JavaScript? Dê exemplos práticos."</code></li>
+          <li>Compare: velocidade de resposta, quantidade de detalhes, qualidade dos exemplos</li>
+          <li>Execute também: <code>claude --model claude-opus-4-5 "qual a diferença entre var, let e const?"</code> e compare todos os três</li>
+        </ol>
+        <div class="callout callout-tip">
+          <strong>Resultado esperado:</strong> Haiku responde mais rápido mas com menos detalhes. Sonnet tem um bom equilíbrio. Opus é o mais detalhado e completo, mas leva mais tempo. Para esta pergunta simples, Haiku ou Sonnet são suficientes — Opus seria excessivo.
+        </div>
+
+        <p style="margin-top: 2rem;"><strong>Exercício 2 — Workflow com pipe</strong></p>
+        <p>Use o modo pipe para analisar um diff de git e gerar um commit message automaticamente.</p>
+        <ol>
+          <li>Faça alguma modificação em qualquer arquivo de um projeto git</li>
+          <li>Execute: <code>git diff | claude "baseado neste diff, escreva uma mensagem de commit seguindo o formato conventional commits (feat/fix/refactor/etc)"</code></li>
+          <li>Observe como o Claude Code analisa as mudanças e gera uma mensagem apropriada</li>
+          <li>Tente também: <code>git log --oneline -10 | claude "identifique padrões nos últimos 10 commits e sugira melhorias no processo de commit"</code></li>
+        </ol>
+        <div class="callout callout-tip">
+          <strong>Resultado esperado:</strong> Claude Code deve gerar uma mensagem de commit clara e no formato conventional commits, baseada exatamente nas mudanças do diff. Por exemplo: <em>"feat(auth): add JWT token refresh endpoint with 7-day expiration"</em>
+        </div>
+      </section>
+
+      <!-- Resources -->
+      <section class="resources-section">
+        <h3>📚 Recursos</h3>
+        <div class="resources-grid">
+          <a href="https://docs.anthropic.com/en/docs/claude-code/cli-reference" target="_blank" rel="noopener" class="resource-card resource-card-docs">
+            <div class="resource-type">Docs</div>
+            <div class="resource-title">CLI Reference — Documentação oficial</div>
+            <div class="resource-desc">Referência completa de todas as flags, subcomandos e opções da CLI</div>
+          </a>
+          <a href="https://docs.anthropic.com/en/docs/claude-code/settings" target="_blank" rel="noopener" class="resource-card resource-card-docs">
+            <div class="resource-type">Docs</div>
+            <div class="resource-title">Settings e Configuração</div>
+            <div class="resource-desc">Guia completo de configuração via variáveis de ambiente e arquivos de configuração</div>
+          </a>
+          <a href="https://docs.anthropic.com/en/docs/about-claude/models/overview" target="_blank" rel="noopener" class="resource-card resource-card-docs">
+            <div class="resource-type">Docs</div>
+            <div class="resource-title">Modelos Claude — Comparativo e preços</div>
+            <div class="resource-desc">Tabela atualizada de todos os modelos disponíveis com capacidades e preços</div>
+          </a>
+        </div>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete">✓ Marcar como concluído</button>
+        <div class="nav-prev-next">
+          <a data-testid="btn-prev" href="/modules/01-fundacoes/" class="btn btn-prev">← O que é Claude Code</a>
+          <a data-testid="btn-next" href="/modules/01-fundacoes/claude-md.html" class="btn btn-next">Próximo: CLAUDE.md →</a>
+        </div>
+      </nav>
+
+      <div style="display:none">
+        <div data-testid="progress-bar"><div class="progress-fill"></div></div>
+        <div data-testid="progress-text">0%</div>
+      </div>
+    </article>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

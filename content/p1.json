@@ -1,0 +1,477 @@
+{
+  "part": 1,
+  "title": "Fundações",
+  "modules": [
+    {
+      "id": 1,
+      "slug": "introducao",
+      "path": "modules/01-fundacoes/index.html",
+      "title": "O que é Claude Code",
+      "subtitle": "Conheça o agente de IA de linha de comando da Anthropic e como ele opera diretamente no seu ambiente de desenvolvimento",
+      "duration": "~15 min",
+      "difficulty": "Iniciante",
+      "objectives": [
+        "Entender o que é Claude Code e como ele difere de outros assistentes de IA",
+        "Instalar e configurar Claude Code no seu ambiente",
+        "Autenticar com a API da Anthropic",
+        "Executar sua primeira sessão interativa",
+        "Compreender a arquitetura de ferramentas do Claude Code"
+      ],
+      "sections": [
+        {
+          "type": "text",
+          "title": "O que é Claude Code",
+          "content": "Claude Code é um agente de IA de linha de comando desenvolvido pela Anthropic. Diferente de chatbots tradicionais que vivem em interfaces web, o Claude Code opera diretamente no seu terminal com acesso real ao seu ambiente de desenvolvimento.\n\nIsso significa que ele pode ler e escrever arquivos, executar comandos shell, interagir com git, instalar dependências e realizar qualquer tarefa que você faria no terminal — tudo de forma autônoma ou com sua supervisão.\n\nClaude Code usa os modelos Claude da Anthropic (Opus, Sonnet e Haiku) como seu backend de inteligência. Você escolhe o modelo de acordo com a complexidade da tarefa e o custo que está disposto a pagar."
+        },
+        {
+          "type": "table",
+          "title": "Por que usar Claude Code",
+          "content": "Veja como o Claude Code se compara a outras ferramentas de IA para desenvolvedores:",
+          "headers": ["Feature", "Claude Code", "ChatGPT", "GitHub Copilot"],
+          "rows": [
+            ["Acesso ao filesystem", "✓ Total", "✗ Nenhum", "Parcial (no editor)"],
+            ["Executa comandos shell", "✓ Sim", "✗ Não", "✗ Não"],
+            ["Edição multi-arquivo", "✓ Sim", "✗ Não", "✓ Sim"],
+            ["Hooks e automação", "✓ Sim", "✗ Não", "✗ Não"],
+            ["Subagentes paralelos", "✓ Sim", "✗ Não", "✗ Não"],
+            ["Integração com git", "✓ Nativa", "✗ Não", "Parcial"],
+            ["Contexto do projeto", "✓ Via CLAUDE.md", "Manual (paste)", "Parcial (workspace)"],
+            ["Uso via terminal", "✓ CLI nativo", "✗ Não", "✗ Não"]
+          ]
+        },
+        {
+          "type": "text",
+          "title": "Pré-requisitos",
+          "content": "Antes de instalar o Claude Code, você precisa ter:\n\n- **Node.js 18+** instalado (verifique com `node --version`)\n- **npm** ou outro package manager\n- Uma **conta Anthropic** em console.anthropic.com\n- Uma **API key** da Anthropic (gerada no Console)"
+        },
+        {
+          "type": "code",
+          "title": "Instalação",
+          "content": "# Instalar globalmente via npm\nnpm install -g @anthropic-ai/claude-code\n\n# Verificar a instalação\nclaude --version\n\n# Exemplo de saída esperada:\n# claude v1.x.x\n\n# Iniciar o Claude Code pela primeira vez\nclaude",
+          "language": "bash"
+        },
+        {
+          "type": "callout",
+          "calloutType": "info",
+          "title": "Instalação em sistemas corporativos",
+          "content": "Em ambientes corporativos com proxies ou registries privados, pode ser necessário configurar o npm para usar o registry correto. Use `npm config set registry <url>` ou configure via variáveis de ambiente. O Claude Code também suporta `ANTHROPIC_BASE_URL` para apontar para gateways de API internos."
+        },
+        {
+          "type": "code",
+          "title": "Autenticação com API Key",
+          "content": "# Opção 1: Variável de ambiente (recomendado para desenvolvimento)\nexport ANTHROPIC_API_KEY=\"sk-ant-api03-...\"\n\n# Adicionar ao seu .bashrc ou .zshrc para persistir\necho 'export ANTHROPIC_API_KEY=\"sk-ant-api03-...\"' >> ~/.zshrc\nsource ~/.zshrc\n\n# Opção 2: Login interativo (salva credenciais localmente)\nclaude auth login\n\n# Verificar autenticação\nclaude auth status",
+          "language": "bash"
+        },
+        {
+          "type": "callout",
+          "calloutType": "warning",
+          "title": "Segurança da API Key",
+          "content": "NUNCA commite sua API key em repositórios. Use variáveis de ambiente ou arquivos `.env` listados no `.gitignore`. A API key começa com `sk-ant-` e deve ser tratada como uma senha — quem a tiver pode usar sua conta e incorrer em custos."
+        },
+        {
+          "type": "text",
+          "title": "Sua primeira sessão",
+          "content": "Ao executar `claude` pela primeira vez, você verá uma interface REPL (Read-Eval-Print Loop) no terminal. A interface mostra:\n\n- O modelo em uso (ex: `claude-sonnet-4-6`)\n- O diretório de trabalho atual\n- Um prompt para você digitar sua mensagem\n\nVocê pode pedir qualquer coisa: analisar código, criar arquivos, executar comandos, fazer perguntas sobre seu projeto. O Claude Code vai usar suas ferramentas para completar a tarefa, pedindo confirmação antes de ações potencialmente destrutivas."
+        },
+        {
+          "type": "code",
+          "title": "Exemplos de primeiras interações",
+          "content": "# Inicie o Claude Code\nclaude\n\n# Você verá algo como:\n# ╭─────────────────────────────────────╮\n# │ Claude Code v1.x.x                  │\n# │ Model: claude-sonnet-4-6            │\n# │ Working dir: /seu/projeto           │\n# ╰─────────────────────────────────────╯\n# > \n\n# Digite sua primeira pergunta:\n# > liste os arquivos do diretório atual\n\n# Claude Code vai executar ls e mostrar o resultado\n# > qual é a estrutura do projeto?\n\n# Claude Code vai ler os arquivos e explicar a estrutura",
+          "language": "bash"
+        },
+        {
+          "type": "text",
+          "title": "Como o Claude Code funciona por baixo dos panos",
+          "content": "O Claude Code opera através de um conjunto de ferramentas que permitem ao modelo interagir com seu ambiente. Cada vez que você faz uma solicitação, o modelo decide quais ferramentas usar e em que ordem.\n\n**Ferramentas principais:**\n\n- **Read** — lê o conteúdo de arquivos\n- **Write** — cria ou sobrescreve arquivos\n- **Edit** — faz edições cirúrgicas em arquivos existentes\n- **Bash** — executa comandos shell\n- **Glob** — busca arquivos por padrão\n- **Grep** — busca conteúdo dentro de arquivos\n- **WebFetch** — acessa URLs (documentação, APIs)\n- **TodoWrite** — gerencia tarefas durante sessões longas\n\nO modelo usa essas ferramentas de forma encadeada: lê arquivos para entender o contexto, planeja a solução, escreve ou edita arquivos, executa testes — tudo de forma autônoma."
+        },
+        {
+          "type": "callout",
+          "calloutType": "tip",
+          "title": "Dica de produtividade",
+          "content": "Para projetos complexos, sempre inicie a sessão pedindo ao Claude Code para 'explorar o projeto e entender sua estrutura antes de fazer qualquer mudança'. Isso garante que ele tenha contexto suficiente para tomar decisões melhores."
+        }
+      ],
+      "exercises": [
+        {
+          "title": "Primeira instalação e sessão",
+          "description": "Instale o Claude Code, configure sua API key e execute seu primeiro comando para listar arquivos do diretório.",
+          "steps": [
+            "Abra seu terminal",
+            "Execute `npm install -g @anthropic-ai/claude-code`",
+            "Configure sua API key: `export ANTHROPIC_API_KEY='sua-key-aqui'`",
+            "Execute `claude --version` para verificar a instalação",
+            "Navegue até um projeto existente: `cd /seu/projeto`",
+            "Execute `claude \"liste os arquivos do diretório atual e explique para que serve cada um\"`",
+            "Observe como o Claude Code usa a ferramenta Bash para listar os arquivos e Read para entender cada um"
+          ],
+          "expectedOutput": "O Claude Code deve listar os arquivos do diretório e fornecer uma explicação do propósito de cada arquivo, demonstrando que ele realmente leu e compreendeu o contexto do projeto."
+        }
+      ],
+      "resources": [
+        {
+          "type": "docs",
+          "title": "Documentação oficial do Claude Code",
+          "url": "https://docs.anthropic.com/en/docs/claude-code",
+          "description": "Documentação completa com guias de instalação, referência da CLI, e exemplos de uso"
+        },
+        {
+          "type": "github",
+          "title": "Repositório GitHub do Claude Code",
+          "url": "https://github.com/anthropics/claude-code",
+          "description": "Código fonte, issues, e contribuições da comunidade"
+        },
+        {
+          "type": "docs",
+          "title": "Anthropic Console — Gerenciar API Keys",
+          "url": "https://console.anthropic.com/",
+          "description": "Crie e gerencie suas API keys, monitore uso e custos"
+        },
+        {
+          "type": "docs",
+          "title": "Página oficial do Claude Code",
+          "url": "https://www.anthropic.com/claude-code",
+          "description": "Site oficial com visão geral de features e casos de uso"
+        }
+      ],
+      "nextModule": "cli.html",
+      "prevModule": null
+    },
+    {
+      "id": 2,
+      "slug": "cli",
+      "path": "modules/01-fundacoes/cli.html",
+      "title": "CLI Completo",
+      "subtitle": "Domine todos os modos de uso, flags, comandos slash e atalhos do terminal do Claude Code",
+      "duration": "~20 min",
+      "difficulty": "Iniciante",
+      "objectives": [
+        "Conhecer todos os modos de invocação do Claude Code (interativo, one-shot, pipe)",
+        "Usar as principais flags de linha de comando",
+        "Dominar os comandos slash built-in no REPL",
+        "Entender os três modos de permissão",
+        "Configurar variáveis de ambiente essenciais",
+        "Usar atalhos de teclado para aumentar produtividade"
+      ],
+      "sections": [
+        {
+          "type": "text",
+          "title": "Modos de uso",
+          "content": "O Claude Code pode ser invocado de quatro formas principais, cada uma adequada a um caso de uso diferente. Entender quando usar cada modo é fundamental para maximizar sua produtividade."
+        },
+        {
+          "type": "code",
+          "title": "Os quatro modos de invocação",
+          "content": "# 1. Modo interativo (REPL) — sessão contínua com histórico e contexto acumulado\nclaude\n\n# 2. Modo one-shot — uma única pergunta, resposta e encerra\nclaude \"explique este código\"\nclaude \"crie um componente React de botão com TypeScript\"\nclaude \"qual é a diferença entre Promise.all e Promise.allSettled?\"\n\n# 3. Pipe input — envia conteúdo via stdin\ncat arquivo.py | claude \"revise este código e sugira melhorias\"\ngit diff HEAD~1 | claude \"escreva um commit message para este diff\"\ncat error.log | claude \"o que causou este erro?\"\n\n# 4. Com arquivo de entrada\nclaude --file problema.txt\nclaude --file especificacao.md \"implemente o que está descrito neste arquivo\"",
+          "language": "bash"
+        },
+        {
+          "type": "callout",
+          "calloutType": "tip",
+          "title": "Modo one-shot em scripts",
+          "content": "O modo one-shot é perfeito para integrar Claude Code em scripts de automação e CI/CD pipelines. Use `--output-format json` para processar a resposta programaticamente com `jq` ou em linguagens de script."
+        },
+        {
+          "type": "text",
+          "title": "Flags principais",
+          "content": "As flags permitem personalizar o comportamento do Claude Code para cada invocação. As mais importantes controlam modelo, contexto, formato de saída e permissões."
+        },
+        {
+          "type": "code",
+          "title": "Seleção de modelo",
+          "content": "# Opus — mais capaz, mais lento, mais caro. Para tarefas complexas de arquitetura.\nclaude --model claude-opus-4-5\n\n# Sonnet — equilíbrio ideal entre qualidade e velocidade. Padrão recomendado.\nclaude --model claude-sonnet-4-6\n\n# Haiku — mais rápido, mais barato. Para tarefas simples e repetitivas.\nclaude --model claude-haiku-4-5\n\n# Definir modelo padrão via variável de ambiente (evita digitar toda vez)\nexport CLAUDE_MODEL=claude-sonnet-4-6",
+          "language": "bash"
+        },
+        {
+          "type": "table",
+          "title": "Comparativo de modelos",
+          "content": "Escolha o modelo certo para cada tipo de tarefa:",
+          "headers": ["Modelo", "Velocidade", "Custo", "Melhor para"],
+          "rows": [
+            ["claude-opus-4-5", "Lento", "Alto ($$$)", "Arquitetura, refactoring complexo, análise profunda"],
+            ["claude-sonnet-4-6", "Médio", "Médio ($$)", "Desenvolvimento diário, debugging, features"],
+            ["claude-haiku-4-5", "Rápido", "Baixo ($)", "Perguntas simples, formatação, tarefas repetitivas"]
+          ]
+        },
+        {
+          "type": "code",
+          "title": "Flags de contexto e output",
+          "content": "# Adicionar diretório inteiro ao contexto (útil para monorepos)\nclaude --add-dir ./src\nclaude --add-dir ./packages/ui --add-dir ./packages/api\n\n# Formato de saída\nclaude --output-format text     # texto simples (padrão)\nclaude --output-format json     # JSON estruturado (bom para scripts)\nclaude --output-format stream-json  # JSON streamado linha por linha\n\n# Exemplo: processar saída JSON com jq\nclaude --output-format json \"liste as funções exportadas em src/utils.ts\" | jq '.message'\n\n# Output detalhado para debugging\nclaude --verbose \"por que este teste está falhando?\"",
+          "language": "bash"
+        },
+        {
+          "type": "code",
+          "title": "Flags de permissão",
+          "content": "# Padrão: confirma ações potencialmente destrutivas (deletar arquivos, etc)\nclaude\n\n# Plan mode: apenas planeja, não executa nenhuma ação\n# Ótimo para entender o que será feito antes de autorizar\nclaude --no-auto-accept\n\n# CUIDADO: aceita TUDO automaticamente sem pedir confirmação\n# Use apenas em ambientes controlados (CI, containers, projetos descartáveis)\nclaude --dangerously-skip-permissions\n\n# Definir ferramentas permitidas explicitamente\nclaude --allowedTools Read,Write,Bash\nclaude --allowedTools Read  # apenas leitura, nunca modifica nada",
+          "language": "bash"
+        },
+        {
+          "type": "callout",
+          "calloutType": "warning",
+          "title": "Cuidado com --dangerously-skip-permissions",
+          "content": "A flag `--dangerously-skip-permissions` desabilita todas as confirmações de segurança. O Claude Code pode deletar arquivos, executar comandos destrutivos e fazer alterações irreversíveis sem pedir sua aprovação. Use apenas em ambientes de desenvolvimento isolados ou containers descartáveis — NUNCA em produção ou em projetos com dados importantes."
+        },
+        {
+          "type": "text",
+          "title": "Comandos slash no REPL",
+          "content": "Dentro do modo interativo (REPL), você pode usar comandos especiais prefixados com `/` para controlar a sessão. Esses comandos são executados localmente, sem consumir tokens da API."
+        },
+        {
+          "type": "code",
+          "title": "Referência completa de comandos slash",
+          "content": "# Ajuda e informações\n/help              # lista todos os comandos disponíveis\n/status            # mostra status da sessão (tokens usados, modelo, custo estimado)\n/cost              # mostra custo acumulado da sessão atual\n/model             # troca o modelo durante a sessão\n\n# Gerenciamento de contexto\n/clear             # limpa todo o histórico da conversa (contexto zerado)\n/compact           # comprime o contexto mantendo apenas o essencial\n                   # útil quando a sessão fica muito longa e o contexto enche\n\n# Memória persistente\n/memory            # abre o arquivo de memória para edição\n                   # conteúdo persiste entre sessões\n\n# Ferramentas de desenvolvimento\n/review            # inicia um review de Pull Request\n                   # pode aceitar número ou URL do PR\n\n# Exemplo de uso do /compact\n# Após uma sessão longa de debugging:\n> /compact\n# Claude resume o contexto em um sumário e continua de onde parou",
+          "language": "bash"
+        },
+        {
+          "type": "callout",
+          "calloutType": "info",
+          "title": "Quando usar /compact",
+          "content": "Use `/compact` quando a sessão ficar longa (mais de 30-40 trocas) ou quando você perceber que o Claude Code está 'esquecendo' contexto anterior. O comando resume toda a conversa em um bloco denso, liberando espaço na janela de contexto para continuar trabalhando."
+        },
+        {
+          "type": "text",
+          "title": "Modos de permissão",
+          "content": "O Claude Code tem três modos de operação em relação a permissões, que determinam como ele lida com ações que afetam seu sistema."
+        },
+        {
+          "type": "table",
+          "title": "Os três modos de permissão",
+          "content": "Entenda quando usar cada modo:",
+          "headers": ["Modo", "Flag", "Comportamento", "Quando usar"],
+          "rows": [
+            ["Default", "(sem flag)", "Confirma ações destrutivas (delete, overwrite)", "Desenvolvimento diário — equilíbrio entre agilidade e segurança"],
+            ["Plan only", "--no-auto-accept", "Mostra o plano mas não executa nada", "Revisar o que será feito antes de autorizar em projetos críticos"],
+            ["Auto-accept", "--dangerously-skip-permissions", "Executa tudo sem confirmação", "CI/CD pipelines, containers descartáveis, demos automatizadas"]
+          ]
+        },
+        {
+          "type": "code",
+          "title": "Variáveis de ambiente",
+          "content": "# Obrigatória: chave de API da Anthropic\nexport ANTHROPIC_API_KEY=\"sk-ant-api03-...\"\n\n# Opcional: modelo padrão (evita usar --model toda vez)\nexport CLAUDE_MODEL=\"claude-sonnet-4-6\"\n\n# Opcional: para usar com proxies ou gateways corporativos\nexport ANTHROPIC_BASE_URL=\"https://seu-gateway.empresa.com\"\n\n# Opcional: desabilitar telemetria de uso\nexport CLAUDE_TELEMETRY_DISABLED=true\n\n# Configuração persistente em ~/.zshrc ou ~/.bashrc\ncat >> ~/.zshrc << 'EOF'\n# Claude Code\nexport ANTHROPIC_API_KEY=\"sk-ant-api03-...\"\nexport CLAUDE_MODEL=\"claude-sonnet-4-6\"\nEOF\nsource ~/.zshrc",
+          "language": "bash"
+        },
+        {
+          "type": "code",
+          "title": "Atalhos de teclado no REPL",
+          "content": "# Controle de execução\nCtrl+C    # cancela a ação em andamento (Claude para de digitar/executar)\nCtrl+D    # encerra a sessão REPL (equivalente a /exit)\n\n# Navegação no histórico\n↑ (seta cima)    # prompt anterior no histórico da sessão\n↓ (seta baixo)   # próximo prompt no histórico\n\n# Edição de texto\nTab              # autocomplete de caminhos de arquivo\nCtrl+A           # ir para o início da linha\nCtrl+E           # ir para o final da linha\nCtrl+U           # apagar da posição atual até o início da linha\nCtrl+K           # apagar da posição atual até o final da linha\n\n# Formatação de prompts longos\n# Use \\ + Enter para continuar o prompt na próxima linha:\n> Analise o arquivo src/auth.ts \\\n  e identifique possíveis vulnerabilidades de segurança",
+          "language": "bash"
+        },
+        {
+          "type": "callout",
+          "calloutType": "tip",
+          "title": "Compose prompts longos externamente",
+          "content": "Para prompts muito longos ou complexos, escreva-os em um editor de texto e passe via arquivo com `--file` ou via pipe: `cat meu-prompt.txt | claude`. Isso é especialmente útil para especificações detalhadas ou quando você precisa reusar o mesmo prompt."
+        }
+      ],
+      "exercises": [
+        {
+          "title": "Comparando modelos: qualidade vs velocidade",
+          "description": "Execute a mesma pergunta com modelos diferentes e observe as diferenças em velocidade, detalhamento e qualidade da resposta.",
+          "steps": [
+            "Abra dois terminais lado a lado",
+            "No primeiro, execute: `claude --model claude-haiku-4-5 \"qual a diferença entre var, let e const em JavaScript? Dê exemplos práticos.\"`",
+            "No segundo, execute: `claude --model claude-sonnet-4-6 \"qual a diferença entre var, let e const em JavaScript? Dê exemplos práticos.\"`",
+            "Compare: velocidade de resposta, quantidade de detalhes, qualidade dos exemplos",
+            "Execute também: `claude --model claude-opus-4-5 \"qual a diferença entre var, let e const?\"` e compare todos os três"
+          ],
+          "expectedOutput": "Haiku responde mais rápido mas com menos detalhes. Sonnet tem um bom equilíbrio. Opus é o mais detalhado e completo, mas leva mais tempo. Para esta pergunta simples, Haiku ou Sonnet são suficientes — Opus seria excessivo."
+        },
+        {
+          "title": "Workflow com pipe",
+          "description": "Use o modo pipe para analisar um diff de git e gerar um commit message automaticamente.",
+          "steps": [
+            "Faça alguma modificação em qualquer arquivo de um projeto git",
+            "Execute: `git diff | claude \"baseado neste diff, escreva uma mensagem de commit seguindo o formato conventional commits (feat/fix/refactor/etc)\"`",
+            "Observe como o Claude Code analisa as mudanças e gera uma mensagem apropriada",
+            "Tente também: `git log --oneline -10 | claude \"identifique padrões nos últimos 10 commits e sugira melhorias no processo de commit\"` "
+          ],
+          "expectedOutput": "Claude Code deve gerar uma mensagem de commit clara e no formato conventional commits, baseada exatamente nas mudanças do diff. Por exemplo: 'feat(auth): add JWT token refresh endpoint with 7-day expiration'"
+        }
+      ],
+      "resources": [
+        {
+          "type": "docs",
+          "title": "CLI Reference — Documentação oficial",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/cli-reference",
+          "description": "Referência completa de todas as flags, subcomandos e opções da CLI"
+        },
+        {
+          "type": "docs",
+          "title": "Settings e Configuração",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/settings",
+          "description": "Guia completo de configuração via variáveis de ambiente e arquivos de configuração"
+        },
+        {
+          "type": "docs",
+          "title": "Modelos Claude — Comparativo e preços",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
+          "description": "Tabela atualizada de todos os modelos disponíveis com capacidades e preços"
+        }
+      ],
+      "nextModule": "claude-md.html",
+      "prevModule": "index.html"
+    },
+    {
+      "id": 3,
+      "slug": "claude-md",
+      "path": "modules/01-fundacoes/claude-md.html",
+      "title": "CLAUDE.md",
+      "subtitle": "Configure comportamento persistente e contexto de projeto com o arquivo de instruções do Claude Code",
+      "duration": "~20 min",
+      "difficulty": "Iniciante",
+      "objectives": [
+        "Entender o que é o CLAUDE.md e por que ele é importante",
+        "Conhecer a hierarquia de arquivos CLAUDE.md (global, projeto, subdiretório)",
+        "Criar um CLAUDE.md eficaz para um projeto real",
+        "Usar a diretiva @ para importar outros arquivos de documentação",
+        "Configurar o CLAUDE.md global para preferências pessoais",
+        "Aplicar boas práticas para maximizar a eficácia do arquivo"
+      ],
+      "sections": [
+        {
+          "type": "text",
+          "title": "O que é CLAUDE.md",
+          "content": "CLAUDE.md é um arquivo Markdown especial que o Claude Code lê automaticamente ao iniciar uma sessão. Ele funciona como um conjunto de instruções persistentes que define:\n\n- O contexto do projeto (o que é, qual o stack, qual o domínio)\n- Convenções de código da equipe\n- Comandos importantes que Claude deve conhecer\n- Arquivos críticos que merecem atenção especial\n- Restrições e comportamentos desejados\n\nPense nele como um README, mas escrito especificamente para o Claude Code — quanto melhor documentado, menos você precisa explicar em cada nova sessão."
+        },
+        {
+          "type": "callout",
+          "calloutType": "tip",
+          "title": "CLAUDE.md é como um README para o Claude",
+          "content": "Um bom CLAUDE.md elimina a necessidade de repetir contexto a cada sessão. Em vez de começar cada conversa com 'Este é um projeto Next.js com TypeScript e Prisma...', você escreve isso uma vez no CLAUDE.md e o Claude Code já sabe. É uma das formas mais eficazes de aumentar a qualidade das respostas sem custo adicional de tokens."
+        },
+        {
+          "type": "text",
+          "title": "Hierarquia de arquivos CLAUDE.md",
+          "content": "O Claude Code suporta múltiplos arquivos CLAUDE.md em diferentes níveis de hierarquia. Todos são carregados e combinados, com o mais específico tendo precedência sobre o mais geral."
+        },
+        {
+          "type": "code",
+          "title": "Hierarquia de carregamento",
+          "content": "# 1. Global — carregado em TODAS as sessões, qualquer diretório\n~/.claude/CLAUDE.md\n\n# 2. Projeto — carregado quando você inicia Claude Code na raiz do projeto\n/seu/projeto/CLAUDE.md\n\n# 3. Subdiretório — carregado apenas quando você trabalha naquele subdiretório\n/seu/projeto/src/CLAUDE.md\n/seu/projeto/packages/api/CLAUDE.md\n\n# Exemplo de estrutura em monorepo\nmeu-monorepo/\n├── CLAUDE.md                    # Contexto geral do monorepo\n├── packages/\n│   ├── api/\n│   │   └── CLAUDE.md            # Contexto específico da API\n│   └── web/\n│       └── CLAUDE.md            # Contexto específico do frontend\n└── docs/\n    └── CLAUDE.md                # Instruções para documentação",
+          "language": "bash"
+        },
+        {
+          "type": "code",
+          "title": "Estrutura típica de um CLAUDE.md de projeto",
+          "content": "# Project Context\nEste é um app Next.js para gestão de tarefas empresariais.\nO backend é uma API REST com autenticação JWT.\n\n## Tech Stack\n- Next.js 15 App Router (TypeScript)\n- Prisma ORM + PostgreSQL\n- NextAuth.js para autenticação\n- shadcn/ui + Tailwind CSS v4\n- Jest + Testing Library para testes\n- pnpm como package manager\n\n## Architecture\n- `src/app/` — rotas e páginas (App Router)\n- `src/components/` — componentes reutilizáveis\n- `src/lib/` — utilitários e configurações\n- `src/server/` — lógica server-side e Server Actions\n- `prisma/` — schema e migrations do banco\n\n## Code Conventions\n- TypeScript strict mode (sem `any` explícito)\n- Use `async/await`, nunca `.then()/.catch()` encadeados\n- Componentes em PascalCase, funções em camelCase\n- Sem default exports — sempre use named exports\n- Server Actions em `src/server/actions/`\n- Validação de input com Zod sempre\n\n## Important Commands\n- `pnpm dev` — inicia servidor de desenvolvimento (porta 3000)\n- `pnpm build` — build de produção\n- `pnpm test` — executa todos os testes\n- `pnpm test:watch` — testes em modo watch\n- `pnpm db:migrate` — aplica migrations do Prisma\n- `pnpm db:seed` — popula banco com dados de desenvolvimento\n- `pnpm lint` — verifica linting\n\n## Critical Files\n- `src/lib/db.ts` — instância do Prisma Client (singleton)\n- `src/lib/auth.ts` — configuração do NextAuth\n- `src/types/index.ts` — tipos TypeScript compartilhados\n- `prisma/schema.prisma` — schema do banco de dados\n- `.env.example` — template de variáveis de ambiente\n\n## Do Not\n- Não faça commit de arquivos `.env` ou segredos\n- Não use `npm` — sempre use `pnpm`\n- Não modifique `prisma/migrations/` manualmente",
+          "language": "markdown"
+        },
+        {
+          "type": "text",
+          "title": "Importando arquivos com @",
+          "content": "Uma feature poderosa do CLAUDE.md é a diretiva `@`, que permite importar o conteúdo de outros arquivos. Isso é útil para modularizar documentação grande ou reutilizar convenções de equipe."
+        },
+        {
+          "type": "code",
+          "title": "Usando a diretiva @ para imports",
+          "content": "# CLAUDE.md — com imports de outros arquivos\n\n# Projeto: Plataforma de E-commerce\n\n## Contexto Geral\nEste arquivo combina contexto do projeto com documentação existente.\n\n## Documentação Importada\n@docs/api-reference.md\n@.claude/team-conventions.md\n@.claude/architecture-decisions.md\n\n## Contexto Adicional\nAlém da documentação acima, sempre:\n- Verifique os testes antes de modificar código de produção\n- Consulte o CHANGELOG.md para entender mudanças recentes",
+          "language": "markdown"
+        },
+        {
+          "type": "code",
+          "title": "Exemplo: .claude/team-conventions.md",
+          "content": "# Team Conventions\n\n## Git Workflow\n- Branches: `feat/`, `fix/`, `chore/`, `docs/`\n- Commits: Conventional Commits (feat, fix, refactor, test, docs)\n- PRs: sempre requerem pelo menos 1 review\n- Never force push to `main` or `develop`\n\n## Code Review Checklist\n- [ ] Testes adicionados/atualizados\n- [ ] Sem `console.log` de debugging\n- [ ] Tipos TypeScript corretos (sem `any`)\n- [ ] Componentes acessíveis (WCAG 2.1 AA)\n- [ ] Performance considerada (lazy loading, memoization)\n\n## Naming Conventions\n- Arquivos de componente: `ComponentName.tsx`\n- Hooks: `use-hook-name.ts`\n- Utilitários: `kebab-case.ts`\n- Constantes: `UPPER_SNAKE_CASE`\n- Tipos/Interfaces: `PascalCase` (sem prefixo I)",
+          "language": "markdown"
+        },
+        {
+          "type": "text",
+          "title": "CLAUDE.md global (~/.claude/CLAUDE.md)",
+          "content": "O arquivo global é carregado em todas as sessões, independente do projeto. Use-o para configurar preferências pessoais, ferramentas favoritas e comportamentos que você quer em todo lugar."
+        },
+        {
+          "type": "code",
+          "title": "Exemplo de CLAUDE.md global",
+          "content": "# Global Instructions — Minhas preferências pessoais\n\n## Preferred Tools\n- Git: use `gh` CLI para operações GitHub (não `git push origin` manual)\n- Package manager: prefira `pnpm` sobre `npm` ou `yarn`\n- Shell: zsh, então scripts devem ser compatíveis com zsh\n\n## Code Style Preferences\n- TypeScript strict mode por padrão\n- Sem default exports — sempre named exports\n- Nomes descritivos (sem `tmp`, `data`, `result` genéricos)\n- Comentários em inglês, comunicação comigo em português\n\n## GitHub Access\n- GitHub CLI (`gh`) está instalado e autenticado como @meu-usuario\n- Use `gh` para todas as operações remotas: PRs, issues, releases\n- Sempre confirme antes de ações destrutivas (force push, deletar branches)\n\n## Workflow Preferences\n- Antes de modificar código, leia os arquivos relevantes primeiro\n- Explique o que vai fazer antes de fazer\n- Prefiro edições cirúrgicas (Edit) a reescritas completas (Write)\n- Quando encontrar bugs, explique a causa raiz antes de corrigir",
+          "language": "markdown"
+        },
+        {
+          "type": "text",
+          "title": "Boas práticas para CLAUDE.md",
+          "content": "Um CLAUDE.md bem escrito é a diferença entre um Claude Code genérico e um assistente que realmente entende seu projeto. Siga estas práticas para máxima eficácia:"
+        },
+        {
+          "type": "table",
+          "title": "O que incluir vs evitar no CLAUDE.md",
+          "content": "Guia rápido para escrever um CLAUDE.md eficaz:",
+          "headers": ["Incluir", "Evitar"],
+          "rows": [
+            ["Stack completo com versões", "Segredos e API keys"],
+            ["Comandos de desenvolvimento (dev, test, build)", "Informações óbvias que qualquer dev já sabe"],
+            ["Convenções específicas da equipe", "Documentação excessivamente longa (use @ para importar)"],
+            ["Arquivos críticos do projeto", "Instruções contraditórias"],
+            ["Restrições importantes (não use X, sempre faça Y)", "Conteúdo que muda frequentemente (use arquivos separados)"],
+            ["Contexto do domínio do negócio", "Dados sensíveis de usuários ou produção"]
+          ]
+        },
+        {
+          "type": "code",
+          "title": "Template starter para novos projetos",
+          "content": "# [Nome do Projeto]\n[Uma frase descrevendo o que o projeto faz e para quem]\n\n## Tech Stack\n- [Framework principal + versão]\n- [Banco de dados + ORM]\n- [Autenticação]\n- [UI library]\n- [Package manager]\n\n## Project Structure\n- `src/` — código fonte principal\n- [Outras pastas importantes]\n\n## Code Conventions\n- [Convenção 1]\n- [Convenção 2]\n\n## Key Commands\n- `[comando]` — [o que faz]\n- `[comando]` — [o que faz]\n\n## Critical Files\n- `[arquivo]` — [por que é crítico]\n\n## Do Not\n- [Restrição importante]\n- [Restrição importante]",
+          "language": "markdown"
+        },
+        {
+          "type": "callout",
+          "calloutType": "info",
+          "title": "CLAUDE.md é versionado com o projeto",
+          "content": "O CLAUDE.md de projeto deve ser commitado no repositório e versionado junto com o código. Assim toda a equipe se beneficia do mesmo contexto. Use o CLAUDE.md global apenas para preferências pessoais que não devem ser compartilhadas com o time."
+        },
+        {
+          "type": "callout",
+          "calloutType": "tip",
+          "title": "Iterando o CLAUDE.md",
+          "content": "Trate o CLAUDE.md como código vivo. Quando o Claude Code fizer algo errado por falta de contexto, adicione aquela informação ao CLAUDE.md. Com o tempo, você terá um arquivo que captura todo o conhecimento importante do projeto de forma que o Claude Code entende perfeitamente."
+        }
+      ],
+      "exercises": [
+        {
+          "title": "Criando seu primeiro CLAUDE.md de projeto",
+          "description": "Crie um CLAUDE.md completo para um projeto existente (ou crie um projeto de exemplo), incluindo todas as seções principais.",
+          "steps": [
+            "Navegue até um projeto existente ou crie um novo diretório de exemplo",
+            "Execute `claude` para iniciar uma sessão interativa",
+            "Peça: 'Explore este projeto e crie um CLAUDE.md completo com: contexto, stack, convenções, comandos principais e arquivos críticos'",
+            "Revise o arquivo gerado e adicione informações que o Claude Code não sabia",
+            "Encerre a sessão com Ctrl+D",
+            "Inicie uma nova sessão com `claude` e verifique que o Claude Code já sabe o contexto sem você precisar explicar",
+            "Teste perguntando: 'Qual é o stack deste projeto?' — deve responder corretamente baseado apenas no CLAUDE.md"
+          ],
+          "expectedOutput": "Um arquivo CLAUDE.md criado na raiz do projeto com pelo menos 5 seções: contexto, stack, estrutura, comandos e convenções. Na segunda sessão, o Claude Code deve demonstrar conhecimento do projeto sem que você precise explicar nada."
+        },
+        {
+          "title": "Configurando o CLAUDE.md global",
+          "description": "Crie um CLAUDE.md global com suas preferências pessoais de desenvolvimento.",
+          "steps": [
+            "Crie o diretório se não existir: `mkdir -p ~/.claude`",
+            "Abra o arquivo para edição: `claude ~/.claude/CLAUDE.md` ou use seu editor favorito",
+            "Adicione suas preferências: package manager preferido, estilo de código, ferramentas que usa, idioma preferido para comunicação",
+            "Salve o arquivo",
+            "Inicie uma nova sessão do Claude Code em qualquer diretório",
+            "Peça para o Claude Code confirmar que entendeu suas preferências: 'Quais são minhas preferências de desenvolvimento?'"
+          ],
+          "expectedOutput": "O Claude Code deve responder com as preferências exatas que você definiu no CLAUDE.md global, confirmando que o arquivo foi carregado corretamente."
+        }
+      ],
+      "resources": [
+        {
+          "type": "docs",
+          "title": "Memory — Documentação oficial de CLAUDE.md",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/memory",
+          "description": "Documentação completa sobre o sistema de memória e CLAUDE.md do Claude Code"
+        },
+        {
+          "type": "docs",
+          "title": "Settings — Configuração do Claude Code",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/settings",
+          "description": "Guia de configuração avançada incluindo hierarquia de settings e variáveis de ambiente"
+        },
+        {
+          "type": "docs",
+          "title": "Tutorials — Melhores práticas",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/tutorials",
+          "description": "Tutoriais práticos mostrando CLAUDE.md em projetos reais"
+        }
+      ],
+      "nextModule": null,
+      "prevModule": "cli.html"
+    }
+  ]
+}

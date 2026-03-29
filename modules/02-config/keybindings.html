@@ -1,51 +1,214 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Keybindings — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>Keybindings</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="active">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon">⚡</span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link active"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>Keybindings</h1>
-    <p>Customize os atalhos de teclado do Claude Code com o arquivo keybindings.json para máxima produtividade.</p>
-    <pre><code>// ~/.claude/keybindings.json
-[
-  { "key": "ctrl+shift+r", "command": "/review-pr" },
-  { "key": "ctrl+shift+d", "command": "/deploy" }
-]</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>// Atalhos padrão
-Ctrl+C  — cancelar operação
-Ctrl+L  — limpar tela
-Esc     — modo plan</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Configure keybindings personalizados para seus comandos mais usados.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/claude-code/keybindings">Documentação oficial Anthropic — Keybindings</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/03-memoria-contexto/memory.html">Próximo módulo</a>
-  </main>
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger">☰</button><span class="mobile-title">Keybindings</span><button data-testid="theme-toggle" class="theme-toggle">🌙</button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 2: Configuração</span> › <span>Keybindings</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button></div>
+    </div>
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 08</div>
+        <h1 class="module-title">Keybindings</h1>
+        <p class="module-description">Domine os atalhos de teclado padrão e crie keybindings customizados para turbinar sua produtividade no Claude Code.</p>
+      </div>
+
+      <section class="module-section">
+        <p class="intro-text">O Claude Code possui um REPL interativo com atalhos de teclado nativos. Além dos defaults, você pode criar bindings customizados — incluindo chord bindings (sequências de teclas) — para disparar skills e comandos com uma combinação.</p>
+      </section>
+
+      <section class="module-section">
+        <h2>Atalhos padrão no REPL</h2>
+        <p>Memorize esses atalhos para navegar e controlar o Claude Code com eficiência:</p>
+        <div class="table-wrap">
+          <table class="data-table keybindings-table">
+            <thead>
+              <tr>
+                <th>Teclas</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><kbd>Ctrl+C</kbd></td>
+                <td>Cancela operação atual</td>
+              </tr>
+              <tr>
+                <td><kbd>Ctrl+D</kbd></td>
+                <td>Encerra a sessão</td>
+              </tr>
+              <tr>
+                <td><kbd>Ctrl+L</kbd></td>
+                <td>Limpa a tela</td>
+              </tr>
+              <tr>
+                <td><kbd>↑</kbd> / <kbd>↓</kbd></td>
+                <td>Navega pelo histórico de prompts</td>
+              </tr>
+              <tr>
+                <td><kbd>Ctrl+R</kbd></td>
+                <td>Busca no histórico de prompts</td>
+              </tr>
+              <tr>
+                <td><kbd>Tab</kbd></td>
+                <td>Autocomplete de paths e nomes de arquivos</td>
+              </tr>
+              <tr>
+                <td><kbd>Shift+Enter</kbd></td>
+                <td>Insere nova linha no prompt (multi-linha)</td>
+              </tr>
+              <tr>
+                <td><kbd>Esc Esc</kbd></td>
+                <td>Ativa modo vim (se configurado)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="module-section">
+        <h2>Configurando keybindings customizados</h2>
+        <p>Crie ou edite <code>~/.claude/keybindings.json</code> para adicionar seus próprios atalhos. Cada binding mapeia uma combinação de teclas para um slash command:</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
+  "bindings": [
+    {
+      "keys": "ctrl+shift+c",
+      "command": "/clear",
+      "description": "Limpar contexto"
+    },
+    {
+      "keys": "ctrl+shift+r",
+      "command": "/review-pr",
+      "description": "Review PR atual"
+    },
+    {
+      "keys": "ctrl+shift+t",
+      "command": "/test",
+      "description": "Gerar testes"
+    }
+  ]
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="module-section">
+        <h2>Chord bindings — sequência de teclas</h2>
+        <p>Chord bindings são sequências onde você pressiona uma combinação, solta, e pressiona outra — inspirados no modelo do VS Code:</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
+  "bindings": [
+    {
+      "keys": "ctrl+k ctrl+c",
+      "command": "/commit",
+      "description": "Commit com mensagem gerada"
+    }
+  ]
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-tip">
+          <strong>Dica:</strong> Chord bindings são sequências onde você pressiona uma combinação de teclas, solta, e pressiona outra. Inspirados no modelo do VS Code (<kbd>Ctrl+K</kbd> → <kbd>Ctrl+C</kbd>).
+        </div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício: criar seus keybindings</h2>
+        <div class="exercise-body">
+          <div class="exercise-prompt">
+            <h3>Objetivo</h3>
+            <p>Configure seu <code>~/.claude/keybindings.json</code> com pelo menos 3 atalhos para as skills que você mais usa. Sugestões:</p>
+            <ul>
+              <li><kbd>Ctrl+Shift+C</kbd> → <code>/commit</code></li>
+              <li><kbd>Ctrl+Shift+T</kbd> → <code>/test</code></li>
+              <li><kbd>Ctrl+K Ctrl+R</kbd> → <code>/review-pr</code></li>
+            </ul>
+          </div>
+          <div class="exercise-solution">
+            <h3>Exemplo</h3>
+            <div class="code-block-wrapper"><pre><code class="language-json">{
+  "bindings": [
+    {
+      "keys": "ctrl+shift+c",
+      "command": "/commit",
+      "description": "Gerar commit semântico"
+    },
+    {
+      "keys": "ctrl+shift+t",
+      "command": "/test",
+      "description": "Gerar testes unitários"
+    },
+    {
+      "keys": "ctrl+k ctrl+r",
+      "command": "/review-pr",
+      "description": "Review do PR atual"
+    }
+  ]
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://docs.anthropic.com/en/docs/claude-code/keyboard-shortcuts" target="_blank" rel="noopener" class="resource-link">Documentação oficial — Keyboard Shortcuts</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete">✓ Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="hooks.html" class="btn btn-prev">← Anterior</a> <a data-testid="btn-next" href="/modules/03-memoria-contexto/memory.html" class="btn btn-next">Próximo →</a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

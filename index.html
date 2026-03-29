@@ -3,40 +3,247 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Code Course — Zero to Hero</title>
+  <title>Claude Code Course — Zero to Hero para Desenvolvedores</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/">Módulo 1: Fundações</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html">Módulo 2: CLI</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3: CLAUDE.md</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4: Tools</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5: Settings</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6: Skills</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7: Hooks</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8: Keybindings</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9: Memória</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10: Contexto</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11: MCP</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12: Agent Tool</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13: Subagentes</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14: Plan Mode</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15: CLI Corporativo</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16: IDE</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17: Modelos</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18: API &amp; SDK</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19: Boas Práticas</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20: Recursos</a>
-  </div>
-  <main>
-    <h1>Claude Code Course</h1>
-    <input data-testid="search-input" type="text" placeholder="Buscar...">
-    <div data-testid="search-results" style="display:none">
-      <div data-testid="search-result-item"></div>
+
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini">
+        <div class="progress-mini-bar" id="sidebar-progress-bar"></div>
+      </div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span>
     </div>
-    <div data-testid="progress-bar"></div>
-    <div data-testid="progress-text">0%</div>
-    <button data-testid="theme-toggle">Toggle Theme</button>
-  </main>
+    <nav class="sidebar-nav">
+      <div class="nav-part">
+        <span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part">
+        <span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part">
+        <span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part">
+        <span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part">
+        <span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <!-- Mobile header -->
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger" aria-label="Menu">☰</button>
+      <span class="mobile-title">Claude Code Course</span>
+      <button data-testid="theme-toggle" class="theme-toggle">☀️</button>
+    </header>
+
+    <!-- Desktop header bar -->
+    <div class="topbar">
+      <div class="search-container">
+        <input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar módulos, comandos, conceitos...">
+        <div data-testid="search-results" class="search-results"></div>
+      </div>
+      <button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">⚡ Guia Completo</div>
+      <h1 class="hero-title">Claude Code<br><span class="accent">Zero to Hero</span></h1>
+      <p class="hero-subtitle">O curso definitivo para desenvolvedores aprenderem a usar Claude Code como profissional. 20 módulos, exemplos práticos, exercícios reais.</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">20</span><span class="stat-label">Módulos</span></div>
+        <div class="stat"><span class="stat-num">5</span><span class="stat-label">Partes</span></div>
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Prático</span></div>
+      </div>
+      <a href="/modules/01-fundacoes/" class="btn btn-primary btn-hero">Começar agora →</a>
+    </section>
+
+    <!-- Progress Overview -->
+    <section class="progress-overview">
+      <div class="progress-header">
+        <h2>Seu progresso</h2>
+        <span data-testid="progress-text" class="progress-percentage">0%</span>
+      </div>
+      <div data-testid="progress-bar" class="progress-bar-container">
+        <div class="progress-fill" style="width: 0%"></div>
+      </div>
+    </section>
+
+    <!-- PARTE 1 -->
+    <section class="part-section">
+      <h2 class="part-title"><span class="part-num">01</span> Fundações</h2>
+      <p class="part-desc">O essencial para começar: o que é Claude Code, CLI, e como configurar suas instruções.</p>
+      <div class="module-grid">
+        <a data-module-id="1" href="/modules/01-fundacoes/" class="module-card">
+          <div class="card-num">01</div>
+          <div class="card-body">
+            <h3>O que é Claude Code</h3>
+            <p>Instalação, autenticação, primeira sessão, arquitetura de ferramentas.</p>
+            <div class="card-meta"><span class="badge">15 min</span><span class="badge badge-beginner">Iniciante</span></div>
+          </div>
+        </a>
+        <a data-module-id="2" href="/modules/01-fundacoes/cli.html" class="module-card">
+          <div class="card-num">02</div>
+          <div class="card-body">
+            <h3>CLI Completo</h3>
+            <p>Todos os comandos, flags, modos de uso, variáveis de ambiente.</p>
+            <div class="card-meta"><span class="badge">20 min</span><span class="badge badge-beginner">Iniciante</span></div>
+          </div>
+        </a>
+        <a data-module-id="3" href="/modules/01-fundacoes/claude-md.html" class="module-card">
+          <div class="card-num">03</div>
+          <div class="card-body">
+            <h3>CLAUDE.md</h3>
+            <p>Instruções persistentes por projeto e globais com importações @.</p>
+            <div class="card-meta"><span class="badge">20 min</span><span class="badge badge-beginner">Iniciante</span></div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PARTE 2 -->
+    <section class="part-section">
+      <h2 class="part-title"><span class="part-num">02</span> Configuração & Customização</h2>
+      <p class="part-desc">Ferramentas built-in, permissões, skills personalizados, hooks e atalhos.</p>
+      <div class="module-grid">
+        <a data-module-id="4" href="/modules/02-config/tools.html" class="module-card">
+          <div class="card-num">04</div>
+          <div class="card-body"><h3>Ferramentas (Tools)</h3><p>Read, Write, Edit, Bash, Grep, Glob, Agent — como o Claude opera.</p><div class="card-meta"><span class="badge">25 min</span><span class="badge badge-beginner">Iniciante</span></div></div>
+        </a>
+        <a data-module-id="5" href="/modules/02-config/settings.html" class="module-card">
+          <div class="card-num">05</div>
+          <div class="card-body"><h3>Settings & Permissões</h3><p>settings.json, allow/deny lists, modos de permissão.</p><div class="card-meta"><span class="badge">20 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+        <a data-module-id="6" href="/modules/02-config/skills.html" class="module-card">
+          <div class="card-num">06</div>
+          <div class="card-body"><h3>Skills (Slash Commands)</h3><p>Criar comandos /custom com SKILL.md — automações reutilizáveis.</p><div class="card-meta"><span class="badge">30 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+        <a data-module-id="7" href="/modules/02-config/hooks.html" class="module-card">
+          <div class="card-num">07</div>
+          <div class="card-body"><h3>Hooks</h3><p>PreToolUse, PostToolUse, SessionStart — automação de eventos.</p><div class="card-meta"><span class="badge">30 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+        <a data-module-id="8" href="/modules/02-config/keybindings.html" class="module-card">
+          <div class="card-num">08</div>
+          <div class="card-body"><h3>Keybindings</h3><p>Atalhos padrão e customização via keybindings.json.</p><div class="card-meta"><span class="badge">10 min</span><span class="badge badge-beginner">Iniciante</span></div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PARTE 3 -->
+    <section class="part-section">
+      <h2 class="part-title"><span class="part-num">03</span> Memória & Contexto</h2>
+      <p class="part-desc">Memória persistente, gestão de tokens e integração com serviços externos via MCP.</p>
+      <div class="module-grid">
+        <a data-module-id="9" href="/modules/03-memoria-contexto/memory.html" class="module-card">
+          <div class="card-num">09</div>
+          <div class="card-body"><h3>Sistema de Memória</h3><p>user, feedback, project, reference — memória entre sessões.</p><div class="card-meta"><span class="badge">25 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+        <a data-module-id="10" href="/modules/03-memoria-contexto/context.html" class="module-card">
+          <div class="card-num">10</div>
+          <div class="card-body"><h3>Gestão de Contexto</h3><p>/compact, /clear, tokens, estratégias para sessões longas.</p><div class="card-meta"><span class="badge">20 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+        <a data-module-id="11" href="/modules/03-memoria-contexto/mcp.html" class="module-card">
+          <div class="card-num">11</div>
+          <div class="card-body"><h3>MCP Servers</h3><p>Model Context Protocol — conectar Claude a databases, APIs e sistemas.</p><div class="card-meta"><span class="badge">35 min</span><span class="badge badge-advanced">Avançado</span></div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PARTE 4 -->
+    <section class="part-section">
+      <h2 class="part-title"><span class="part-num">04</span> Agentes & Automação</h2>
+      <p class="part-desc">Agent Tool, subagentes em paralelo, plan mode e worktrees para trabalho isolado.</p>
+      <div class="module-grid">
+        <a data-module-id="12" href="/modules/04-agentes/agent-tool.html" class="module-card">
+          <div class="card-num">12</div>
+          <div class="card-body"><h3>Agent Tool</h3><p>Spawnar subagentes especializados — tipos, parâmetros, worktrees.</p><div class="card-meta"><span class="badge">30 min</span><span class="badge badge-advanced">Avançado</span></div></div>
+        </a>
+        <a data-module-id="13" href="/modules/04-agentes/subagents.html" class="module-card">
+          <div class="card-num">13</div>
+          <div class="card-body"><h3>Subagentes & Agent Teams</h3><p>Orquestração paralela, handoffs limpos, janelas de contexto independentes.</p><div class="card-meta"><span class="badge">40 min</span><span class="badge badge-advanced">Avançado</span></div></div>
+        </a>
+        <a data-module-id="14" href="/modules/04-agentes/plan-mode.html" class="module-card">
+          <div class="card-num">14</div>
+          <div class="card-body"><h3>Plan Mode</h3><p>Revisar planos antes de executar — quando e como usar.</p><div class="card-meta"><span class="badge">15 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PARTE 5 -->
+    <section class="part-section">
+      <h2 class="part-title"><span class="part-num">05</span> Avançado & Mundo Real</h2>
+      <p class="part-desc">CLI corporativo, IDE, modelos, API, boas práticas e recursos da comunidade.</p>
+      <div class="module-grid">
+        <a data-module-id="15" href="/modules/05-avancado/cli-corporate.html" class="module-card">
+          <div class="card-num">15</div>
+          <div class="card-body"><h3>CLI Corporativo</h3><p>CI/CD, pipelines, pre-commit hooks, automações corporativas.</p><div class="card-meta"><span class="badge">30 min</span><span class="badge badge-advanced">Avançado</span></div></div>
+        </a>
+        <a data-module-id="16" href="/modules/05-avancado/ide.html" class="module-card">
+          <div class="card-num">16</div>
+          <div class="card-body"><h3>IDE Integration</h3><p>VS Code, JetBrains, Web App — configuração e uso.</p><div class="card-meta"><span class="badge">15 min</span><span class="badge badge-beginner">Iniciante</span></div></div>
+        </a>
+        <a data-module-id="17" href="/modules/05-avancado/models.html" class="module-card">
+          <div class="card-num">17</div>
+          <div class="card-body"><h3>Seleção de Modelos</h3><p>Opus vs Sonnet vs Haiku — quando usar cada um, custos.</p><div class="card-meta"><span class="badge">20 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+        <a data-module-id="18" href="/modules/05-avancado/api-sdk.html" class="module-card">
+          <div class="card-num">18</div>
+          <div class="card-body"><h3>Claude API & Agent SDK</h3><p>Usar Claude nas suas apps — SDK TypeScript/Python, streaming, tools.</p><div class="card-meta"><span class="badge">35 min</span><span class="badge badge-advanced">Avançado</span></div></div>
+        </a>
+        <a data-module-id="19" href="/modules/05-avancado/best-practices.html" class="module-card">
+          <div class="card-num">19</div>
+          <div class="card-body"><h3>Boas Práticas</h3><p>Padrões, segurança, prompts eficazes, debug de sessões.</p><div class="card-meta"><span class="badge">25 min</span><span class="badge badge-intermediate">Intermediário</span></div></div>
+        </a>
+        <a data-module-id="20" href="/modules/05-avancado/resources.html" class="module-card">
+          <div class="card-num">20</div>
+          <div class="card-body"><h3>Recursos & Referências</h3><p>Docs oficiais, vídeos, cursos, comunidade, ferramentas.</p><div class="card-meta"><span class="badge">10 min</span><span class="badge badge-beginner">Iniciante</span></div></div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Construído para desenvolvedores que querem dominar o Claude Code.<br>
+      <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener">Documentação Oficial</a> ·
+      <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener">GitHub</a></p>
+    </footer>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

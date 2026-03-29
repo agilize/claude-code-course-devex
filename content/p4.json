@@ -1,0 +1,561 @@
+{
+  "part": "4-5",
+  "title": "Agentes & Avançado",
+  "modules": [
+    {
+      "id": 12,
+      "title": "Agent Tool",
+      "description": "A ferramenta Agent do Claude Code permite spawnar subagentes — instâncias independentes do Claude que executam tarefas em janelas de contexto separadas.",
+      "sections": [
+        {
+          "title": "O que é o Agent Tool",
+          "content": "A ferramenta `Agent` do Claude Code permite spawnar subagentes — instâncias independentes do Claude que executam tarefas em janelas de contexto separadas, sem compartilhar o contexto da sessão principal."
+        },
+        {
+          "title": "Tipos de agentes disponíveis",
+          "content": "O Claude Code oferece uma variedade de subagentes especializados:",
+          "code": {
+            "language": "text",
+            "snippet": "general-purpose          — agente genérico\nExplore                  — exploração de codebase\nPlan                     — planejamento de implementação\ncode-reviewer            — revisão de código\ncode-archaeologist       — análise de código legado\nperformance-optimizer    — otimização de performance\ndocumentation-specialist — geração de documentação\nbackend-developer        — desenvolvimento backend\nfrontend-developer       — desenvolvimento frontend\nreact-component-architect — componentes React\ndjango-backend-expert    — Django\nrails-backend-expert     — Ruby on Rails\n... (muitos outros)"
+          }
+        },
+        {
+          "title": "Como o Claude usa Agent internamente",
+          "content": "Quando você pede uma tarefa complexa, o Claude pode automaticamente spawnar subagentes para partes independentes, executar em paralelo, e consolidar resultados — sem que você precise pedir explicitamente."
+        },
+        {
+          "title": "Forçando uso de agente",
+          "content": "Você pode instruir o Claude explicitamente a usar subagentes:",
+          "code": {
+            "language": "text",
+            "snippet": "\"Use um subagente para pesquisar X e me traga o resultado\"\n\"Spawne um agente para revisar cada arquivo em src/\"\n\"Use agent teams para implementar isso em paralelo\""
+          }
+        },
+        {
+          "title": "Parâmetros do Agent tool",
+          "content": "Os principais parâmetros ao spawnar um agente:",
+          "code": {
+            "language": "text",
+            "snippet": "description    — 3-5 palavras descritivas\nsubagent_type  — tipo do agente (ver lista acima)\nprompt         — instrução completa para o agente\nrun_in_background — true para execução paralela\nisolation: \"worktree\" — cria worktree git isolada"
+          }
+        },
+        {
+          "title": "Worktree isolation",
+          "content": "O parâmetro `isolation: \"worktree\"` cria uma branch e worktree git isolada para o agente, evitando conflitos quando múltiplos agentes modificam arquivos em paralelo.",
+          "code": {
+            "language": "text",
+            "snippet": "\"Use worktree isolation\" para tarefas que modificam arquivos\nCada agente opera em branch/worktree própria\nEvita conflitos em trabalho paralelo\nO orquestrador faz merge ao final"
+          }
+        },
+        {
+          "title": "Boas práticas para usar agentes",
+          "content": "Cinco regras essenciais para uso eficiente do Agent tool:",
+          "list": [
+            "Brief mínimo — prompt curto e focado",
+            "Output definido — diga exatamente o que retornar",
+            "Sem dependências — agentes paralelos não devem depender entre si",
+            "Contexto por arquivo — passe context em arquivos, não inline",
+            "Retorno enxuto — { status, files, errors } — nunca conteúdo completo"
+          ]
+        }
+      ],
+      "resources": [
+        {
+          "title": "Sub-agents — Claude Code Docs",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/sub-agents"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Subagentes & Agent Teams",
+      "description": "Padrão de uso onde múltiplos agentes especializados trabalham em paralelo, cada um com contexto limpo, coordenados por um orquestrador.",
+      "sections": [
+        {
+          "title": "O que são Agent Teams",
+          "content": "Agent Teams é um padrão arquitetural onde múltiplos agentes especializados trabalham em paralelo, cada um com contexto limpo (~50-80k tokens), coordenados por um orquestrador na janela principal."
+        },
+        {
+          "title": "Padrão orquestrador",
+          "content": "A estrutura hierárquica de um agent team:",
+          "code": {
+            "language": "text",
+            "snippet": "Orquestrador (janela principal)\n├── Mantém estado global (só paths, não conteúdo)\n├── Spawna agentes em waves\n├── Coleta resultados (só { status, file })\n└── Faz merge/integração ao final\n\nAgentes (janelas separadas, ~50-80k tokens)\n├── Recebem brief compacto\n├── Leem context de arquivos\n├── Executam tarefa específica\n└── Escrevem output em arquivo\n   └── Retornam só { status, file }"
+          }
+        },
+        {
+          "title": "Exemplo real — parallelizando análise de codebase",
+          "content": "Um caso prático de agent team para análise paralela de um projeto:",
+          "code": {
+            "language": "text",
+            "snippet": "Agente 1: analisa src/components/ → escreve analysis-components.json\nAgente 2: analisa src/api/ → escreve analysis-api.json\nAgente 3: analisa src/lib/ → escreve analysis-lib.json\nAgente 4: analisa tests/ → escreve analysis-tests.json\nAgente 5: analisa docs/ → escreve analysis-docs.json\n\nOrquestrador: lê os 5 arquivos JSON → gera relatório final"
+          }
+        },
+        {
+          "title": "Regras para agent teams eficientes",
+          "content": "Diretrizes operacionais para manter agent teams funcionando sem problemas:",
+          "code": {
+            "language": "text",
+            "snippet": "Máximo 5 agentes paralelos (evita rate limiting)\nCada agente < 100k tokens de contexto\nRetorno ao orquestrador: sempre só paths/status\nAgentes transientes: não dependem de sessão persistente\nHandoff via arquivos: output de um → input do próximo"
+          }
+        },
+        {
+          "title": "Passagem de bastão (handoff) entre agentes",
+          "content": "Agentes podem trabalhar em sequência (waves), onde o output de um se torna o input do próximo:",
+          "code": {
+            "language": "text",
+            "snippet": "Wave 1: A1 → escreve design.json\nWave 2: B1 lê design.json → produz component.html\nWave 3: C1 lê component.html → escreve tests"
+          }
+        },
+        {
+          "title": "Anti-padrões",
+          "content": "Erros comuns a evitar ao usar agent teams:",
+          "code": {
+            "language": "text",
+            "snippet": "❌ Agente retorna conteúdo completo ao orquestrador\n❌ Agente com brief de 10.000 tokens\n❌ 20 agentes em paralelo\n❌ Agente lê tudo do projeto para fazer tarefa simples\n❌ Orquestrador processa HTML/JSON completo inline"
+          }
+        }
+      ],
+      "exercise": {
+        "title": "Criar um prompt de agent team para pesquisa paralela",
+        "description": "Crie um prompt que instrua Claude a usar 3 agentes paralelos para: (1) pesquisar melhores práticas de TypeScript, (2) pesquisar melhores práticas de React, (3) pesquisar melhores práticas de testes. Consolidar em um arquivo final.",
+        "tip": "Lembre-se: cada agente deve escrever seu resultado em um arquivo separado (ex: best-practices-typescript.md), e o orquestrador só recebe os paths de volta — nunca o conteúdo completo."
+      },
+      "resources": [
+        {
+          "title": "Sub-agents — Claude Code Docs",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/sub-agents"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Plan Mode",
+      "description": "Plan Mode é um modo onde Claude planeja o que fará sem executar. Útil para revisar o plano antes de permitir execução.",
+      "sections": [
+        {
+          "title": "O que é Plan Mode",
+          "content": "Plan Mode é um modo onde Claude detalha todas as ações que tomaria para completar uma tarefa — sem executar nenhuma delas. Você revisa o plano e decide se aprova ou modifica antes de qualquer ação real."
+        },
+        {
+          "title": "Ativando Plan Mode",
+          "content": "Você pode ativar o Plan Mode via prompt natural:",
+          "code": {
+            "language": "bash",
+            "snippet": "# Via prompt direto\n\"Planeje (não execute) como você refatoraria este módulo\"\n\"Entre em plan mode: como você implementaria autenticação JWT?\"\n\n# O Claude também usa plan mode automaticamente em tarefas de alto risco"
+          }
+        },
+        {
+          "title": "Como funciona",
+          "content": "O fluxo do Plan Mode em 4 passos:",
+          "list": [
+            "Claude analisa a tarefa",
+            "Lista todas as ferramentas que usaria e por quê",
+            "Mostra o impacto esperado (arquivos modificados, comandos executados)",
+            "Aguarda aprovação antes de executar qualquer ação"
+          ]
+        },
+        {
+          "title": "Quando usar Plan Mode",
+          "content": "Situações onde Plan Mode é especialmente valioso:",
+          "list": [
+            "Antes de refatorações grandes",
+            "Antes de deletar ou mover arquivos",
+            "Em novos projetos (entender o que Claude fará)",
+            "Para aprender como Claude abordaria um problema",
+            "Em produção (validar antes de executar)"
+          ]
+        },
+        {
+          "title": "ExitPlanMode",
+          "content": "Quando Claude está em Plan Mode, você pode aprovar o plano como está, pedir modificações, ou cancelar. Ao aprovar, o Claude executa exatamente o que foi planejado."
+        },
+        {
+          "title": "Exemplo de interação em Plan Mode",
+          "content": "Como se parece uma sessão típica em Plan Mode:",
+          "code": {
+            "language": "text",
+            "snippet": "Você: \"Planeje como você migraria este projeto de JavaScript para TypeScript\"\n\nClaude (plan mode):\n1. Analisarei a estrutura atual com Glob('**/*.js')\n2. Identificarei as dependências com Read(package.json)\n3. Para cada arquivo .js:\n   a. Renomeio para .ts\n   b. Adiciono tipos explícitos\n   c. Corrijo erros de compilação\n4. Atualizarei tsconfig.json\n5. Rodando npm run build para verificar\n\nDeseja prosseguir? [Aprovar / Modificar]"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "title": "How Claude Code Works",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/how-claude-code-works"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "CLI Corporativo",
+      "description": "Claude Code em pipelines CI/CD, automação com scripts, pre-commit hooks e integrações corporativas.",
+      "sections": [
+        {
+          "title": "Claude Code em pipelines CI/CD",
+          "content": "Claude Code pode ser integrado diretamente em workflows do GitHub Actions:",
+          "code": {
+            "language": "yaml",
+            "snippet": "# GitHub Actions\n- name: Code Review com Claude\n  run: |\n    claude --no-auto-accept \"revise os arquivos modificados neste PR e aponte problemas\"\n  env:\n    ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}"
+          }
+        },
+        {
+          "title": "Automação com scripts",
+          "content": "Exemplo de script de revisão diária automatizada:",
+          "code": {
+            "language": "bash",
+            "snippet": "#!/bin/bash\n# daily-review.sh — revisão diária automatizada\n\nCHANGED=$(git diff --name-only HEAD~1)\necho \"Arquivos modificados: $CHANGED\"\n\nclaude --output-format json \"\n  Analise estes arquivos modificados: $CHANGED\n  Verifique:\n  1. Bugs potenciais\n  2. Violações de estilo\n  3. Segurança\n  Retorne JSON: { issues: [], score: 0-10 }\n\" > review-$(date +%Y%m%d).json"
+          }
+        },
+        {
+          "title": "Uso em pre-commit hooks",
+          "content": "Integração com hooks do git para verificação automática antes de cada commit:",
+          "code": {
+            "language": "bash",
+            "snippet": "#!/bin/bash\n# .git/hooks/pre-commit\n\nSTAGED=$(git diff --cached --name-only)\n\nif echo \"$STAGED\" | grep -q \"\\.ts$\"; then\n  echo \"Verificando TypeScript com Claude...\"\n  result=$(claude --output-format json \"Verifique erros em: $STAGED\" 2>/dev/null)\n  issues=$(echo $result | jq '.issues | length')\n  \n  if [ \"$issues\" -gt 0 ]; then\n    echo \"Claude encontrou $issues problemas. Verifique antes de commitar.\"\n    exit 1\n  fi\nfi"
+          }
+        },
+        {
+          "title": "Empresas usando Claude Code via CLI",
+          "content": "Casos de uso reais em empresas:",
+          "list": [
+            "Vercel — code reviews automáticos em PRs",
+            "Stripe — análise de segurança em código de pagamento",
+            "Shopify — refatoração de codebase legada em escala",
+            "Padrão comum: CI/CD + Claude Code + ferramentas internas"
+          ]
+        },
+        {
+          "title": "Integrações corporativas",
+          "content": "Exemplos de integrações com ferramentas corporativas:",
+          "code": {
+            "language": "bash",
+            "snippet": "# Jira integration\nclaude \"analise o ticket PROJ-123 e implemente a solução\"\n\n# Slack notification após deploy\nclaude \"resuma as mudanças do deploy de hoje\" | \\\n  curl -X POST $SLACK_WEBHOOK -d '{\"text\": \"'$(cat)'\"}'\n\n# Relatório semanal\nclaude \"gere relatório semanal de atividade do git desta semana\" > relatorio-$(date +%V).md"
+          }
+        },
+        {
+          "title": "Segurança em ambientes corporativos",
+          "content": "Boas práticas de segurança ao usar Claude Code em produção:",
+          "code": {
+            "language": "bash",
+            "snippet": "# NUNCA exponha API keys em scripts\n# Use secrets managers:\nANTHROPIC_API_KEY=$(aws secretsmanager get-secret-value --secret-id claude-api-key --query SecretString --output text)\n\n# Use variáveis de ambiente do CI:\n# GitHub: ${{ secrets.ANTHROPIC_API_KEY }}\n# GitLab: $ANTHROPIC_API_KEY (CI variable)"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "title": "GitHub Actions — Claude Code Docs",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/github-actions"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "IDE Integration",
+      "description": "Integração do Claude Code com VS Code, JetBrains e Web App — como usar Claude diretamente no seu editor.",
+      "sections": [
+        {
+          "title": "VS Code",
+          "content": "A extensão oficial do Claude Code para VS Code:",
+          "code": {
+            "language": "text",
+            "snippet": "Extensão: Claude Code (oficial Anthropic)\nInstall: code --install-extension anthropic.claude-code\n\nFeatures:\n- Chat panel integrado\n- Acesso direto ao arquivo aberto\n- Seleção de código → \"Explain / Fix / Refactor\"\n- Diff view integrado\n- Keybindings nativos do VS Code"
+          }
+        },
+        {
+          "title": "JetBrains (IntelliJ, WebStorm, PyCharm, etc.)",
+          "content": "Plugin oficial para a família JetBrains:",
+          "code": {
+            "language": "text",
+            "snippet": "Plugin: Claude Code\nInstall: Settings → Plugins → \"Claude Code\"\n\nFeatures:\n- Similar ao VS Code\n- Integração com run configurations\n- Acesso a ferramentas do IDE"
+          }
+        },
+        {
+          "title": "Configuração em ambos",
+          "content": "Configurações disponíveis no settings do VS Code:",
+          "code": {
+            "language": "json",
+            "snippet": "// settings (VS Code)\n{\n  \"claude-code.model\": \"claude-sonnet-4-6\",\n  \"claude-code.autoApprove\": false,\n  \"claude-code.theme\": \"dark\"\n}"
+          }
+        },
+        {
+          "title": "Web App (claude.ai/code)",
+          "content": "A versão browser do Claude Code tem características próprias:",
+          "list": [
+            "Versão browser do Claude Code",
+            "Sem acesso a filesystem local (usa sandbox)",
+            "Bom para: exploração, aprendizado, prototipagem"
+          ]
+        },
+        {
+          "title": "Quando usar IDE vs Terminal vs Web",
+          "content": "Guia de quando usar cada interface:",
+          "code": {
+            "language": "text",
+            "snippet": "IDE     → desenvolvimento ativo, contexto visual, diff inline\nTerminal → automação, scripts, CI/CD, agent teams\nWeb     → aprendizado, prototipagem rápida, sem setup"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "title": "IDE Integrations — Claude Code Docs",
+          "url": "https://docs.anthropic.com/en/docs/claude-code/ide-integrations"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Seleção de Modelos",
+      "description": "Como escolher o modelo certo para cada tarefa — Opus, Sonnet e Haiku, extended thinking e custos.",
+      "sections": [
+        {
+          "title": "Modelos disponíveis",
+          "content": "Os três modelos do Claude e seus casos de uso:",
+          "code": {
+            "language": "text",
+            "snippet": "claude-opus-4-6     — mais poderoso, mais lento, mais caro\n                      ideal: tarefas complexas, arquitetura, refatorações grandes\n                      \nclaude-sonnet-4-6   — balanceado (padrão recomendado)\n                      ideal: desenvolvimento do dia a dia, code review, explicações\n                      \nclaude-haiku-4-5    — mais rápido, mais barato\n                      ideal: tarefas simples, completions rápidas, CI/CD"
+          }
+        },
+        {
+          "title": "Selecionando modelo",
+          "content": "Diferentes formas de selecionar o modelo:",
+          "code": {
+            "language": "bash",
+            "snippet": "# Na sessão via flag\nclaude --model claude-opus-4-6\n\n# Permanente (settings.json)\n{ \"model\": \"claude-sonnet-4-6\" }\n\n# Trocando durante a sessão\n/model claude-haiku-4-5\n\n# Via prompt\n\"Use o modelo mais poderoso disponível para esta refatoração\""
+          }
+        },
+        {
+          "title": "Quando usar cada modelo",
+          "content": "Guia prático de seleção por tipo de tarefa:",
+          "code": {
+            "language": "text",
+            "snippet": "Opus:    arquitetura de sistema, migração de codebase, análise de segurança profunda\nSonnet:  features normais, bug fixing, code review, documentação\nHaiku:   completions, reformatação, tarefas mecânicas, CI/CD cost-efficient"
+          }
+        },
+        {
+          "title": "Extended Thinking",
+          "content": "Os modelos suportam um modo de raciocínio aprofundado:",
+          "code": {
+            "language": "text",
+            "snippet": "Modelos suportam \"extended thinking\" — Claude pensa antes de responder.\nAtivar com: \"pense profundamente antes de responder\"\nMais lento mas mais preciso em problemas complexos."
+          }
+        },
+        {
+          "title": "Custo estimado por tarefa",
+          "content": "Referência aproximada de custo por tipo de uso com Sonnet:",
+          "code": {
+            "language": "text",
+            "snippet": "Sessão 1h desenvolvimento normal: ~$0.10–$0.50 (Sonnet)\nCode review completo de PR: ~$0.05–$0.20\nRefatoração de módulo grande: ~$0.20–$1.00"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "title": "About Claude Models",
+          "url": "https://docs.anthropic.com/en/docs/about-claude/models"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Claude API & Agent SDK",
+      "description": "Como usar a Claude API diretamente e o Agent SDK para construir suas próprias aplicações com IA.",
+      "sections": [
+        {
+          "title": "Claude API direta",
+          "content": "Integrando Claude diretamente em suas aplicações TypeScript:",
+          "code": {
+            "language": "typescript",
+            "snippet": "import Anthropic from \"@anthropic-ai/sdk\";\n\nconst client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });\n\nconst message = await client.messages.create({\n  model: \"claude-sonnet-4-6\",\n  max_tokens: 1024,\n  messages: [{ role: \"user\", content: \"Explique recursão\" }],\n});\n\nconsole.log(message.content[0].text);"
+          }
+        },
+        {
+          "title": "Streaming",
+          "content": "Recebendo respostas em tempo real via streaming:",
+          "code": {
+            "language": "typescript",
+            "snippet": "const stream = await client.messages.create({\n  model: \"claude-sonnet-4-6\",\n  max_tokens: 1024,\n  stream: true,\n  messages: [{ role: \"user\", content: \"Explique O(n log n)\" }],\n});\n\nfor await (const chunk of stream) {\n  if (chunk.type === \"content_block_delta\") {\n    process.stdout.write(chunk.delta.text);\n  }\n}"
+          }
+        },
+        {
+          "title": "Tool Use (function calling)",
+          "content": "Definindo ferramentas que o Claude pode chamar durante a conversa:",
+          "code": {
+            "language": "typescript",
+            "snippet": "const response = await client.messages.create({\n  model: \"claude-sonnet-4-6\",\n  tools: [{\n    name: \"get_weather\",\n    description: \"Get current weather for a city\",\n    input_schema: {\n      type: \"object\",\n      properties: {\n        city: { type: \"string\", description: \"City name\" }\n      },\n      required: [\"city\"]\n    }\n  }],\n  messages: [{ role: \"user\", content: \"Qual o tempo em São Paulo?\" }],\n});"
+          }
+        },
+        {
+          "title": "Agent SDK (@anthropic-ai/agent-sdk)",
+          "content": "Construindo agentes autônomos com o Agent SDK:",
+          "code": {
+            "language": "typescript",
+            "snippet": "import { Agent } from \"@anthropic-ai/agent-sdk\";\n\nconst agent = new Agent({\n  model: \"claude-sonnet-4-6\",\n  instructions: \"Você é um assistente de desenvolvimento. Ajude com código TypeScript.\",\n  tools: [\n    {\n      name: \"read_file\",\n      description: \"Read a file from disk\",\n      execute: async ({ path }) => fs.readFileSync(path, \"utf-8\"),\n    }\n  ],\n});\n\nconst result = await agent.run(\"Analise meu package.json e sugira atualizações\");"
+          }
+        }
+      ],
+      "resources": [
+        {
+          "title": "Claude API Reference",
+          "url": "https://docs.anthropic.com/en/api"
+        },
+        {
+          "title": "Anthropic SDK TypeScript",
+          "url": "https://github.com/anthropics/anthropic-sdk-typescript"
+        },
+        {
+          "title": "Anthropic SDK Python",
+          "url": "https://github.com/anthropics/anthropic-sdk-python"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Boas Práticas & Padrões",
+      "description": "CLAUDE.md eficaz, prompts de qualidade, padrões de uso diário, segurança e debug de sessões.",
+      "sections": [
+        {
+          "title": "CLAUDE.md eficaz",
+          "content": "O que incluir (e o que evitar) no seu CLAUDE.md:",
+          "code": {
+            "language": "markdown",
+            "snippet": "✓ Stack técnico específico\n✓ Comandos do projeto\n✓ Convenções de código\n✓ Arquivos críticos com propósito\n✓ Exemplos de padrões usados\n✗ Secrets/API keys\n✗ Informações genéricas (Claude já sabe)\n✗ Instruções longas demais"
+          }
+        },
+        {
+          "title": "Prompts eficazes",
+          "content": "Exemplos de prompts ruins vs. bons:",
+          "code": {
+            "language": "text",
+            "snippet": "❌ \"Melhore meu código\"\n✓  \"Refatore src/auth.ts para usar async/await e adicione tratamento de erros\"\n\n❌ \"Faça testes\"\n✓  \"Crie testes unitários para todas as funções exportadas em src/utils/format.ts usando Vitest\"\n\n❌ \"Isso está errado\"\n✓  \"Este código tem N+1 query problem na linha 45. Corrija usando eager loading do Prisma\""
+          }
+        },
+        {
+          "title": "Padrões de uso diário",
+          "content": "Rotina recomendada para uso produtivo do Claude Code:",
+          "code": {
+            "language": "text",
+            "snippet": "Manhã:    nova sessão limpa\n          claude \"o que foi modificado ontem? resume o estado atual\"\n          \nDurante:  sessões focadas por tarefa\n          /compact ao crescer demais\n          \nFim do dia: claude \"faça commit das mudanças com mensagem semântica\""
+          }
+        },
+        {
+          "title": "Segurança",
+          "content": "Práticas de segurança essenciais:",
+          "code": {
+            "language": "text",
+            "snippet": "✗ Nunca cole API keys no prompt\n✗ Não peça ao Claude para commitar em main sem review\n✗ Cuidado com --dangerously-skip-permissions em produção\n✓ Use allow/deny lists no settings.json\n✓ Revise ações destrutivas antes de aprovar\n✓ Use plan mode antes de mudanças grandes"
+          }
+        },
+        {
+          "title": "Debug de sessões problemáticas",
+          "content": "Comandos e estratégias para quando algo não está funcionando:",
+          "code": {
+            "language": "bash",
+            "snippet": "claude --verbose    # mostra todas as chamadas de ferramenta\n/status             # tokens, modelo, custo\n/compact            # se sessão ficou muito pesada\n# Iniciar nova sessão se comportamento estranho"
+          }
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Recursos & Referências",
+      "description": "Documentação oficial, cursos, comunidade e ferramentas relacionadas ao Claude Code.",
+      "sections": [
+        {
+          "title": "Documentação Oficial",
+          "content": "Fontes primárias de referência:",
+          "resources": [
+            {
+              "title": "Claude Code Docs",
+              "url": "https://docs.anthropic.com/en/docs/claude-code",
+              "description": "Documentação completa do Claude Code"
+            },
+            {
+              "title": "API Reference",
+              "url": "https://docs.anthropic.com/en/api",
+              "description": "Referência completa da Claude API"
+            },
+            {
+              "title": "MCP Protocol",
+              "url": "https://modelcontextprotocol.io",
+              "description": "Model Context Protocol — especificação oficial"
+            },
+            {
+              "title": "Claude Code GitHub",
+              "url": "https://github.com/anthropics/claude-code",
+              "description": "Repositório oficial — issues, changelog, releases"
+            },
+            {
+              "title": "MCP Servers Oficiais",
+              "url": "https://github.com/modelcontextprotocol/servers",
+              "description": "Coleção de servidores MCP oficiais"
+            }
+          ]
+        },
+        {
+          "title": "Cursos e Tutoriais",
+          "content": "Recursos de aprendizado recomendados:",
+          "resources": [
+            {
+              "title": "Anthropic Learning Hub",
+              "url": "https://www.anthropic.com/learn",
+              "description": "Hub oficial de aprendizado da Anthropic"
+            },
+            {
+              "title": "Canal Anthropic no YouTube",
+              "url": "https://www.youtube.com/@anthropic-ai",
+              "description": "Tutoriais em vídeo do canal oficial Anthropic"
+            },
+            {
+              "title": "Awesome Claude Code (GitHub)",
+              "url": "https://github.com/search?q=awesome-claude-code",
+              "description": "Coleções curadas pela comunidade de recursos e exemplos"
+            }
+          ]
+        },
+        {
+          "title": "Comunidade",
+          "content": "Onde encontrar suporte e trocar experiências:",
+          "resources": [
+            {
+              "title": "Discord Oficial Anthropic",
+              "url": "https://discord.gg/anthropic",
+              "description": "Servidor Discord oficial da Anthropic"
+            },
+            {
+              "title": "Reddit r/ClaudeAI",
+              "url": "https://reddit.com/r/ClaudeAI",
+              "description": "Comunidade Reddit sobre Claude e Claude Code"
+            },
+            {
+              "title": "GitHub Anthropic",
+              "url": "https://github.com/anthropics",
+              "description": "Organização oficial da Anthropic no GitHub"
+            }
+          ]
+        },
+        {
+          "title": "Ferramentas relacionadas",
+          "content": "SDKs e ferramentas do ecossistema Anthropic:",
+          "resources": [
+            {
+              "title": "Anthropic SDK TypeScript",
+              "url": "https://github.com/anthropics/anthropic-sdk-typescript",
+              "description": "SDK oficial TypeScript/JavaScript para a Claude API"
+            },
+            {
+              "title": "Anthropic SDK Python",
+              "url": "https://github.com/anthropics/anthropic-sdk-python",
+              "description": "SDK oficial Python para a Claude API"
+            },
+            {
+              "title": "Claude Code Action",
+              "url": "https://github.com/anthropics/claude-code-action",
+              "description": "GitHub Action oficial para integrar Claude Code em workflows"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

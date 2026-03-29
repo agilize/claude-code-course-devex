@@ -1,0 +1,191 @@
+{
+  "part": 3,
+  "title": "Memória & Contexto",
+  "modules": [
+    {
+      "id": 9,
+      "slug": "sistema-de-memoria",
+      "title": "Sistema de Memória",
+      "description": "Claude Code tem um sistema de memória persistente baseado em arquivos. Salva informações entre sessões em ~/.claude/projects/<hash>/memory/.",
+      "concepts": [
+        {
+          "name": "Tipos de memória",
+          "items": [
+            { "type": "user", "description": "perfil, preferências, expertise do usuário" },
+            { "type": "feedback", "description": "correções e confirmações de comportamento" },
+            { "type": "project", "description": "contexto do projeto, decisões, prazos" },
+            { "type": "reference", "description": "ponteiros para recursos externos (Jira, Slack, docs)" }
+          ]
+        },
+        {
+          "name": "Estrutura de arquivo de memória",
+          "example": "---\nname: user-profile\ndescription: Developer profile and preferences\ntype: user\n---\n\nUser is a senior full-stack developer with 10 years experience.\nExpert in TypeScript and React. New to DevOps.\nPrefers concise responses without trailing summaries."
+        },
+        {
+          "name": "MEMORY.md — índice",
+          "example": "# Memory Index\n- [User Profile](user-profile.md) — senior dev, TypeScript expert\n- [Project Context](project-context.md) — e-commerce app, deadline Mar 15\n- [Feedback](feedback-style.md) — prefers terse responses"
+        },
+        {
+          "name": "Quando o Claude salva memória",
+          "items": [
+            "Ao aprender sobre o usuário: salva user memory",
+            "Ao receber correção: salva feedback memory",
+            "Ao conhecer contexto do projeto: salva project memory",
+            "Ao descobrir recursos externos: salva reference memory"
+          ]
+        },
+        {
+          "name": "Como acessar memória",
+          "commands": [
+            { "cmd": "/memory", "description": "lista todas as memórias" },
+            { "cmd": "/memory list", "description": "lista com detalhes" },
+            { "cmd": "/memory show user-profile", "description": "mostra memória específica" },
+            { "cmd": "/memory forget feedback-*", "description": "remove memórias por padrão" }
+          ]
+        },
+        {
+          "name": "Boas práticas",
+          "items": [
+            "Salvar explicitamente: 'Lembre-se que prefiro pnpm' → Claude salva",
+            "Corrigir: 'Não, use tabs não spaces' → Claude atualiza",
+            "Revisar periodicamente: memórias velhas podem ficar stale",
+            "Não salvar: código, git history, estado temporário"
+          ]
+        }
+      ],
+      "exercise": {
+        "description": "Iniciar sessão, dizer ao Claude suas preferências (linguagem favorita, estilo de código, ferramentas preferidas). Verificar em ~/.claude/projects/*/memory/ que foram salvas."
+      },
+      "resources": [
+        "https://docs.anthropic.com/en/docs/claude-code/memory"
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "gestao-de-contexto",
+      "title": "Gestão de Contexto",
+      "description": "Modelos LLM têm limite de tokens. Sessões longas podem ficar lentas, caras, ou perder contexto relevante.",
+      "concepts": [
+        {
+          "name": "Comandos de gestão",
+          "commands": [
+            { "cmd": "/status", "description": "mostra tokens usados/disponíveis, modelo, custo" },
+            { "cmd": "/compact", "description": "comprime contexto mantendo essencial (recomendado)" },
+            { "cmd": "/clear", "description": "limpa tudo (perde contexto mas começa limpo)" },
+            { "cmd": "/cost", "description": "mostra custo acumulado da sessão" }
+          ]
+        },
+        {
+          "name": "Estratégias",
+          "items": [
+            "Use /compact regularmente — quando sessão fica longa",
+            "Inicie sessões focadas — uma tarefa por sessão",
+            "Use CLAUDE.md — evita re-explicar contexto",
+            "Use memória — salva info que repetidamente precisa dar",
+            "Subagentes — delegue tarefas para agentes com contextos limpos"
+          ]
+        },
+        {
+          "name": "Quando usar /clear vs /compact",
+          "items": [
+            "/compact → mantém resumo, boa para continuar trabalho",
+            "/clear → começa do zero, bom para nova tarefa não relacionada"
+          ]
+        },
+        {
+          "name": "Estimando tokens",
+          "items": [
+            "1 token ≈ 4 caracteres em inglês",
+            "1 token ≈ 3 caracteres em código",
+            "Arquivo 1000 linhas ≈ 5.000–15.000 tokens",
+            "Sessão longa ≈ 50.000–200.000 tokens"
+          ]
+        },
+        {
+          "name": "Limites por modelo",
+          "models": [
+            { "model": "claude-opus-4-6", "context_tokens": 200000 },
+            { "model": "claude-sonnet-4-6", "context_tokens": 200000 },
+            { "model": "claude-haiku-4-5", "context_tokens": 200000 }
+          ]
+        },
+        {
+          "name": "Padrão de trabalho eficiente",
+          "steps": [
+            "Nova tarefa → nova sessão limpa",
+            "Sessão longa → /compact antes de continuar",
+            "Tarefa complexa → use subagentes",
+            "Info recorrente → salve em memória ou CLAUDE.md"
+          ]
+        }
+      ],
+      "exercise": {
+        "description": "Usar /status para ver o uso atual de tokens. Usar /compact e verificar a redução."
+      },
+      "resources": [
+        "https://docs.anthropic.com/en/docs/claude-code/context-management"
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "mcp-servers",
+      "title": "MCP Servers",
+      "description": "Model Context Protocol — protocolo padrão aberto para conectar LLMs a ferramentas externas. Permite que Claude acesse bancos de dados, APIs, sistemas de arquivos remotos, etc.",
+      "concepts": [
+        {
+          "name": "Configuração em settings.json",
+          "example": "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/Users/user/Documents\"]\n    },\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_PERSONAL_ACCESS_TOKEN\": \"ghp_...\"\n      }\n    },\n    \"postgres\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-postgres\"],\n      \"env\": {\n        \"POSTGRES_CONNECTION_STRING\": \"postgresql://...\"\n      }\n    }\n  }\n}"
+        },
+        {
+          "name": "Servidores MCP oficiais (Anthropic)",
+          "servers": [
+            { "package": "@modelcontextprotocol/server-filesystem", "description": "acesso a arquivos locais" },
+            { "package": "@modelcontextprotocol/server-github", "description": "GitHub API (issues, PRs, repos)" },
+            { "package": "@modelcontextprotocol/server-postgres", "description": "PostgreSQL queries" },
+            { "package": "@modelcontextprotocol/server-sqlite", "description": "SQLite queries" },
+            { "package": "@modelcontextprotocol/server-fetch", "description": "HTTP requests" },
+            { "package": "@modelcontextprotocol/server-brave-search", "description": "Brave Search API" },
+            { "package": "@modelcontextprotocol/server-puppeteer", "description": "controle de browser" },
+            { "package": "@modelcontextprotocol/server-slack", "description": "Slack API" },
+            { "package": "@modelcontextprotocol/server-memory", "description": "memória KV persistente" }
+          ]
+        },
+        {
+          "name": "Adicionando MCP server via CLI",
+          "commands": [
+            { "cmd": "claude mcp add filesystem npx @modelcontextprotocol/server-filesystem ~/docs", "description": "adiciona servidor filesystem" },
+            { "cmd": "claude mcp add github npx @modelcontextprotocol/server-github", "description": "adiciona servidor github" },
+            { "cmd": "claude mcp list", "description": "lista servidores configurados" },
+            { "cmd": "claude mcp remove filesystem", "description": "remove servidor" }
+          ]
+        },
+        {
+          "name": "Criando seu próprio MCP server (TypeScript)",
+          "example": "import { Server } from \"@modelcontextprotocol/sdk/server/index.js\";\nimport { StdioServerTransport } from \"@modelcontextprotocol/sdk/server/stdio.js\";\n\nconst server = new Server({\n  name: \"meu-server\",\n  version: \"1.0.0\",\n}, {\n  capabilities: { tools: {} }\n});\n\n// Registrar ferramenta\nserver.setRequestHandler(ListToolsRequestSchema, async () => ({\n  tools: [{\n    name: \"consultar_api\",\n    description: \"Consulta nossa API interna\",\n    inputSchema: {\n      type: \"object\",\n      properties: {\n        endpoint: { type: \"string\" },\n        params: { type: \"object\" }\n      }\n    }\n  }]\n}));\n\n// Implementar ferramenta\nserver.setRequestHandler(CallToolRequestSchema, async (request) => {\n  if (request.params.name === \"consultar_api\") {\n    const result = await fetch(`https://api.minha-empresa.com/${request.params.arguments.endpoint}`);\n    return { content: [{ type: \"text\", text: JSON.stringify(await result.json()) }] };\n  }\n});\n\nconst transport = new StdioServerTransport();\nawait server.connect(transport);"
+        },
+        {
+          "name": "Servidores MCP populares da comunidade",
+          "servers": [
+            { "name": "Vercel MCP", "url": "https://mcp.vercel.com", "description": "deployments, logs, projetos" },
+            { "name": "Linear MCP", "description": "issues e projetos Linear" },
+            { "name": "Jira MCP", "description": "tickets Atlassian" },
+            { "name": "Figma MCP", "description": "design tokens e componentes" },
+            { "name": "AWS MCP", "description": "recursos AWS" }
+          ]
+        },
+        {
+          "name": "Usando MCP server remoto (HTTP)",
+          "example": "claude mcp add --transport http vercel https://mcp.vercel.com"
+        }
+      ],
+      "exercise": {
+        "description": "Configurar o servidor @modelcontextprotocol/server-filesystem para acessar ~/Documents e pedir ao Claude 'liste todos os PDFs em meus documentos'."
+      },
+      "resources": [
+        "https://docs.anthropic.com/en/docs/claude-code/mcp",
+        "https://modelcontextprotocol.io",
+        "https://github.com/modelcontextprotocol/servers"
+      ]
+    }
+  ]
+}

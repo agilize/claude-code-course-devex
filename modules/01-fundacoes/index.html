@@ -2,45 +2,362 @@
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>O que é Claude Code — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav data-testid="breadcrumb"><a href="/">Início</a> &gt; <span>O que é Claude Code</span></nav>
-  <aside data-testid="sidebar">
-    <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="active">Módulo 1</a>
-    <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html">Módulo 2</a>
-    <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html">Módulo 3</a>
-    <a data-testid="nav-module-4" href="/modules/02-config/tools.html">Módulo 4</a>
-    <a data-testid="nav-module-5" href="/modules/02-config/settings.html">Módulo 5</a>
-    <a data-testid="nav-module-6" href="/modules/02-config/skills.html">Módulo 6</a>
-    <a data-testid="nav-module-7" href="/modules/02-config/hooks.html">Módulo 7</a>
-    <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html">Módulo 8</a>
-    <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html">Módulo 9</a>
-    <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html">Módulo 10</a>
-    <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html">Módulo 11</a>
-    <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html">Módulo 12</a>
-    <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html">Módulo 13</a>
-    <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html">Módulo 14</a>
-    <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html">Módulo 15</a>
-    <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html">Módulo 16</a>
-    <a data-testid="nav-module-17" href="/modules/05-avancado/models.html">Módulo 17</a>
-    <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html">Módulo 18</a>
-    <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html">Módulo 19</a>
-    <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html">Módulo 20</a>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link"><span class="logo-icon">⚡</span><span class="logo-text">Claude Code<br><small>Course</small></span></a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 20</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link active"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+    </nav>
   </aside>
-  <main>
-    <h1>O que é Claude Code</h1>
-    <p>Claude Code é a CLI oficial da Anthropic para desenvolvimento assistido por IA. Neste módulo você aprende os fundamentos do Claude Code e como ele transforma seu fluxo de trabalho.</p>
-    <pre><code>$ claude --help
-$ claude "explique este código"
-$ claude --version</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <pre><code>$ npm install -g @anthropic-ai/claude-code</code></pre>
-    <button data-testid="copy-btn">Copiar</button>
-    <section data-testid="exercise"><h3>Exercício</h3><p>Instale o Claude Code e execute seu primeiro comando.</p></section>
-    <a href="https://docs.anthropic.com/en/docs/claude-code">Documentação oficial Anthropic</a>
-    <button data-testid="btn-complete">Marcar como concluído</button>
-    <a data-testid="btn-next" href="/modules/01-fundacoes/cli.html">Próximo módulo</a>
-  </main>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger">☰</button>
+      <span class="mobile-title">O que é Claude Code</span>
+      <button data-testid="theme-toggle" class="theme-toggle">🌙</button>
+    </header>
+
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <a href="/modules/01-fundacoes/">Parte 1 — Fundações</a> › <span>O que é Claude Code</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="🔍 Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only">🌙</button>
+      </div>
+    </div>
+
+    <article class="module-body">
+      <div class="module-header">
+        <div class="module-meta">
+          <span class="badge">⏱ ~15 min</span>
+          <span class="badge badge-iniciante">Iniciante</span>
+          <span class="badge badge-part">Parte 1</span>
+        </div>
+        <h1>O que é Claude Code</h1>
+        <p class="subtitle">Conheça o agente de IA de linha de comando da Anthropic e como ele opera diretamente no seu ambiente de desenvolvimento</p>
+        <div class="objectives-box">
+          <h4>Objetivos</h4>
+          <ul>
+            <li>Entender o que é Claude Code e como ele difere de outros assistentes de IA</li>
+            <li>Instalar e configurar Claude Code no seu ambiente</li>
+            <li>Autenticar com a API da Anthropic</li>
+            <li>Executar sua primeira sessão interativa</li>
+            <li>Compreender a arquitetura de ferramentas do Claude Code</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section: O que é Claude Code -->
+      <section class="module-section">
+        <h2>O que é Claude Code</h2>
+        <p>Claude Code é um agente de IA de linha de comando desenvolvido pela Anthropic. Diferente de chatbots tradicionais que vivem em interfaces web, o Claude Code opera diretamente no seu terminal com acesso real ao seu ambiente de desenvolvimento.</p>
+        <p>Isso significa que ele pode ler e escrever arquivos, executar comandos shell, interagir com git, instalar dependências e realizar qualquer tarefa que você faria no terminal — tudo de forma autônoma ou com sua supervisão.</p>
+        <p>Claude Code usa os modelos Claude da Anthropic (Opus, Sonnet e Haiku) como seu backend de inteligência. Você escolhe o modelo de acordo com a complexidade da tarefa e o custo que está disposto a pagar.</p>
+      </section>
+
+      <!-- Section: Comparativo -->
+      <section class="module-section">
+        <h2>Por que usar Claude Code</h2>
+        <p>Veja como o Claude Code se compara a outras ferramentas de IA para desenvolvedores:</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Claude Code</th>
+                <th>ChatGPT</th>
+                <th>GitHub Copilot</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Acesso ao filesystem</td>
+                <td class="cell-yes">✓ Total</td>
+                <td class="cell-no">✗ Nenhum</td>
+                <td>Parcial (no editor)</td>
+              </tr>
+              <tr>
+                <td>Executa comandos shell</td>
+                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-no">✗ Não</td>
+                <td class="cell-no">✗ Não</td>
+              </tr>
+              <tr>
+                <td>Edição multi-arquivo</td>
+                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-no">✗ Não</td>
+                <td class="cell-yes">✓ Sim</td>
+              </tr>
+              <tr>
+                <td>Hooks e automação</td>
+                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-no">✗ Não</td>
+                <td class="cell-no">✗ Não</td>
+              </tr>
+              <tr>
+                <td>Subagentes paralelos</td>
+                <td class="cell-yes">✓ Sim</td>
+                <td class="cell-no">✗ Não</td>
+                <td class="cell-no">✗ Não</td>
+              </tr>
+              <tr>
+                <td>Integração com git</td>
+                <td class="cell-yes">✓ Nativa</td>
+                <td class="cell-no">✗ Não</td>
+                <td>Parcial</td>
+              </tr>
+              <tr>
+                <td>Contexto do projeto</td>
+                <td class="cell-yes">✓ Via CLAUDE.md</td>
+                <td>Manual (paste)</td>
+                <td>Parcial (workspace)</td>
+              </tr>
+              <tr>
+                <td>Uso via terminal</td>
+                <td class="cell-yes">✓ CLI nativo</td>
+                <td class="cell-no">✗ Não</td>
+                <td class="cell-no">✗ Não</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Pré-requisitos -->
+      <section class="module-section">
+        <h2>Pré-requisitos</h2>
+        <p>Antes de instalar o Claude Code, você precisa ter:</p>
+        <ul>
+          <li><strong>Node.js 18+</strong> instalado (verifique com <code>node --version</code>)</li>
+          <li><strong>npm</strong> ou outro package manager</li>
+          <li>Uma <strong>conta Anthropic</strong> em <a href="https://console.anthropic.com/" target="_blank" rel="noopener">console.anthropic.com</a></li>
+          <li>Uma <strong>API key</strong> da Anthropic (gerada no Console)</li>
+        </ul>
+      </section>
+
+      <!-- Section: Instalação -->
+      <section class="module-section">
+        <h2>Instalação</h2>
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Instalar globalmente via npm
+npm install -g @anthropic-ai/claude-code
+
+# Verificar a instalação
+claude --version
+
+# Exemplo de saída esperada:
+# claude v1.x.x
+
+# Iniciar o Claude Code pela primeira vez
+claude</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>ℹ️ Info:</strong> Em ambientes corporativos com proxies ou registries privados, pode ser necessário configurar o npm para usar o registry correto. Use <code>npm config set registry &lt;url&gt;</code> ou configure via variáveis de ambiente. O Claude Code também suporta <code>ANTHROPIC_BASE_URL</code> para apontar para gateways de API internos.
+        </div>
+      </section>
+
+      <!-- Section: Autenticação -->
+      <section class="module-section">
+        <h2>Autenticação com API Key</h2>
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Opção 1: Variável de ambiente (recomendado para desenvolvimento)
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+
+# Adicionar ao seu .bashrc ou .zshrc para persistir
+echo 'export ANTHROPIC_API_KEY="sk-ant-api03-..."' >> ~/.zshrc
+source ~/.zshrc
+
+# Opção 2: Login interativo (salva credenciais localmente)
+claude auth login
+
+# Verificar autenticação
+claude auth status</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="callout callout-warning">
+          <strong>⚠️ Atenção:</strong> NUNCA commite sua API key em repositórios. Use variáveis de ambiente ou arquivos <code>.env</code> listados no <code>.gitignore</code>. A API key começa com <code>sk-ant-</code> e deve ser tratada como uma senha — quem a tiver pode usar sua conta e incorrer em custos.
+        </div>
+      </section>
+
+      <!-- Section: Primeira sessão -->
+      <section class="module-section">
+        <h2>Sua primeira sessão</h2>
+        <p>Ao executar <code>claude</code> pela primeira vez, você verá uma interface REPL (Read-Eval-Print Loop) no terminal. A interface mostra:</p>
+        <ul>
+          <li>O modelo em uso (ex: <code>claude-sonnet-4-6</code>)</li>
+          <li>O diretório de trabalho atual</li>
+          <li>Um prompt para você digitar sua mensagem</li>
+        </ul>
+        <p>Você pode pedir qualquer coisa: analisar código, criar arquivos, executar comandos, fazer perguntas sobre seu projeto. O Claude Code vai usar suas ferramentas para completar a tarefa, pedindo confirmação antes de ações potencialmente destrutivas.</p>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Inicie o Claude Code
+claude
+
+# Você verá algo como:
+# ╭─────────────────────────────────────╮
+# │ Claude Code v1.x.x                  │
+# │ Model: claude-sonnet-4-6            │
+# │ Working dir: /seu/projeto           │
+# ╰─────────────────────────────────────╯
+# >
+
+# Digite sua primeira pergunta:
+# > liste os arquivos do diretório atual
+
+# Claude Code vai executar ls e mostrar o resultado
+# > qual é a estrutura do projeto?
+
+# Claude Code vai ler os arquivos e explicar a estrutura</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+      </section>
+
+      <!-- Section: Como funciona -->
+      <section class="module-section">
+        <h2>Como o Claude Code funciona por baixo dos panos</h2>
+        <p>O Claude Code opera através de um conjunto de ferramentas que permitem ao modelo interagir com seu ambiente. Cada vez que você faz uma solicitação, o modelo decide quais ferramentas usar e em que ordem.</p>
+
+        <h3>Ferramentas principais</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ferramenta</th>
+                <th>O que faz</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>Read</code></td><td>Lê o conteúdo de arquivos</td></tr>
+              <tr><td><code>Write</code></td><td>Cria ou sobrescreve arquivos</td></tr>
+              <tr><td><code>Edit</code></td><td>Faz edições cirúrgicas em arquivos existentes</td></tr>
+              <tr><td><code>Bash</code></td><td>Executa comandos shell</td></tr>
+              <tr><td><code>Glob</code></td><td>Busca arquivos por padrão</td></tr>
+              <tr><td><code>Grep</code></td><td>Busca conteúdo dentro de arquivos</td></tr>
+              <tr><td><code>WebFetch</code></td><td>Acessa URLs (documentação, APIs)</td></tr>
+              <tr><td><code>TodoWrite</code></td><td>Gerencia tarefas durante sessões longas</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>O modelo usa essas ferramentas de forma encadeada: lê arquivos para entender o contexto, planeja a solução, escreve ou edita arquivos, executa testes — tudo de forma autônoma.</p>
+
+        <div class="callout callout-tip">
+          <strong>💡 Dica:</strong> Para projetos complexos, sempre inicie a sessão pedindo ao Claude Code para "explorar o projeto e entender sua estrutura antes de fazer qualquer mudança". Isso garante que ele tenha contexto suficiente para tomar decisões melhores.
+        </div>
+      </section>
+
+      <!-- Exercise -->
+      <section data-testid="exercise" class="exercise-section">
+        <h3>🎯 Exercício Prático</h3>
+        <p><strong>Primeira instalação e sessão</strong> — Instale o Claude Code, configure sua API key e execute seu primeiro comando para listar arquivos do diretório.</p>
+        <ol>
+          <li>Abra seu terminal</li>
+          <li>Execute <code>npm install -g @anthropic-ai/claude-code</code></li>
+          <li>Configure sua API key: <code>export ANTHROPIC_API_KEY='sua-key-aqui'</code></li>
+          <li>Execute <code>claude --version</code> para verificar a instalação</li>
+          <li>Navegue até um projeto existente: <code>cd /seu/projeto</code></li>
+          <li>Execute <code>claude "liste os arquivos do diretório atual e explique para que serve cada um"</code></li>
+          <li>Observe como o Claude Code usa a ferramenta Bash para listar os arquivos e Read para entender cada um</li>
+        </ol>
+        <div class="callout callout-tip">
+          <strong>Resultado esperado:</strong> O Claude Code deve listar os arquivos do diretório e fornecer uma explicação do propósito de cada arquivo, demonstrando que ele realmente leu e compreendeu o contexto do projeto.
+        </div>
+      </section>
+
+      <!-- Resources -->
+      <section class="resources-section">
+        <h3>📚 Recursos</h3>
+        <div class="resources-grid">
+          <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener" class="resource-card resource-card-docs">
+            <div class="resource-type">Docs</div>
+            <div class="resource-title">Documentação oficial do Claude Code</div>
+            <div class="resource-desc">Documentação completa com guias de instalação, referência da CLI, e exemplos de uso</div>
+          </a>
+          <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener" class="resource-card resource-card-github">
+            <div class="resource-type">GitHub</div>
+            <div class="resource-title">Repositório GitHub do Claude Code</div>
+            <div class="resource-desc">Código fonte, issues, e contribuições da comunidade</div>
+          </a>
+          <a href="https://console.anthropic.com/" target="_blank" rel="noopener" class="resource-card resource-card-docs">
+            <div class="resource-type">Docs</div>
+            <div class="resource-title">Anthropic Console — Gerenciar API Keys</div>
+            <div class="resource-desc">Crie e gerencie suas API keys, monitore uso e custos</div>
+          </a>
+          <a href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener" class="resource-card resource-card-docs">
+            <div class="resource-type">Docs</div>
+            <div class="resource-title">Página oficial do Claude Code</div>
+            <div class="resource-desc">Site oficial com visão geral de features e casos de uso</div>
+          </a>
+        </div>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete">✓ Marcar como concluído</button>
+        <div class="nav-prev-next">
+          <a data-testid="btn-next" href="/modules/01-fundacoes/cli.html" class="btn btn-next">Próximo: CLI Completo →</a>
+        </div>
+      </nav>
+
+      <div style="display:none">
+        <div data-testid="progress-bar"><div class="progress-fill"></div></div>
+        <div data-testid="progress-text">0%</div>
+      </div>
+    </article>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

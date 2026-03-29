@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W5: Pipeline 100% Agentic — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link active"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Pipeline Agentic</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Pipeline Agentic</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 27</div>
+        <h1 class="module-title">W5: Pipeline 100% Agentic</h1>
+        <p class="module-description">Zero intervenção humana. Um trigger (GitHub issue, webhook, cron) inicia um orchestrator que spawna agentes especializados criados em runtime, executa em paralelo, verifica, testa e faz merge — completamente autônomo.</p>
+      </div>
+
+      <!-- Seção 1: Filosofia e quando usar -->
+      <section class="content-section">
+        <h2><i class="uil uil-bolt"></i> Filosofia e quando usar</h2>
+        <p>O pipeline 100% agentic representa o topo da pirâmide de automação com Claude Code. Nenhum humano aprova etapas intermediárias: do trigger ao merge em produção, tudo ocorre por decisão de agentes. Isso é viável — e confiável — apenas sob condições muito específicas.</p>
+
+        <h3>Para que cenários este workflow é adequado</h3>
+        <ul>
+          <li><strong>Features bem-definidas:</strong> spec clara, critérios de aceite explícitos, sem ambiguidade de produto</li>
+          <li><strong>Tarefas repetitivas ou de manutenção:</strong> rate limiting, paginação, adição de campos, atualizações de dependências</li>
+          <li><strong>Hotfixes com escopo restrito:</strong> erros de validação, mensagens de erro, ajustes de configuração</li>
+          <li><strong>Automações de infraestrutura:</strong> rotação de secrets, atualização de certificados, bumps de versão</li>
+        </ul>
+
+        <h3>Para que cenários este workflow NÃO é adequado</h3>
+        <ul>
+          <li>Features de alta ambiguidade ou que dependem de julgamento de produto</li>
+          <li>Mudanças de arquitetura com impacto transversal no codebase</li>
+          <li>Qualquer alteração onde o custo de erro é alto e rollback é complexo</li>
+          <li>Código que lida com PII, dados financeiros ou compliance regulatório sem revisão humana adicional</li>
+        </ul>
+
+        <h3>Pré-requisito inegociável: o pipeline deve ter testes rigorosos antes de ser autônomo</h3>
+        <p>Antes de ativar autonomia total, você precisa de:</p>
+        <ul>
+          <li>Suíte de testes com cobertura de pelo menos 80% nas rotas críticas</li>
+          <li>Testes de integração com banco de dados real (não mocks)</li>
+          <li>Testes E2E cobrindo as jornadas de usuário afetadas</li>
+          <li>Load tests estabelecendo baseline de throughput</li>
+          <li>Gates de qualidade que bloqueiam o pipeline se qualquer teste falhar</li>
+        </ul>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Autonomia sem testes do pipeline é caos automatizado.</strong> Um agente que faz merge direto em produção sem uma suíte de testes robusta não é automação — é uma roleta-russa executada em escala. Invista primeiro nos testes, depois na autonomia.
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção 2: Arquitetura do pipeline -->
+      <section class="content-section">
+        <h2><i class="uil uil-sitemap"></i> Arquitetura do pipeline</h2>
+        <p>O pipeline agentic tem três camadas: <strong>triggers</strong> que iniciam o processo, <strong>agentes especializados</strong> que trabalham em paralelo, e <strong>gates de qualidade</strong> que bloqueiam o avanço até que todos os critérios sejam satisfeitos.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart TD
+  T1[GitHub Issue\nWebhook] --> ORC
+  T2[Cron Job] --> ORC
+  T3[API Trigger] --> ORC
+
+  ORC[Orchestrator\ncontexto &lt; 80K tokens] --> ORC1[Lê issue/ticket\nAnalisa codebase]
+  ORC1 --> ORC2{Quais especialistas\nsão necessários?}
+
+  ORC2 -->|Backend| BA[Backend Agent\n&lt; 60K tokens\nHex Arch + TDD]
+  ORC2 -->|Frontend| FA[Frontend Agent\n&lt; 60K tokens\nshadcn/ui + Lucide]
+  ORC2 -->|Testes| TA[Test Agent\n&lt; 60K tokens\nTDD-first]
+  ORC2 -->|Segurança| SA[Security Agent\n&lt; 60K tokens\nOWASP Top 10]
+
+  BA --> F1[Arquivos de implementação]
+  FA --> F2[Componentes UI]
+  TA --> F3[Suíte de testes]
+  SA --> F4[Security report]
+
+  F1 & F2 & F3 & F4 --> ORC3[Orchestrator consolida]
+  ORC3 --> ORC4[Review Agent\ncode quality + SOLID]
+  ORC4 --> GATE1{Passou\nreview?}
+  GATE1 -->|Não| ORC5[Debug Agent\ncontexto do erro]
+  ORC5 --> BA
+  GATE1 -->|Sim| TEST[Testing Pipeline]
+
+  TEST --> T1A[vitest unit]
+  T1A --> T2A[vitest integration]
+  T2A --> T3A[cypress headless]
+  T3A --> T4A{API mudou?}
+  T4A -->|Sim| T5A[k6 load + stress]
+  T4A -->|Não| GATE2
+  T5A --> GATE2
+
+  GATE2{Todos os\ntestes passaram?} -->|Não| ORC6[Análise de falha\nnovo ciclo]
+  ORC6 --> BA
+  GATE2 -->|Sim| MERGE[gh pr create\nauto-approve policy\ngh pr merge]
+  MERGE --> DEPLOY[vercel deploy\nsmoke test]
+  DEPLOY --> CLOSE[gh issue close]
+          </div>
+          <p class="diagram-caption">Pipeline 100% agentic: do trigger ao merge autônomo com gates de qualidade em cada etapa</p>
+        </div>
+
+        <h3>Responsabilidades de cada camada</h3>
+        <p><strong>Orchestrator (&lt; 80K tokens de contexto ativo):</strong> analisa o issue, decide quais agentes spawnar, consolida resultados e mantém o estado do pipeline em arquivos — nunca em memória. É o único agente que tem visão do pipeline completo.</p>
+        <p><strong>Agentes especializados (&lt; 60K tokens cada):</strong> recebem um brief focado, trabalham em paralelo, e escrevem output em arquivos no diretório <code>.pipeline/[issue-number]/</code>. Nunca se comunicam diretamente entre si — apenas através do orchestrator.</p>
+        <p><strong>Review Agent:</strong> audita o output consolidado contra critérios de qualidade: SOLID, ausência de regressões, OWASP Top 10. Produz um relatório estruturado que o orchestrator usa para decidir se avança ou inicia um novo ciclo de correção.</p>
+        <p><strong>Testing Pipeline:</strong> sequência determinística de testes. Cada etapa só executa se a anterior passou. O resultado é um JSON estruturado que o orchestrator usa como gate final.</p>
+      </section>
+
+      <!-- Seção 3: Exemplo concreto — do zero ao merge -->
+      <section class="content-section">
+        <h2><i class="uil uil-code-branch"></i> Exemplo concreto — do zero ao merge</h2>
+        <p>Cenário real: Issue GitHub #247 reportando abuso na API de usuários. Acompanhe cada passo do pipeline desde o webhook de trigger até o fechamento automático do issue.</p>
+
+        <h3>Passo 1 — Trigger: webhook do GitHub</h3>
+        <p>O GitHub envia um webhook quando o issue é aberto. Seu servidor de automação (ou GitHub Actions) intercepta o payload e inicia o orchestrator.</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">// Webhook payload do GitHub
+{
+  "action": "opened",
+  "issue": {
+    "number": 247,
+    "title": "Adicionar rate limiting de 100 req/min na API de usuários",
+    "body": "Estamos sofrendo abuse na rota GET /api/users. Precisamos de rate limiting por IP com resposta 429.",
+    "labels": [{"name": "enhancement"}, {"name": "security"}]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Passo 2 — Orchestrator boot (&lt; 30K tokens de contexto inicial)</h3>
+        <p>O orchestrator lê o issue, analisa o codebase relevante e produz um plano estruturado de quais agentes spawnar. O output é limitado a 2K tokens para manter o contexto enxuto.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">claude -p "
+Issue #247: Adicionar rate limiting 100 req/min na API de usuários.
+Leia src/api/users/ e identifique:
+1. Qual middleware de rate limiting está disponível no projeto
+2. Quais agentes você vai spawnar e por quê
+3. Escreva agents-plan.json com a lista de agentes e seus briefs
+Contexto máximo: mantenha resposta &lt; 2K tokens.
+Escreva resultado em .pipeline/247/orchestrator-plan.json"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>O arquivo <code>.pipeline/247/orchestrator-plan.json</code> gerado contém o mapa de agentes e os briefs que cada um receberá. Isso separa a decisão de planejamento da execução.</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
+  "issue": 247,
+  "agents": [
+    {
+      "id": "backend",
+      "brief_file": ".pipeline/247/backend-brief.txt",
+      "rationale": "Implementar middleware rate-limit em src/api/users/ com resposta 429"
+    },
+    {
+      "id": "test",
+      "brief_file": ".pipeline/247/test-brief.txt",
+      "rationale": "TDD-first: escrever testes para rate limiting antes da implementação"
+    },
+    {
+      "id": "security",
+      "brief_file": ".pipeline/247/security-brief.txt",
+      "rationale": "Issue tem label security — auditar OWASP A03 (injection via IP header) e A07 (auth bypass)"
+    }
+  ]
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Passo 3 — Spawn paralelo dos agentes especializados</h3>
+        <p>O orchestrator lança os agentes em paralelo usando subshells em background. O <code>wait</code> garante que todos terminem antes de consolidar.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Backend Agent — implementa o middleware
+claude -p "$(cat .pipeline/247/backend-brief.txt)" &
+
+# Test Agent — TDD: escreve testes ANTES da implementação
+claude -p "$(cat .pipeline/247/test-brief.txt)" &
+
+# Security Agent — OWASP A03: injection via X-Forwarded-For, A07: bypass por header
+claude -p "$(cat .pipeline/247/security-brief.txt)" &
+
+wait # aguarda os 3 terminarem antes de consolidar</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Por que o Test Agent roda em paralelo com o Backend Agent?</strong> O Test Agent recebe um brief com a spec da feature (o que o middleware deve fazer), não o código do Backend Agent. Ele escreve testes contra a interface esperada. Quando o Backend Agent termina, os testes já existem — o ciclo Red/Green começa imediatamente na fase de consolidação.
+          </div>
+        </div>
+
+        <h3>Passo 4 — Gate de integração: Review Agent</h3>
+        <p>O Review Agent lê os outputs de todos os agentes e produz um relatório estruturado. O orchestrator usa esse relatório para decidir: avança para o testing pipeline ou inicia um novo ciclo com o Debug Agent.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Review agent consolida e audita
+claude -p "Leia .pipeline/247/backend-output/, .pipeline/247/tests/, .pipeline/247/security-report.json.
+Verifique: SOLID, sem regressões, OWASP OK.
+Escreva .pipeline/247/review-result.json com status e issues."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-json">// .pipeline/247/review-result.json
+{
+  "status": "approved",
+  "solid_violations": [],
+  "owasp_issues": [],
+  "regression_risk": "low",
+  "notes": "X-Forwarded-For sanitizado corretamente. Testes cobrem cenários de bypass."
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Passo 5 — Testing pipeline sequencial</h3>
+        <p>Com o review aprovado, o pipeline executa testes em sequência determinística. Cada comando gera um JSON que o orchestrator analisa para decidir se avança ou dispara análise de falha.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Unidade: domínio isolado, sem I/O externo
+npx vitest run --reporter=json > .pipeline/247/test-results.json
+
+# E2E: jornadas críticas com browser headless
+npx cypress run --headless --reporter json > .pipeline/247/cypress-results.json
+
+# Load + stress: somente se API mudou (rate limiting mudou o contrato)
+k6 run --out json=.pipeline/247/k6-results.json k6/load.js
+
+# Auditoria de dependências: OWASP A06
+npm audit --json > .pipeline/247/audit-results.json</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Passo 6 — PR criação, merge automático e fechamento do issue</h3>
+        <p>Todos os gates passaram. O orchestrator cria o PR, aplica a auto-approve policy e fecha o issue com referência ao PR gerado.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">gh pr create \
+  --title "feat: rate limiting 100 req/min na API de usuários (closes #247)" \
+  --body "$(cat .pipeline/247/pr-description.md)"
+
+gh pr merge --squash --auto
+
+gh issue close 247 --comment "Implementado via pipeline autônomo. PR #$(gh pr view --json number -q .number)"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div>
+            <strong>Do webhook ao merge em produção:</strong> zero interação humana, todos os gates de qualidade respeitados, rastreabilidade completa em <code>.pipeline/247/</code>. O histórico do pipeline fica disponível para auditoria e post-mortem.
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção 4: Dynamic agent spawning -->
+      <section class="content-section">
+        <h2><i class="uil uil-robot"></i> Dynamic agent spawning — criação em runtime</h2>
+        <p>Uma das características centrais deste pipeline é que <strong>não existe lista fixa de agentes</strong>. O orchestrator analisa cada issue e decide em runtime quais especialistas são necessários. A mesma pipeline que spawna 3 agentes para um rate limiting pode spawnar 6 para uma feature que envolve migração de banco, frontend e mudança de autenticação.</p>
+
+        <h3>Como o orchestrator decide quais agentes criar</h3>
+        <p>A decisão é baseada em análise do issue: labels, palavras-chave no corpo, e impacto nos módulos do codebase identificados na fase de boot.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Regras de decisão do orchestrator (lógica de seleção de agentes)
+
+# Label "security" presente → spawna security agent com checklist OWASP
+if issue.labels includes "security":
+  spawn security-agent --brief security-brief.txt
+
+# Corpo menciona "frontend" ou "UI" → spawna frontend agent com skill frontend-design
+if issue.body matches /(frontend|UI|componente|tela)/i:
+  spawn frontend-agent --skill frontend-design --brief frontend-brief.txt
+
+# Corpo menciona "banco" ou "migration" → spawna migration agent
+if issue.body matches /(database|migration|schema|PostgreSQL)/i:
+  spawn migration-agent --brief migration-brief.txt
+
+# Corpo menciona "performance" ou "latência" → spawna perf agent com k6
+if issue.body matches /(performance|latência|throughput|slow)/i:
+  spawn perf-agent --tools k6 --brief perf-brief.txt</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Como criar um skill especializado em runtime</h3>
+        <p>Para issues com domínios incomuns — como zero-downtime migrations de PostgreSQL — o orchestrator pode gerar um skill temporário antes de spawnar o agente correspondente. O skill é criado como arquivo Markdown no diretório do pipeline e passado ao agente via <code>--skill</code> ou injetado no brief.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">claude -p "Crie um skill temporário em .pipeline/247/skills/migration-agent.md
+para um agente especializado em migrations de banco PostgreSQL com zero downtime.
+O skill deve ter: instruções de como criar migrations reversíveis,
+checklist de segurança, e formato de output."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>O skill gerado em runtime tem a mesma estrutura de qualquer skill do Claude Code: frontmatter YAML com <code>description</code>, corpo com instruções e exemplos. A diferença é que ele é efêmero — existe apenas para este pipeline run e é descartado após o merge.</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown">---
+description: Agente especializado em migrations PostgreSQL com zero downtime
+---
+
+## Regras de zero-downtime migration
+
+1. NUNCA use `ALTER TABLE ... DROP COLUMN` sem um ciclo de deploy intermediário
+2. Adicione colunas como nullable primeiro, popule com default, então adicione constraint
+3. Use transactions explícitas: `BEGIN; ... COMMIT;`
+4. Toda migration deve ter `up()` e `down()` implementados e testados
+
+## Checklist de segurança
+- [ ] Migration reversível via `down()`
+- [ ] Testada em snapshot da base de produção (anonimizada)
+- [ ] Lock time estimado &lt; 100ms (senão use `pg_repack` ou online DDL)
+- [ ] Plano de rollback documentado em migration-plan.md
+
+## Formato de output
+Escreva os arquivos em `.pipeline/[issue]/migrations/`:
+- `YYYYMMDDHHMMSS_description.sql` — a migration em si
+- `migration-plan.md` — estimativa de lock time e plano de rollback</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Skills temporários são poderosos para domínios de nicho.</strong> Em vez de tentar cobrir todos os possíveis especialismos em skills permanentes, o orchestrator gera o conhecimento especializado sob demanda. O custo é uma chamada extra ao Claude — o benefício é um agente com instruções precisas para o problema específico daquele issue.
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção 5: Context Window discipline no pipeline agentic -->
+      <section class="content-section">
+        <h2><i class="uil uil-setting"></i> Context Window discipline no pipeline agentic</h2>
+        <p>O pipeline 100% agentic é o cenário mais crítico para context discipline. Com múltiplos agentes rodando em paralelo e um orchestrator que precisa manter visibilidade do estado global, um descuido no gerenciamento de contexto causa dois tipos de falha: context overflow (o agente perde informação importante) ou context poisoning (output irrelevante polui o raciocínio).</p>
+
+        <h3>Limites obrigatórios</h3>
+        <ul>
+          <li><strong>Orchestrator:</strong> máximo 80K tokens ativos. Nunca acumular outputs completos dos agentes.</li>
+          <li><strong>Cada agente spawned:</strong> máximo 60K tokens de contexto inicial (brief + arquivos relevantes).</li>
+          <li><strong>Entre waves pesadas:</strong> <code>/compact</code> obrigatório antes de iniciar nova fase.</li>
+          <li><strong>Handoffs:</strong> sempre via arquivos (<code>PLAN.md</code>, <code>CONTEXT.md</code>, <code>ADR.md</code>) — nunca in-memory.</li>
+          <li><strong>Ciclo de vida dos agentes:</strong> destruídos após tarefa; estado persiste exclusivamente em arquivos.</li>
+          <li><strong>Reinício do orchestrator:</strong> após 3 waves, reiniciar com <code>CONTEXT.md</code> como única fonte de estado.</li>
+        </ul>
+
+        <h3>Anti-pattern: orchestrator que pede output completo de todos os agentes</h3>
+        <p>Este é o erro mais comum e o que causa context overflow com maior frequência. O orchestrator não precisa saber o conteúdo completo de cada arquivo gerado — apenas onde estão e se a geração foi bem-sucedida.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># ANTI-PATTERN: solicitar output completo causa context overflow
+claude -p "
+Mostre o conteúdo completo de todos os arquivos em .pipeline/247/backend-output/,
+.pipeline/247/tests/, e .pipeline/247/security-report.json.
+Analise tudo e me diga se está OK."
+
+# Problema: com 3 agentes gerando código, você facilmente injeta 50K+ tokens
+# de output de implementação no contexto do orchestrator.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Pattern correto: orchestrator solicita apenas status e paths</h3>
+        <p>O orchestrator pede um summary estruturado — não o conteúdo dos arquivos. O Review Agent, que tem contexto próprio e limitado, é quem lê os arquivos completos e produz o relatório de qualidade.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># PATTERN CORRETO: orchestrator pede apenas { status, output_files[], issues[] }
+claude -p "
+Cada agente escreveu um arquivo de resultado em .pipeline/247/:
+- backend-result.json
+- test-result.json
+- security-result.json
+
+Leia APENAS esses três arquivos de resultado (não os outputs completos).
+Produza um summary em .pipeline/247/wave-1-summary.json com:
+{ status: 'ok'|'failed', output_files: [], issues: [] }
+Mantenha a resposta abaixo de 500 tokens."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>Cada agente especializado é responsável por produzir seu próprio arquivo <code>*-result.json</code> com o summary do que fez. O orchestrator consome apenas esse summary. Os arquivos de implementação ficam em disco e são lidos apenas pelos agentes que precisam deles.</p>
+        <div class="code-block-wrapper"><pre><code class="language-json">// Formato padrão de result.json para cada agente
+{
+  "agent": "backend",
+  "status": "ok",
+  "output_files": [
+    "src/middleware/rate-limit.ts",
+    "src/api/users/index.ts"
+  ],
+  "issues": [],
+  "tokens_used": 18420,
+  "duration_seconds": 47
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Context discipline é o que diferencia um pipeline que escala de um que trava na 3ª wave.</strong> Orquestradores que acumulam contexto tendem a falhar silenciosamente: o modelo começa a ignorar partes do contexto quando se aproxima do limite, produzindo outputs incompletos ou inconsistentes sem sinalizar erro.
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção 6: Como configurar o pipeline -->
+      <section class="content-section">
+        <h2><i class="uil uil-cog"></i> Como configurar o pipeline</h2>
+        <p>A infraestrutura do pipeline requer três componentes: estrutura de diretórios para persistência de estado, GitHub Actions para trigger automático, e política de auto-approve configurada com os guardrails corretos.</p>
+
+        <h3>Estrutura de diretórios</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">project-root/
+├── .pipeline/               # Estado dos pipelines em execução e histórico
+│   └── [issue-number]/      # Diretório isolado por issue
+│       ├── orchestrator-plan.json
+│       ├── backend-brief.txt
+│       ├── test-brief.txt
+│       ├── security-brief.txt
+│       ├── backend-output/  # Arquivos gerados pelo backend agent
+│       ├── tests/           # Testes gerados pelo test agent
+│       ├── security-report.json
+│       ├── wave-1-summary.json
+│       ├── review-result.json
+│       ├── test-results.json
+│       ├── cypress-results.json
+│       ├── k6-results.json
+│       ├── audit-results.json
+│       └── pr-description.md
+├── k6/
+│   ├── load.js              # Cenário de carga: baseline de throughput
+│   └── stress.js            # Cenário de stress: ponto de ruptura
+├── scripts/
+│   ├── orchestrator.sh      # Script principal do pipeline
+│   ├── spawn-agents.sh      # Lançamento paralelo de agentes
+│   └── testing-pipeline.sh  # Sequência determinística de testes
+└── .github/
+    └── workflows/
+        └── agentic-pipeline.yml</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>GitHub Actions: trigger automático por issue label</h3>
+        <p>O workflow só dispara quando o issue tem labels específicas que indicam que a feature é elegível para automação. Isso evita que issues exploratórios ou de produto ativem o pipeline.</p>
+        <div class="code-block-wrapper"><pre><code class="language-yaml"># .github/workflows/agentic-pipeline.yml
+name: Agentic Pipeline
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  run-pipeline:
+    # Só dispara para labels que indicam feature elegível para automação
+    if: |
+      github.event.label.name == 'agentic-ready' ||
+      github.event.label.name == 'auto-implement'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install GitHub CLI
+        run: |
+          type -p curl >/dev/null || apt install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          apt update && apt install gh -y
+
+      - name: Run agentic pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: bash scripts/orchestrator.sh</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Script principal do orchestrator</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">#!/usr/bin/env bash
+# scripts/orchestrator.sh
+set -euo pipefail
+
+ISSUE=$ISSUE_NUMBER
+PIPELINE_DIR=".pipeline/$ISSUE"
+mkdir -p "$PIPELINE_DIR/skills"
+
+echo "=== Pipeline iniciado para issue #$ISSUE ==="
+
+# Fase 1: Boot do orchestrator — análise e planejamento
+claude -p "
+Issue #$ISSUE: $ISSUE_TITLE
+Corpo: $ISSUE_BODY
+
+Analise src/ e identifique os módulos impactados.
+Decida quais agentes spawnar. Escreva os briefs.
+Output em $PIPELINE_DIR/orchestrator-plan.json e $PIPELINE_DIR/*-brief.txt
+Mantenha resposta abaixo de 2K tokens." \
+  --output-format json
+
+# Fase 2: Spawn paralelo de agentes especializados
+bash scripts/spawn-agents.sh "$PIPELINE_DIR"
+
+# Fase 3: Consolidação e review
+claude -p "
+Leia $PIPELINE_DIR/*-result.json (apenas os result files, não os outputs completos).
+Produza $PIPELINE_DIR/wave-1-summary.json com { status, output_files[], issues[] }"
+
+REVIEW_STATUS=$(jq -r '.status' "$PIPELINE_DIR/wave-1-summary.json")
+if [ "$REVIEW_STATUS" != "ok" ]; then
+  echo "Wave 1 falhou. Iniciando ciclo de debug..." >&2
+  exit 1
+fi
+
+# Fase 4: Testing pipeline
+bash scripts/testing-pipeline.sh "$PIPELINE_DIR"
+
+# Fase 5: PR + merge + fechamento
+bash scripts/merge-and-close.sh "$PIPELINE_DIR" "$ISSUE"
+
+echo "=== Pipeline concluído para issue #$ISSUE ==="</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Configuração de auto-approve policy</h3>
+        <p>A auto-approve policy é a parte mais delicada da configuração. Ela define quais PRs o pipeline pode mergear sem aprovação humana. Comece restritivo e expanda gradualmente conforme o histórico de sucesso aumenta.</p>
+        <div class="code-block-wrapper"><pre><code class="language-yaml"># .github/auto-approve.yml (usando hmarr/auto-approve-action ou equivalente)
+# Política restritiva para início: apenas PRs pequenos com todos os gates passando
+
+rules:
+  - conditions:
+      # Só aprova automaticamente PRs criados pelo pipeline agentic
+      - author: "github-actions[bot]"
+      # Requer que todos os checks de CI passem
+      - check-success: "vitest"
+      - check-success: "cypress"
+      - check-success: "npm-audit"
+      # Limita o tamanho do PR para mudanças incrementais
+      - "files-changed < 15"
+      - "additions + deletions < 300"
+    actions:
+      approve: true
+      merge:
+        method: squash</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Smoke tests pós-deploy</h3>
+        <p>Após o merge e deploy, o pipeline executa um smoke test mínimo para confirmar que a feature está funcionando em produção antes de fechar o issue.</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Smoke test pós-deploy: verifica endpoints críticos
+PROD_URL="https://api.seuapp.com"
+
+# Verifica que o rate limiting responde corretamente
+RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$PROD_URL/api/users")
+if [ "$RESPONSE" != "200" ]; then
+  echo "SMOKE TEST FAILED: /api/users retornou $RESPONSE" >&2
+  # Aciona rollback automático via vercel rollback ou gh workflow run rollback
+  gh workflow run rollback.yml -f deployment_id="$DEPLOYMENT_ID"
+  exit 1
+fi
+
+# Verifica que rate limiting está ativo (deve retornar 429 após 100 requests)
+for i in $(seq 1 101); do
+  STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$PROD_URL/api/users")
+  if [ "$i" -eq 101 ] && [ "$STATUS" != "429" ]; then
+    echo "SMOKE TEST FAILED: rate limiting não ativou na requisição 101" >&2
+    exit 1
+  fi
+done
+
+echo "Smoke tests passaram. Issue fechado."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- Seção 7: Limitações e quando NÃO usar -->
+      <section class="content-section">
+        <h2><i class="uil uil-times-circle"></i> Limitações e quando NÃO usar</h2>
+        <p>O pipeline 100% agentic é uma ferramenta poderosa dentro de um escopo específico. Fora desse escopo, ele cria mais problemas do que resolve. Reconhecer os limites é tão importante quanto saber configurar o pipeline.</p>
+
+        <h3>Cenários onde o pipeline agentic NÃO deve ser usado</h3>
+        <ul>
+          <li>
+            <strong>Features de alta ambiguidade:</strong> quando a spec não está clara, o agente vai tomar decisões de produto que deveriam ser humanas. O resultado é implementação tecnicamente correta mas funcionalmente errada — e o erro só aparece em produção.
+          </li>
+          <li>
+            <strong>Mudanças de arquitetura:</strong> refactoring de camadas, introdução de novos patterns, migração de framework. O custo de erro é propagado por múltiplos módulos e o rollback é complexo.
+          </li>
+          <li>
+            <strong>Features que precisam de julgamento de produto:</strong> trade-offs de UX, decisões de monetização, alterações em fluxos de onboarding. Agentes não têm o contexto de negócio necessário para esse tipo de decisão.
+          </li>
+          <li>
+            <strong>Custo de erro alto com rollback difícil:</strong> migrations de banco de dados em produção com dados sensíveis, mudanças em sistemas de pagamento, alterações em pipelines de dados com downstream dependents.
+          </li>
+          <li>
+            <strong>Domínios sem cobertura de testes:</strong> se o módulo impactado não tem testes, o pipeline não tem como verificar que não quebrou nada. Nunca use o pipeline agentic para adicionar autonomia onde não há observabilidade.
+          </li>
+          <li>
+            <strong>Primeiros deploys de uma feature:</strong> o pipeline é adequado para iterar sobre features existentes, não para criar do zero. Features novas geralmente envolvem decisões de design que requerem revisão humana.
+          </li>
+        </ul>
+
+        <h3>Sinais de que o pipeline está sendo usado incorretamente</h3>
+        <ul>
+          <li>O orchestrator está spawning mais de 6 agentes para um único issue</li>
+          <li>Os briefs dos agentes contêm perguntas abertas sobre o que implementar</li>
+          <li>O Review Agent frequentemente retorna <code>status: failed</code> (indica spec ambígua)</li>
+          <li>O pipeline está rodando em branches que não têm testes de integração</li>
+          <li>A auto-approve policy está aprovando PRs com mais de 500 linhas de alteração</li>
+        </ul>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Comece com o pipeline supervisionado.</strong> Nas primeiras implementações, configure o pipeline para criar o PR mas <em>não fazer merge automaticamente</em> — um engenheiro revisa e aprova. Só ative o auto-merge após 20+ PRs com zero regressões em produção. A confiança no pipeline deve ser earned, não assumed.
+          </div>
+        </div>
+
+        <h3>Checklist antes de ativar autonomia total</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># Checklist de maturidade para pipeline 100% agentic
+
+## Cobertura de testes
+- [ ] Cobertura de testes unitários >= 80% nas rotas críticas
+- [ ] Testes de integração com banco de dados real (sem mocks de infra)
+- [ ] Testes E2E cobrindo jornadas de usuário afetadas pelo pipeline
+- [ ] Load tests com baseline documentado de throughput e latência
+
+## Gates do pipeline
+- [ ] Review Agent configurado com checklist SOLID e OWASP Top 10
+- [ ] Testing pipeline bloqueia merge se qualquer teste falhar
+- [ ] Smoke tests pós-deploy com rollback automático em caso de falha
+- [ ] npm audit como gate obrigatório (bloqueia em vulnerabilidades críticas)
+
+## Auto-approve policy
+- [ ] Policy restritiva por padrão: PRs pequenos, todos os checks passando
+- [ ] Limitação de tamanho de PR configurada (recomendado: < 300 linhas)
+- [ ] 20+ PRs supervisionados com zero regressões antes de ativar auto-merge
+
+## Observabilidade
+- [ ] Logs estruturados em cada etapa do pipeline (JSON, não texto livre)
+- [ ] Alertas configurados para falhas de smoke test
+- [ ] Histórico de pipelines auditável em .pipeline/ com retenção adequada
+
+## Rollback
+- [ ] Procedimento de rollback documentado e testado manualmente
+- [ ] Rollback automático configurado para falhas de smoke test
+- [ ] Canal de comunicação (Slack/PagerDuty) para falhas críticas do pipeline</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+  <h2><i class="uil uil-shield-check"></i> Hooks no pipeline agentic</h2>
+  <p>No pipeline 100% autônomo, hooks são <strong>críticos</strong> — não há humano revisando. Cada agente do pipeline precisa ter hooks configurados para que erros sejam detectados antes de chegarem ao merge gate.</p>
+
+  <div class="callout callout-warning">
+    <i class="uil uil-exclamation-triangle"></i>
+    <div><strong>Pipeline sem hooks = risco alto:</strong> O orchestrator confia no output dos agentes. Se um agente escrever código com vulnerabilidade ou testes falhando, sem hooks o pipeline pode avançar até o merge.</div>
+  </div>
+
+  <h3>Cada agente do pipeline deve rodar com hooks ativos</h3>
+  <div class="code-block-wrapper"><pre><code class="language-bash"># Backend Agent com hooks ativos
+claude -p "$(cat .pipeline/247/backend-brief.txt)" \
+  --settings .claude/settings-strict.json &
+
+# Test Agent com hooks ativos
+claude -p "$(cat .pipeline/247/test-brief.txt)" \
+  --settings .claude/settings-strict.json &
+
+# Security Agent com hooks ativos
+claude -p "$(cat .pipeline/247/security-brief.txt)" \
+  --settings .claude/settings-strict.json &
+
+wait</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <h3>settings-strict.json — configuração para agentes do pipeline</h3>
+  <div class="code-block-wrapper"><pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{"type": "command", "command": "node scripts/quality-gate.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""}]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "node scripts/bash-guard.mjs"}]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [{"type": "command", "command": "node scripts/agent-report.mjs"}]
+      }
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <h3>agent-report.mjs — relatório ao final de cada agente</h3>
+  <div class="code-block-wrapper"><pre><code class="language-javascript">#!/usr/bin/env node
+// agent-report.mjs — escreve relatório de qualidade que o orchestrator lê
+import { execSync, writeFileSync } from 'node:child_process';
+import { mkdirSync } from 'node:fs';
+
+const pipelineDir = process.env.PIPELINE_DIR ?? '.pipeline/current';
+mkdirSync(pipelineDir, { recursive: true });
+
+let status = 'ok';
+let issues = [];
+
+try {
+  execSync('npx vitest run --reporter=json', { stdio: 'pipe' });
+} catch (e) {
+  status = 'failed';
+  issues.push('testes falhando');
+}
+
+try {
+  execSync('npm audit --audit-level high', { stdio: 'pipe' });
+} catch {
+  issues.push('vulnerabilidades em dependências');
+}
+
+writeFileSync(
+  `${pipelineDir}/quality-report.json`,
+  JSON.stringify({ status, issues, timestamp: new Date().toISOString() }, null, 2)
+);
+
+console.log(`[agent-report] status=${status}, issues=${issues.length}`);
+if (status === 'failed') process.exit(1);</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <p>Scripts base (<code>quality-gate.mjs</code>, <code>bash-guard.mjs</code>) no <a href="/modules/06-workflows/00-fundamentos.html#hooks">Módulo 22 — Fundamentos</a>.</p>
+</section>
+
+    </article>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

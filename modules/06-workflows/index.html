@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflows de Desenvolvimento — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+
+    /* Workflow cards grid */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .workflow-card {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .workflow-card:hover {
+      border-color: var(--accent, #6366f1);
+    }
+    .workflow-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .workflow-card-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: var(--accent, #6366f1);
+      color: #fff;
+      white-space: nowrap;
+    }
+    .workflow-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary, #e2e8f0);
+      text-decoration: none;
+    }
+    .workflow-card-title:hover {
+      color: var(--accent, #6366f1);
+    }
+    .workflow-card-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted, #888);
+      margin: 0 0 0.75rem;
+      line-height: 1.5;
+    }
+    .workflow-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent, #6366f1);
+      text-decoration: none;
+    }
+    .workflow-card-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Comparison table */
+    .comparison-table-wrapper {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .comparison-table th {
+      background: var(--surface-2, #1a1a2e);
+      color: var(--text-primary, #e2e8f0);
+      font-weight: 600;
+      padding: 0.65rem 0.9rem;
+      text-align: left;
+      border: 1px solid var(--border, #2a2a3e);
+      white-space: nowrap;
+    }
+    .comparison-table th:first-child {
+      color: var(--text-muted, #888);
+      font-weight: 500;
+    }
+    .comparison-table td {
+      padding: 0.6rem 0.9rem;
+      border: 1px solid var(--border, #2a2a3e);
+      color: var(--text-secondary, #cbd5e1);
+      vertical-align: top;
+    }
+    .comparison-table tr:nth-child(even) td {
+      background: var(--surface-1, #0f172a);
+    }
+    .comparison-table td:first-child {
+      font-weight: 600;
+      color: var(--text-primary, #e2e8f0);
+      white-space: nowrap;
+    }
+    .comparison-table code {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 4px;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Fundamentos list */
+    .fundamentos-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .fundamentos-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary, #cbd5e1);
+    }
+    .fundamentos-list li i {
+      color: var(--accent, #6366f1);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings & Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA & CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes & Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API & Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos & Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link active"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Workflows</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Workflows</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 21</div>
+        <h1 class="module-title">Workflows de Desenvolvimento</h1>
+        <p class="module-description">Seis abordagens para desenvolver software de alta qualidade com Claude Code — do dev solo ao pipeline 100% autônomo. Cada workflow incorpora Clean Code, TDD, arquitetura hexagonal, testes completos e segurança OWASP.</p>
+      </div>
+
+      <!-- SEÇÃO 1: Por que workflows importam -->
+      <section class="module-section">
+        <h2 class="section-title"><i class="uil uil-award"></i> Por que workflows importam</h2>
+
+        <p>Existe uma diferença fundamental entre <strong>pedir para o Claude escrever código</strong> e <strong>orquestrar um workflow de desenvolvimento</strong>. A primeira abordagem delega uma tarefa. A segunda orquestra um processo.</p>
+
+        <p>Quando você simplesmente pede ao Claude para escrever uma função, você recebe uma função. Pode estar correta, pode ser legível, mas provavelmente não tem testes, não segue a arquitetura do projeto, não passou por revisão de segurança e não foi validada contra os requisitos reais.</p>
+
+        <p>Um workflow muda a equação. Ele define <em>como</em> o Claude deve operar — quais etapas seguir, quais critérios de qualidade aplicar, quais portas de verificação passar antes de avançar. O modelo executa dentro de um processo deliberadamente estruturado.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <p>"O melhor modelo com um workflow ruim produz código ruim. O pior modelo com um workflow excelente produz código defensável."</p>
+        </div>
+
+        <p>Isso significa que a escolha do workflow é mais determinante para a qualidade do resultado do que a escolha do modelo. Os workflows nesta parte do curso foram projetados para garantir, em cada abordagem, que TDD, arquitetura hexagonal, cobertura de testes e segurança OWASP não sejam opcionais — são parte do processo.</p>
+      </section>
+
+      <!-- SEÇÃO 2: Os seis workflows -->
+      <section class="module-section">
+        <h2 class="section-title"><i class="uil uil-apps"></i> Os seis workflows</h2>
+
+        <p>Cada workflow foi projetado para um contexto específico. Eles não são mutuamente exclusivos — você pode combinar elementos ou migrar de um para outro conforme o projeto evolui.</p>
+
+        <div class="workflow-grid">
+
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <span class="workflow-card-badge">W1</span>
+              <a href="/modules/06-workflows/01-solo.html" class="workflow-card-title">Claude Code Solo</a>
+            </div>
+            <p class="workflow-card-desc">O workflow mais direto. Você e o Claude Code, sem dependências externas. Ideal para projetos pessoais, protótipos rápidos e situações onde velocidade importa mais do que processo.</p>
+            <a href="/modules/06-workflows/01-solo.html" class="workflow-card-link"><i class="uil uil-arrow-right"></i> Módulo 23</a>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <span class="workflow-card-badge">W2</span>
+              <a href="/modules/06-workflows/02-gsd.html" class="workflow-card-title">Claude Code + GSD</a>
+            </div>
+            <p class="workflow-card-desc">Integração com o GSD skill para gerenciamento de milestones, memória cross-session e execução em waves. Pensado para times com roadmap definido e entregas planejadas.</p>
+            <a href="/modules/06-workflows/02-gsd.html" class="workflow-card-link"><i class="uil uil-arrow-right"></i> Módulo 24</a>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <span class="workflow-card-badge">W3</span>
+              <a href="/modules/06-workflows/03-cortex.html" class="workflow-card-title">Claude Code + Cortex</a>
+            </div>
+            <p class="workflow-card-desc">Usa o Cortex para memória semântica organizacional. Três agentes paralelos (implementador, revisor, testador) com contexto persistente entre sessões e projetos.</p>
+            <a href="/modules/06-workflows/03-cortex.html" class="workflow-card-link"><i class="uil uil-arrow-right"></i> Módulo 25</a>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <span class="workflow-card-badge">W4</span>
+              <a href="/modules/06-workflows/04-feature-dev.html" class="workflow-card-title">Feature Dev</a>
+            </div>
+            <p class="workflow-card-desc">Workflow focado em uma feature única do início ao fim. Três agentes com papéis definidos: arquiteto, implementador e code-reviewer. Overhead baixo, qualidade controlada.</p>
+            <a href="/modules/06-workflows/04-feature-dev.html" class="workflow-card-link"><i class="uil uil-arrow-right"></i> Módulo 26</a>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <span class="workflow-card-badge">W5</span>
+              <a href="/modules/06-workflows/05-agentic.html" class="workflow-card-title">Pipeline 100% Agentic</a>
+            </div>
+            <p class="workflow-card-desc">Autonomia máxima. N agentes especializados operam em pipeline sem intervenção humana — agente de testes, agente de segurança, agente de build. Ideal para CI/CD autônomo.</p>
+            <a href="/modules/06-workflows/05-agentic.html" class="workflow-card-link"><i class="uil uil-arrow-right"></i> Módulo 27</a>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <span class="workflow-card-badge">W6</span>
+              <a href="/modules/06-workflows/06-ideal-stack.html" class="workflow-card-title">O Stack Ideal</a>
+            </div>
+            <p class="workflow-card-desc">A abordagem production-grade. Combina GSD, múltiplos skills, gates de qualidade rigorosos e intervenção humana mínima nos pontos certos. Para quem não aceita comprometer qualidade.</p>
+            <a href="/modules/06-workflows/06-ideal-stack.html" class="workflow-card-link"><i class="uil uil-arrow-right"></i> Módulo 28</a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3: Tabela comparativa -->
+      <section class="module-section">
+        <h2 class="section-title"><i class="uil uil-table"></i> Tabela comparativa</h2>
+
+        <p>Use esta tabela para comparar os workflows nas dimensões que mais importam para o seu contexto. Cada célula resume o comportamento padrão — os módulos individuais detalham como personalizar.</p>
+
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Dimensão</th>
+                <th>W1 Solo</th>
+                <th>W2 GSD</th>
+                <th>W3 Cortex</th>
+                <th>W4 Feature Dev</th>
+                <th>W5 Agentic</th>
+                <th>W6 Ideal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Instalação</td>
+                <td>nenhuma</td>
+                <td>GSD skill</td>
+                <td><code>brew install cx</code></td>
+                <td>plugin install</td>
+                <td>nenhuma</td>
+                <td>GSD + skills</td>
+              </tr>
+              <tr>
+                <td>Overhead</td>
+                <td>mínimo</td>
+                <td>médio</td>
+                <td>médio</td>
+                <td>baixo</td>
+                <td>alto setup</td>
+                <td>alto</td>
+              </tr>
+              <tr>
+                <td>Paralelismo</td>
+                <td>nenhum</td>
+                <td>waves</td>
+                <td>3 agentes</td>
+                <td>3 agentes</td>
+                <td>N agentes</td>
+                <td>multi-wave</td>
+              </tr>
+              <tr>
+                <td>Memória cross-session</td>
+                <td>manual</td>
+                <td>GSD memory</td>
+                <td>Cortex semantic</td>
+                <td>nenhum</td>
+                <td>arquivos</td>
+                <td>híbrido</td>
+              </tr>
+              <tr>
+                <td>PM envolvido</td>
+                <td>não</td>
+                <td>sim (discuss)</td>
+                <td>não</td>
+                <td>não</td>
+                <td>não</td>
+                <td>sim</td>
+              </tr>
+              <tr>
+                <td>TDD enforçado</td>
+                <td>manual</td>
+                <td>via execute</td>
+                <td>via /implement</td>
+                <td>via reviewer</td>
+                <td>via test agent</td>
+                <td>hard gate</td>
+              </tr>
+              <tr>
+                <td>OWASP gate</td>
+                <td>manual</td>
+                <td>security phase</td>
+                <td>memory + review</td>
+                <td>code-reviewer</td>
+                <td>security agent</td>
+                <td>CI gate</td>
+              </tr>
+              <tr>
+                <td>Ideal para</td>
+                <td>solo/rápido</td>
+                <td>times/milestones</td>
+                <td>memória org.</td>
+                <td>feature única</td>
+                <td>CI autônomo</td>
+                <td>prod-grade</td>
+              </tr>
+              <tr>
+                <td>Intervenção humana</td>
+                <td>total</td>
+                <td>gates</td>
+                <td>gates</td>
+                <td>gates</td>
+                <td>zero</td>
+                <td>gates mínimos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4: Árvore de decisão -->
+      <section class="module-section">
+        <h2 class="section-title"><i class="uil uil-sitemap"></i> Árvore de decisão</h2>
+
+        <p>Se você ainda não sabe qual workflow usar, percorra este diagrama. Cada bifurcação leva à recomendação mais adequada para o seu contexto atual.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart TD
+  A[Nova feature/bug] --> B{Projeto solo?}
+  B -->|Sim| C{Precisa de estrutura?}
+  C -->|Não| W1[W1: Claude Code Solo]
+  C -->|Sim| W4[W4: Feature Dev]
+  B -->|Não, time| D{Tem milestones/roadmap?}
+  D -->|Sim| W2[W2: GSD]
+  D -->|Não| E{Precisa de memória org.?}
+  E -->|Sim| W3[W3: Cortex]
+  E -->|Não| F{100% autônomo?}
+  F -->|Sim| W5[W5: Agentic Pipeline]
+  F -->|Não - máxima qualidade| W6[W6: Stack Ideal]
+          </div>
+          <p class="diagram-caption">Árvore de decisão para escolha do workflow adequado ao contexto</p>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 5: Fundamentos transversais -->
+      <section class="module-section">
+        <h2 class="section-title"><i class="uil uil-book-open"></i> Fundamentos transversais</h2>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <p>Todos os seis workflows compartilham os mesmos fundamentos de qualidade. Antes de escolher um workflow, leia o <a href="/modules/06-workflows/00-fundamentos.html">Módulo 22 — Fundamentos de Qualidade</a>. Ele define os critérios que cada workflow implementa à sua maneira.</p>
+        </div>
+
+        <p>Os sete fundamentos transversais presentes em todos os workflows são:</p>
+
+        <ul class="fundamentos-list">
+          <li><i class="uil uil-check-circle"></i><span><strong>Clean Code + SOLID</strong> — nomenclatura, funções pequenas, responsabilidade única, extensibilidade</span></li>
+          <li><i class="uil uil-check-circle"></i><span><strong>Arquitetura Hexagonal</strong> — portas e adaptadores, separação de domínio e infraestrutura, testabilidade por design</span></li>
+          <li><i class="uil uil-check-circle"></i><span><strong>TDD (Test-Driven Development)</strong> — testes escritos antes da implementação, ciclo red-green-refactor</span></li>
+          <li><i class="uil uil-check-circle"></i><span><strong>Pirâmide de Testes</strong> — unitários, integração e E2E em proporção adequada, sem gaps de cobertura</span></li>
+          <li><i class="uil uil-check-circle"></i><span><strong>OWASP Top 10</strong> — validação de entrada, controle de acesso, exposição de dados, injeção e demais categorias</span></li>
+          <li><i class="uil uil-check-circle"></i><span><strong>Context Window Discipline</strong> — prompts concisos, contexto relevante, evitar overflow e degradação de qualidade</span></li>
+          <li><i class="uil uil-check-circle"></i><span><strong>Frontend Design Standards</strong> — acessibilidade, responsividade, consistência visual e experiência do usuário</span></li>
+        </ul>
+      </section>
+
+      <!-- SEÇÃO 6: Como usar este módulo -->
+      <section class="module-section">
+        <h2 class="section-title"><i class="uil uil-map"></i> Como usar este módulo</h2>
+
+        <p>Esta visão geral é o ponto de entrada da Parte 6. Siga esta sequência para aproveitar ao máximo:</p>
+
+        <ol>
+          <li>
+            <strong>Leia os fundamentos primeiro.</strong> O <a href="/modules/06-workflows/00-fundamentos.html">Módulo 22 — Fundamentos de Qualidade</a> define o vocabulário comum e os critérios de qualidade que todos os workflows aplicam. Pular este passo significa não entender <em>por que</em> cada workflow faz o que faz.
+          </li>
+          <li>
+            <strong>Escolha seu workflow pela tabela comparativa.</strong> Identifique as dimensões mais relevantes para o seu contexto — tamanho do time, necessidade de memória cross-session, grau de autonomia desejado — e use a tabela acima para filtrar as opções.
+          </li>
+          <li>
+            <strong>Use a árvore de decisão se ainda tiver dúvida.</strong> O diagrama percorre as perguntas certas para chegar à recomendação mais adequada ao seu momento atual.
+          </li>
+          <li>
+            <strong>Leia o módulo do workflow escolhido em profundidade.</strong> Cada workflow tem seu próprio módulo com setup completo, exemplos práticos e instruções de prompt.
+          </li>
+        </ol>
+
+        <div class="callout callout-success">
+          <i class="uil uil-shield-check"></i>
+          <p>Todo workflow desta parte já inclui TDD, OWASP, testes completos e arquitetura hexagonal como partes não-negociáveis do processo — não como opcionais a adicionar depois.</p>
+        </div>
+      </section>
+
+    </article>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

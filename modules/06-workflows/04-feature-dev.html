@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W4: Feature Dev — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+
+    /* Phase detail cards */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .phase-card {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .phase-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .phase-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      background: var(--accent, #6366f1);
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .phase-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary, #e2e8f0);
+      margin: 0;
+    }
+    .phase-agent-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent, #6366f1);
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 4px;
+      padding: 0.15rem 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .phase-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary, #94a3b8);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Agent cards */
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .agent-card {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .agent-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .agent-icon {
+      font-size: 1.4rem;
+      color: var(--accent, #6366f1);
+    }
+    .agent-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary, #e2e8f0);
+      font-family: 'JetBrains Mono', monospace;
+      margin: 0;
+    }
+    .agent-card ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary, #94a3b8);
+      line-height: 1.7;
+    }
+
+    /* Comparison table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.875rem;
+    }
+    .comparison-table th {
+      background: var(--surface-2, #1a1a2e);
+      color: var(--text-primary, #e2e8f0);
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border: 1px solid var(--border, #2a2a3e);
+    }
+    .comparison-table td {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border, #2a2a3e);
+      color: var(--text-secondary, #94a3b8);
+      vertical-align: top;
+    }
+    .comparison-table tr:nth-child(even) td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Confidence score bar */
+    .confidence-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+    .confidence-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary, #94a3b8);
+      min-width: 140px;
+    }
+    .confidence-bar-wrap {
+      flex: 1;
+      background: var(--surface-2, #1a1a2e);
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .confidence-bar {
+      height: 100%;
+      border-radius: 4px;
+    }
+    .confidence-bar.high   { background: #22c55e; }
+    .confidence-bar.medium { background: #f59e0b; }
+    .confidence-bar.low    { background: #ef4444; }
+    .confidence-value {
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-primary, #e2e8f0);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .section-header i {
+      font-size: 1.3rem;
+      color: var(--accent, #6366f1);
+    }
+    .section-header h2 {
+      margin: 0;
+    }
+
+    /* Test sequence */
+    .test-sequence {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+    }
+    .test-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+    .test-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      background: var(--accent, #6366f1);
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .test-step-content strong {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text-primary, #e2e8f0);
+      margin-bottom: 0.2rem;
+    }
+    .test-step-content span {
+      font-size: 0.82rem;
+      color: var(--text-secondary, #94a3b8);
+    }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link active"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Feature Dev</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Feature Dev</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 26</div>
+        <h1 class="module-title">W4: Feature Dev</h1>
+        <p class="module-description">O plugin oficial da Anthropic para desenvolvimento de features. Sete fases guiadas com três agentes especializados — projetado para prevenir o erro mais comum: implementar antes de entender.</p>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 1: O que é Feature Dev                                  -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-package"></i>
+          <h2>O que é Feature Dev</h2>
+        </div>
+
+        <p>Feature Dev é o plugin oficial da Anthropic para o Claude Code, com verificação Anthropic-verified e mais de <strong>143 mil instalações</strong> ativas. Ele impõe um processo estruturado de sete fases antes de tocar em qualquer linha de código — o oposto do comportamento padrão onde o agente implementa imediatamente sem explorar o codebase.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Filosofia central:</strong> entender o codebase ANTES de propor qualquer implementação. O plugin bloqueia a geração de código até que o agente tenha mapeado a arquitetura existente e feito todas as perguntas necessárias ao desenvolvedor.
+          </div>
+        </div>
+
+        <p>O comando de entrada é único e deliberadamente simples. Toda a complexidade do processo é gerenciada internamente pelo plugin:</p>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Via Claude Code marketplace (recomendado)
+/plugin install feature-dev
+
+# Via CLI diretamente
+claude plugins install feature-dev
+
+# Uso após instalação
+/feature-dev [descrição da feature]
+
+# Exemplos
+/feature-dev Adicionar rate limiting por IP na API REST
+/feature-dev Migrar autenticação de JWT para OAuth 2.0 com Google
+/feature-dev Implementar cache em Redis para consultas de produtos</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+
+        <p>Após a instalação, o plugin fica disponível como slash command em qualquer sessão do Claude Code. Não requer configuração adicional — mas pode ser potencializado com instruções no <code>CLAUDE.md</code> do projeto (ver Seção 5 sobre TDD).</p>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div>
+            <strong>Quando usar Feature Dev:</strong> feature nova ou extensão significativa de feature existente, especialmente em codebases que você não conhece profundamente. O custo das sete fases é compensado pela ausência de retrabalho por pressupostos errados.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 2: Os 3 agentes especializados                          -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-robot"></i>
+          <h2>Os 3 agentes especializados</h2>
+        </div>
+
+        <p>O Feature Dev orquestra três agentes especializados que são ativados em fases específicas do processo. Cada agente tem escopo restrito, o que mantém o contexto controlado e os outputs previsíveis.</p>
+
+        <div class="agent-grid">
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <i class="uil uil-search agent-icon"></i>
+              <h3 class="agent-name">code-explorer</h3>
+            </div>
+            <ul>
+              <li>Mapeia a arquitetura existente do projeto</li>
+              <li>Traça caminhos de execução relevantes para a feature</li>
+              <li>Detecta convenções de nomenclatura, estrutura de pastas e padrões de código</li>
+              <li>Identifica dependências e pontos de integração</li>
+              <li>Produz um mapa de contexto para os agentes subsequentes</li>
+            </ul>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <i class="uil uil-drafting-compass agent-icon"></i>
+              <h3 class="agent-name">code-architect</h3>
+            </div>
+            <ul>
+              <li>Propõe 2 a 3 estratégias de implementação distintas</li>
+              <li>Documenta trade-offs explícitos: complexidade, performance, manutenibilidade</li>
+              <li>Avalia compatibilidade com a arquitetura existente</li>
+              <li>Seleciona ou solicita aprovação da abordagem preferida</li>
+              <li>Respeita padrões detectados pelo code-explorer</li>
+            </ul>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-card-header">
+              <i class="uil uil-shield-check agent-icon"></i>
+              <h3 class="agent-name">code-reviewer</h3>
+            </div>
+            <ul>
+              <li>Revisa o código implementado com confidence scores por finding</li>
+              <li>Identifica bugs, edge cases e violações de convenção</li>
+              <li>Executa security assessment alinhado ao OWASP Top 10</li>
+              <li>Findings com score &gt; 0.8 são classificados como bloqueantes</li>
+              <li>Gera lista priorizada de ajustes antes do Final Summary</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Separação de responsabilidades:</strong> os três agentes não compartilham contexto diretamente. O orquestrador do Feature Dev passa o output de um como input estruturado para o próximo, mantendo cada agente focado e o window de contexto dentro dos limites operacionais.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 3: As 7 fases                                           -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-list-ol"></i>
+          <h2>As 7 fases</h2>
+        </div>
+
+        <p>O processo do Feature Dev é linear e sequencial. Cada fase tem um gate de conclusão explícito — a próxima fase só começa quando o output da anterior é validado, seja pelo próprio agente ou por confirmação do desenvolvedor.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart LR
+  F1[1. Discovery] --> F2[2. Codebase\nExploration]
+  F2 --> F3[3. Clarifying\nQuestions]
+  F3 --> F4[4. Architecture\nDesign]
+  F4 --> F5[5. Implementation]
+  F5 --> F6[6. Quality\nReview]
+  F6 --> F7[7. Final\nSummary]
+  style F1 fill:#1e293b
+  style F2 fill:#1e293b
+  style F3 fill:#1e293b
+  style F4 fill:#1e293b
+  style F5 fill:#1e293b
+  style F6 fill:#1e293b
+  style F7 fill:#1e293b
+          </div>
+          <p class="diagram-caption">Fluxo sequencial das 7 fases do Feature Dev — cada fase tem gate de conclusão antes de avançar</p>
+        </div>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-text">FASE 1 — Discovery
+  Agente:  orquestrador
+  Input:   descrição do usuário via /feature-dev
+  Output:  objetivo, usuários-alvo, critérios de aceite preliminares
+
+FASE 2 — Codebase Exploration
+  Agente:  code-explorer
+  Input:   output da Fase 1 + acesso ao codebase
+  Output:  mapa de arquitetura, convenções detectadas, pontos de integração
+
+FASE 3 — Clarifying Questions
+  Agente:  orquestrador
+  Input:   outputs das fases 1 e 2
+  Output:  lista de perguntas → respostas do dev → contexto enriquecido
+
+FASE 4 — Architecture Design
+  Agente:  code-architect
+  Input:   todo o contexto acumulado
+  Output:  2-3 abordagens com trade-offs → dev aprova uma
+
+FASE 5 — Implementation
+  Agente:  orquestrador (com acesso ao editor)
+  Input:   abordagem aprovada na Fase 4
+  Output:  código implementado, testes (se instruído via TDD)
+
+FASE 6 — Quality Review
+  Agente:  code-reviewer
+  Input:   diff completo da Fase 5
+  Output:  findings com confidence scores, lista de ajustes
+
+FASE 7 — Final Summary
+  Agente:  orquestrador
+  Input:   todas as fases anteriores
+  Output:  o que foi feito, o que mudou, o que testar, PR description</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 4: Fase por fase em detalhe                             -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-layers"></i>
+          <h2>Fase por fase em detalhe</h2>
+        </div>
+
+        <div class="phase-grid">
+          <div class="phase-card">
+            <div class="phase-card-header">
+              <span class="phase-badge">1</span>
+              <h3 class="phase-card-title">Discovery</h3>
+            </div>
+            <div class="phase-agent-tag"><i class="uil uil-robot"></i> orquestrador</div>
+            <p>O orquestrador analisa a descrição recebida para extrair o objetivo real da feature, os usuários-alvo e os critérios de aceite preliminares. Nenhum código é lido ou escrito. O output é um brief estruturado que alimenta todas as fases seguintes.</p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-card-header">
+              <span class="phase-badge">2</span>
+              <h3 class="phase-card-title">Codebase Exploration</h3>
+            </div>
+            <div class="phase-agent-tag"><i class="uil uil-search"></i> code-explorer</div>
+            <p>O code-explorer lê o codebase existente, mapeia a arquitetura (camadas, módulos, dependências), traça os caminhos de execução relevantes para a feature e detecta convenções: nomenclatura, estrutura de pastas, padrões de erro, estilo de testes.</p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-card-header">
+              <span class="phase-badge">3</span>
+              <h3 class="phase-card-title">Clarifying Questions</h3>
+            </div>
+            <div class="phase-agent-tag"><i class="uil uil-robot"></i> orquestrador</div>
+            <p>Com base no brief e no mapa do codebase, o orquestrador identifica o que ainda não sabe: comportamentos em edge cases, prioridades de design, dependências externas, requisitos não-funcionais. Faz as perguntas ao desenvolvedor e aguarda resposta antes de prosseguir.</p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-card-header">
+              <span class="phase-badge">4</span>
+              <h3 class="phase-card-title">Architecture Design</h3>
+            </div>
+            <div class="phase-agent-tag"><i class="uil uil-drafting-compass"></i> code-architect</div>
+            <p>O code-architect propõe 2 a 3 abordagens de implementação distintas. Para cada abordagem: complexidade de implementação, impacto em performance, facilidade de teste, compatibilidade com a arquitetura existente e riscos identificados. O desenvolvedor escolhe uma abordagem antes de seguir para a Fase 5.</p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-card-header">
+              <span class="phase-badge">5</span>
+              <h3 class="phase-card-title">Implementation</h3>
+            </div>
+            <div class="phase-agent-tag"><i class="uil uil-robot"></i> orquestrador</div>
+            <p>Execução da abordagem aprovada respeitando as convenções detectadas na Fase 2. Por padrão, o Feature Dev implementa código funcional sem obrigatoriedade de TDD — mas aceita instrução explícita para escrever testes antes da implementação (ver Seção 5).</p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-card-header">
+              <span class="phase-badge">6</span>
+              <h3 class="phase-card-title">Quality Review</h3>
+            </div>
+            <div class="phase-agent-tag"><i class="uil uil-shield-check"></i> code-reviewer</div>
+            <p>O code-reviewer analisa o diff completo produzido na Fase 5. Cada finding recebe um confidence score entre 0.0 e 1.0. Scores acima de 0.8 são classificados como bloqueantes — o orquestrador aplica as correções antes de avançar para a Fase 7.</p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-card-header">
+              <span class="phase-badge">7</span>
+              <h3 class="phase-card-title">Final Summary</h3>
+            </div>
+            <div class="phase-agent-tag"><i class="uil uil-robot"></i> orquestrador</div>
+            <p>O orquestrador consolida o trabalho de todas as fases em um relatório final: o que foi implementado, quais arquivos foram modificados, quais testes devem ser executados, e uma PR description pronta para uso. Este output é o ponto de handoff para o desenvolvedor.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 5: Aplicando TDD na Fase 5                              -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-sync"></i>
+          <h2>Aplicando TDD na Fase 5</h2>
+        </div>
+
+        <p>O Feature Dev <strong>não força TDD por padrão</strong>. A Fase 5 implementa código funcional diretamente. Para ativar o ciclo Red → Green → Refactor, você precisa instruir explicitamente — no prompt inicial ou no <code>CLAUDE.md</code> do projeto.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Ciclo TDD no Feature Dev:</strong><br>
+            <strong>RED</strong> — escreve o teste que descreve o comportamento esperado; roda a suite e confirma falha.<br>
+            <strong>GREEN</strong> — implementa o mínimo necessário para o teste passar; roda novamente.<br>
+            <strong>REFACTOR</strong> — limpa o código sem quebrar os testes; roda a suite uma vez mais.
+          </div>
+        </div>
+
+        <h3>Opção 1: instrução no prompt inicial</h3>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Instrução inline no /feature-dev
+/feature-dev Adicionar rate limiting por IP na API REST \
+  — aplique TDD: escreva cada teste ANTES da implementação correspondente, \
+  confirme falha, implemente, confirme passagem
+
+# Mais conciso
+/feature-dev Autenticação OAuth com Google — TDD-first, Red/Green/Refactor</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+
+        <h3>Opção 2: diretiva no CLAUDE.md do projeto</h3>
+
+        <p>Adicionar no <code>CLAUDE.md</code> garante TDD em todos os <code>/feature-dev</code> do projeto sem repetir a instrução a cada vez:</p>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-markdown"># CLAUDE.md
+
+## Regras de desenvolvimento
+
+### TDD obrigatório
+Toda implementação deve seguir o ciclo TDD:
+1. Escreva o teste (deve falhar — confirme com `npm test`)
+2. Implemente o mínimo para passar (confirme com `npm test`)
+3. Refatore sem quebrar (confirme com `npm test`)
+
+Nunca escreva código de produção sem um teste falhando que o justifique.
+
+### Stack de testes
+- Unit/Integration: Vitest (`npx vitest run`)
+- E2E: Cypress (`npx cypress run --headless`)
+- Cobertura mínima: 80% nas novas features</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Detalhe importante:</strong> ao instruir TDD, o Feature Dev vai rodar os testes automaticamente durante a Fase 5 — o que requer permissão de execução de comandos no terminal. Confirme que a ferramenta Bash está habilitada nas configurações do Claude Code antes de iniciar.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 6: OWASP na Fase 6                                      -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-shield"></i>
+          <h2>OWASP na Fase 6</h2>
+        </div>
+
+        <p>A Fase 6 inclui um security assessment realizado pelo <code>code-reviewer</code>. Por padrão, o reviewer aplica heurísticas gerais de segurança. Para garantir cobertura explícita do OWASP Top 10 (2021), é necessário um prompt adicional na invocação.</p>
+
+        <h3>Confidence scores — como interpretar</h3>
+
+        <p>Cada finding retornado pelo <code>code-reviewer</code> carrega um confidence score de 0.0 a 1.0:</p>
+
+        <div style="margin: 1.25rem 0;">
+          <div class="confidence-row">
+            <span class="confidence-label">SQL Injection (A03)</span>
+            <div class="confidence-bar-wrap"><div class="confidence-bar high" style="width: 94%"></div></div>
+            <span class="confidence-value">0.94</span>
+          </div>
+          <div class="confidence-row">
+            <span class="confidence-label">Missing rate limit (A07)</span>
+            <div class="confidence-bar-wrap"><div class="confidence-bar high" style="width: 88%"></div></div>
+            <span class="confidence-value">0.88</span>
+          </div>
+          <div class="confidence-row">
+            <span class="confidence-label">Verbose error message</span>
+            <div class="confidence-bar-wrap"><div class="confidence-bar medium" style="width: 72%"></div></div>
+            <span class="confidence-value">0.72</span>
+          </div>
+          <div class="confidence-row">
+            <span class="confidence-label">Unused import (potencial)</span>
+            <div class="confidence-bar-wrap"><div class="confidence-bar low" style="width: 41%"></div></div>
+            <span class="confidence-value">0.41</span>
+          </div>
+        </div>
+
+        <div class="callout callout-error">
+          <i class="uil uil-times-circle"></i>
+          <div>
+            <strong>Score &gt; 0.8 = bloqueante.</strong> O orquestrador aplica a correção automaticamente antes de prosseguir para a Fase 7. Findings com score entre 0.5 e 0.8 são reportados e ficam na decisão do desenvolvedor.
+          </div>
+        </div>
+
+        <h3>Prompt para cobertura OWASP completa</h3>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash">/feature-dev Implementar upload de arquivos S3 \
+  — na Fase 6, o code-reviewer deve cobrir explicitamente todos os \
+  itens do OWASP Top 10 2021: A01-A10, reportar cada um com \
+  confidence score e aplicar correções nos bloqueantes</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+
+        <h3>Mapeamento OWASP no Feature Dev</h3>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Vulnerabilidade</th>
+              <th>Gate no Feature Dev</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A01</td>
+              <td>Broken Access Control</td>
+              <td>code-reviewer Fase 6 + testes de autorização na Fase 5</td>
+            </tr>
+            <tr>
+              <td>A02</td>
+              <td>Cryptographic Failures</td>
+              <td>code-reviewer audita uso de crypto e gestão de secrets</td>
+            </tr>
+            <tr>
+              <td>A03</td>
+              <td>Injection (SQL, NoSQL, Command)</td>
+              <td>code-architect Fase 4 + code-reviewer Fase 6 (bloqueante &gt;0.8)</td>
+            </tr>
+            <tr>
+              <td>A04</td>
+              <td>Insecure Design</td>
+              <td>code-architect Fase 4 documenta threat model na proposta</td>
+            </tr>
+            <tr>
+              <td>A05</td>
+              <td>Security Misconfiguration</td>
+              <td>code-reviewer Fase 6 audita configurações de produção</td>
+            </tr>
+            <tr>
+              <td>A06</td>
+              <td>Vulnerable Components</td>
+              <td><code>npm audit</code> como gate obrigatório pós-Fase 7</td>
+            </tr>
+            <tr>
+              <td>A07</td>
+              <td>Auth &amp; Session Failures</td>
+              <td>code-reviewer Fase 6 + revisão de fluxo de autenticação</td>
+            </tr>
+            <tr>
+              <td>A08</td>
+              <td>Integrity Failures</td>
+              <td>Verificação de integridade de dependências</td>
+            </tr>
+            <tr>
+              <td>A09</td>
+              <td>Logging &amp; Monitoring</td>
+              <td>code-reviewer verifica ausência de dados sensíveis em logs</td>
+            </tr>
+            <tr>
+              <td>A10</td>
+              <td>SSRF</td>
+              <td>code-reviewer audita URLs externas e requests de saída</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 7: Pirâmide de testes pós-implementação                 -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-flask"></i>
+          <h2>Pirâmide de testes pós-implementação</h2>
+        </div>
+
+        <p>O Feature Dev implementa e revisa o código — mas a execução da pirâmide de testes é responsabilidade do desenvolvedor após receber o Final Summary da Fase 7. Este é o handoff esperado: o agente entrega código validado internamente, o dev valida contra o ambiente real.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Divisão de responsabilidade:</strong> Feature Dev garante qualidade interna (review, security, convenções). O desenvolvedor garante qualidade externa: testes rodando no ambiente real, load test em infra real, auditoria de dependências, e PR criado com o contexto correto.
+          </div>
+        </div>
+
+        <h3>Sequência após Fase 7</h3>
+
+        <div class="test-sequence">
+          <div class="test-step">
+            <span class="test-step-num">1</span>
+            <div class="test-step-content">
+              <strong>Unit + Integration — Vitest</strong>
+              <span>Valida domínio isolado e integrações com banco real. Deve rodar em menos de 30s para não bloquear o feedback loop.</span>
+            </div>
+          </div>
+          <div class="test-step">
+            <span class="test-step-num">2</span>
+            <div class="test-step-content">
+              <strong>E2E — Cypress</strong>
+              <span>Jornadas críticas do usuário. Roda headless em CI/CD. Cobre apenas os fluxos afetados pela nova feature.</span>
+            </div>
+          </div>
+          <div class="test-step">
+            <span class="test-step-num">3</span>
+            <div class="test-step-content">
+              <strong>Load Test — k6</strong>
+              <span>Executar apenas se a feature tocou APIs ou endpoints. Valida que a implementação não degradou throughput baseline.</span>
+            </div>
+          </div>
+          <div class="test-step">
+            <span class="test-step-num">4</span>
+            <div class="test-step-content">
+              <strong>Auditoria de dependências — npm audit</strong>
+              <span>OWASP A06. Gate obrigatório. Bloqueia o PR se houver vulnerabilidades com severity high ou critical.</span>
+            </div>
+          </div>
+          <div class="test-step">
+            <span class="test-step-num">5</span>
+            <div class="test-step-content">
+              <strong>Pull Request — gh pr create</strong>
+              <span>Usa o Final Summary da Fase 7 como body do PR. Inclui o que foi feito, o que mudou e o que testar — pronto para revisão humana.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Sequência completa pós-Fase 7
+npx vitest run                        # unit + integration
+npx cypress run --headless            # E2E jornadas críticas
+k6 run k6/load.js                     # load test (se API mudou)
+npm audit                             # OWASP A06 — gate obrigatório
+gh pr create \
+  --title "feat: [nome da feature]" \
+  --body "$(cat .feature-dev-summary.md)"  # output da Fase 7</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 8: Exemplo concreto                                      -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-code-branch"></i>
+          <h2>Exemplo concreto</h2>
+        </div>
+
+        <p>Feature real: adicionar autenticação OAuth 2.0 com Google a um backend Node.js/Express com banco Postgres e sessões em Redis. O codebase tem autenticação própria (email + senha) e o desenvolvedor não conhece profundamente os módulos de auth existentes.</p>
+
+        <h3>Prompt exato para o /feature-dev</h3>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash">/feature-dev Adicionar autenticação OAuth 2.0 com Google ao sistema existente \
+  de login (email + senha). Os usuários devem poder escolher entre login \
+  tradicional e login com Google. Sessões em Redis já existem — manter \
+  compatibilidade. TDD-first na Fase 5. Na Fase 6 cobrir OWASP A01, A02, A07.</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+
+        <h3>O que cada fase produziu</h3>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-text">FASE 1 — Discovery
+  Objetivo: login social como alternativa ao tradicional, sem breaking changes
+  Usuários: todos os existentes + novos com conta Google
+  Critérios: SSO funcional, sessão unificada com o sistema atual, revogação
+
+FASE 2 — Codebase Exploration (code-explorer)
+  Arquitetura: Express + Passport.js (local strategy já configurada)
+  Convenções: controllers em src/controllers/, middlewares em src/middleware/
+  Padrão de sessão: express-session + connect-redis
+  Achado crítico: User model sem campo provider — precisa de migração
+
+FASE 3 — Clarifying Questions
+  P: "Usuários que logaram com email podem vincular Google ao mesmo account?"
+  R: "Sim, via email como chave de deduplicação."
+  P: "Qual o comportamento quando o email Google já existe no sistema?"
+  R: "Vincular automaticamente, não criar conta duplicada."
+
+FASE 4 — Architecture Design (code-architect)
+  Abordagem A: Passport.js google-oauth20 strategy (extensão natural)
+    → compatível com infraestrutura existente, mínimo de novo código
+  Abordagem B: Biblioteca oauth4webapi direta, sem Passport
+    → mais controle, mais código novo, risco de regressão
+  Aprovada: Abordagem A
+
+FASE 5 — Implementation (TDD-first)
+  Testes escritos: auth.google.unit.test.ts, auth.google.integration.test.ts
+  Ciclos Red/Green/Refactor: 4 ciclos
+  Arquivos criados/modificados:
+    + src/strategies/google.strategy.ts
+    + src/routes/auth.google.ts
+    ~ src/controllers/auth.controller.ts (extended)
+    ~ prisma/migrations/add_oauth_provider.sql
+    ~ src/middleware/session.middleware.ts
+
+FASE 6 — Quality Review (code-reviewer)
+  Finding 1: "State parameter ausente no OAuth flow" — score 0.93 (BLOQUEANTE)
+    → Corrigido: adicionado CSRF state token com crypto.randomBytes
+  Finding 2: "Email de verificação Google não validado" — score 0.87 (BLOQUEANTE)
+    → Corrigido: verificação de email_verified antes de criar/vincular conta
+  Finding 3: "Log de email do usuário em debug" — score 0.71
+    → Reportado, dev decide manter em desenvolvimento</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+
+        <h3>Output da Fase 7 (Final Summary)</h3>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-markdown"># Feature: OAuth 2.0 com Google
+
+## O que foi implementado
+Autenticação OAuth 2.0 com Google via Passport.js google-oauth20 strategy,
+integrada ao sistema de sessões Redis existente. Suporte a vinculação de
+contas quando o email Google já existe no sistema (sem duplicatas).
+
+## Arquivos modificados
+- src/strategies/google.strategy.ts (novo)
+- src/routes/auth.google.ts (novo)
+- src/controllers/auth.controller.ts (estendido)
+- prisma/migrations/add_oauth_provider.sql (novo)
+- src/middleware/session.middleware.ts (atualizado)
+
+## Segurança aplicada
+- CSRF state token com crypto.randomBytes(32) no flow OAuth
+- Validação de email_verified antes de criar/vincular conta
+- Nenhum dado sensível em logs de produção
+
+## O que testar
+1. Login com Google em conta nova → cria usuário, sessão ativa
+2. Login com Google em email já cadastrado → vincula, não duplica
+3. Revogação de token Google → sessão invalidada
+4. Tentativa de OAuth sem state → rejeitada com 403
+
+## Variáveis de ambiente necessárias
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_CALLBACK_URL=https://app.example.com/auth/google/callback</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+
+        <h3>Testes rodados após a Fase 7</h3>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash">npx vitest run --reporter=verbose
+# PASS  src/__tests__/auth.google.unit.test.ts (8 tests)
+# PASS  src/__tests__/auth.google.integration.test.ts (5 tests)
+
+npx cypress run --headless --spec "cypress/e2e/auth/**"
+# 3 passing (14s)
+
+npm audit
+# found 0 vulnerabilities
+
+gh pr create \
+  --title "feat: OAuth 2.0 com Google (#auth)" \
+  --body "$(cat .feature-dev-summary.md)"
+# https://github.com/org/repo/pull/247</code></pre>
+          <button data-testid="copy-btn" class="copy-btn"><i class="uil uil-copy"></i> Copiar</button>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SEÇÃO 9: Comparação com outros workflows                       -->
+      <!-- ============================================================ -->
+      <section class="module-section">
+        <div class="section-header">
+          <i class="uil uil-exchange"></i>
+          <h2>Comparação com outros workflows</h2>
+        </div>
+
+        <p>O Feature Dev não substitui os outros workflows — ele resolve um problema específico: desenvolvimento de uma feature complexa com processo garantido e auditável. Entender onde cada workflow se encaixa evita overhead desnecessário.</p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Dimensão</th>
+              <th>W4: Feature Dev</th>
+              <th>W1: Claude Code Solo</th>
+              <th>W2: GSD</th>
+              <th>W3: Cortex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Escopo</strong></td>
+              <td>Uma feature específica por invocação</td>
+              <td>Qualquer tarefa, sem estrutura imposta</td>
+              <td>Múltiplas features / milestones completos</td>
+              <td>Sessões persistentes com memória cross-session</td>
+            </tr>
+            <tr>
+              <td><strong>Estrutura</strong></td>
+              <td>7 fases fixas com gates obrigatórios</td>
+              <td>Nenhuma — o dev define a estrutura</td>
+              <td>Fases definidas no plano do milestone</td>
+              <td>Contexto acumulado entre sessões, sem fases fixas</td>
+            </tr>
+            <tr>
+              <td><strong>Agentes</strong></td>
+              <td>3 especializados (explorer, architect, reviewer)</td>
+              <td>Claude Code direto, sem orquestração</td>
+              <td>Configurável, tipicamente 2-4 agentes</td>
+              <td>Memória distribuída com subagentes por domínio</td>
+            </tr>
+            <tr>
+              <td><strong>Memória cross-session</strong></td>
+              <td>Nenhuma — cada /feature-dev começa do zero</td>
+              <td>Nenhuma por padrão (CLAUDE.md é estático)</td>
+              <td>PLAN.md persiste entre sessões</td>
+              <td>Core do Cortex — memória explícita e versionada</td>
+            </tr>
+            <tr>
+              <td><strong>Melhor para</strong></td>
+              <td>Feature nova em codebase desconhecido, features com risco de segurança</td>
+              <td>Tarefas rápidas, refactoring, debug pontual</td>
+              <td>Projetos com múltiplas features e linha do tempo definida</td>
+              <td>Projetos longos onde o contexto acumulado é vantagem</td>
+            </tr>
+            <tr>
+              <td><strong>Overhead</strong></td>
+              <td>Alto (7 fases) — justificado pela complexidade</td>
+              <td>Baixo — começa imediatamente</td>
+              <td>Médio — planejamento inicial, depois fluido</td>
+              <td>Médio — custo de manutenção da memória</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div>
+            <strong>Regra prática de seleção:</strong> use Feature Dev quando a feature tem mais de um dia de trabalho estimado, toca em partes do codebase que você não conhece bem, ou tem requisitos de segurança explícitos. Para tasks menores use W1 Solo. Para projetos com roadmap use GSD. Para contexto persistente use Cortex.
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Combinação possível:</strong> Feature Dev e GSD não são mutuamente exclusivos. Em um projeto GSD, cada fase do milestone pode ser executada com <code>/feature-dev</code> quando a feature é complexa o suficiente para justificar as 7 fases. O GSD gerencia o roadmap; o Feature Dev gerencia a qualidade de cada entrega.
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+  <h2><i class="uil uil-shield-check"></i> Hooks neste workflow</h2>
+  <p>O Feature Dev tem o code-reviewer na Fase 6 — mas o reviewer é probabilístico. Hooks adicionam gates mecânicos que bloqueiam antes do reviewer precisar agir.</p>
+
+  <div class="callout callout-info">
+    <i class="uil uil-info-circle"></i>
+    <div><strong>Fase 5 + Hooks:</strong> Na implementação (Fase 5), cada arquivo escrito pelo Feature Dev passa automaticamente pelos quality gates. Se um gate falhar, a Fase 5 é interrompida — antes de chegar à Fase 6.</div>
+  </div>
+
+  <h3>settings.json para W4</h3>
+  <div class="code-block-wrapper"><pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{"type": "command", "command": "node scripts/quality-gate.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""}]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "node scripts/bash-guard.mjs"}]
+      }
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <h3>Gate extra — verificar se teste existe antes de nova feature</h3>
+  <div class="code-block-wrapper"><pre><code class="language-javascript">#!/usr/bin/env node
+// require-test.mjs — se um source file novo é criado, deve ter teste correspondente
+import { existsSync } from 'node:fs';
+import { basename, dirname, extname, join } from 'node:path';
+
+const file = process.argv[2];
+if (!file) process.exit(0);
+
+const ext = extname(file);
+if (!['.ts', '.js'].includes(ext)) process.exit(0);
+if (file.includes('.test.') || file.includes('.spec.') || file.includes('node_modules')) process.exit(0);
+
+// Verifica se existe arquivo de teste correspondente
+const base = basename(file, ext);
+const dir = dirname(file);
+const testPaths = [
+  join(dir, `${base}.test${ext}`),
+  join(dir, `${base}.spec${ext}`),
+  join(dir, '__tests__', `${base}.test${ext}`),
+];
+
+const hasTest = testPaths.some(p => existsSync(p));
+if (!hasTest) {
+  console.warn(`[require-test] AVISO: nenhum teste encontrado para ${file}`);
+  console.warn(`[require-test] Esperado: ${testPaths[0]}`);
+  // warn apenas, não bloqueia — Feature Dev pode criar teste em seguida
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <p>Scripts completos no <a href="/modules/06-workflows/00-fundamentos.html#hooks">Módulo 22 — Fundamentos</a>.</p>
+</section>
+
+    </article>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

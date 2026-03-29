@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W3: Claude Code + Cortex — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link active"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Claude Code + Cortex</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Claude Code + Cortex</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 25</div>
+        <h1 class="module-title">W3: Claude Code + Cortex</h1>
+        <p class="module-description">O cérebro de desenvolvimento. Cortex adiciona memória semântica cross-session, task management integrado, LSP-powered code navigation e um pipeline 3-agentes automático — tudo gerenciado pelo Claude Code via 65+ MCP tools.</p>
+      </div>
+
+      <!-- Seção 1: O que é Cortex -->
+      <section class="content-section">
+        <h2><i class="uil uil-brain"></i> O que é Cortex</h2>
+        <p>Cortex é um sistema de desenvolvimento criado por <strong>jsvitolo</strong> (GitHub: <code>jsvitolo/cortex-releases</code>) que transforma o Claude Code em uma plataforma de engenharia com memória persistente e orquestração automatizada. Onde o Claude Code Solo resolve uma tarefa por sessão, o Cortex acumula conhecimento entre sessões e coordena agentes especializados em cada fase do ciclo de desenvolvimento.</p>
+
+        <p>A arquitetura é composta por três camadas integradas:</p>
+        <ul>
+          <li><strong>CLI (<code>cx</code>):</strong> Binário standalone que gerencia tarefas, inicializa o projeto, abre o dashboard e dispara comandos de alto nível como <code>cx init</code>, <code>cx ui</code> e <code>cx status</code>.</li>
+          <li><strong>MCP server:</strong> Expõe 65+ ferramentas que o Claude Code consome nativamente para criar tarefas, persistir memória semântica, navegar pelo codebase via LSP e transitar estados no kanban.</li>
+          <li><strong>Plugin de skills para Claude Code:</strong> Instalado via <code>/plugin install</code>, adiciona slash commands como <code>/cortex:implement</code>, <code>/cortex:plan</code>, <code>/cortex:pr</code> e <code>/cortex:session-end</code> diretamente na REPL.</li>
+        </ul>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div><strong>MCP como camada de integração:</strong> Cortex usa MCP como protocolo de comunicação entre o Claude Code e seu runtime, mas o workflow acontece naturalmente dentro da sessão Claude Code. O engenheiro não opera o MCP server diretamente — interage com skills e o Claude chama as tools MCP nos bastidores.</div>
+        </div>
+
+        <h3>Quando usar vs. não usar</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cenário</th>
+                <th>Usar Cortex?</th>
+                <th>Motivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Projeto com mais de 2 semanas de vida</td>
+                <td>Sim</td>
+                <td>Memória semântica começa a pagar o investimento de setup</td>
+              </tr>
+              <tr>
+                <td>Time com 2+ engenheiros</td>
+                <td>Sim</td>
+                <td>Decisões arquiteturais compartilhadas via memória persistente</td>
+              </tr>
+              <tr>
+                <td>Features com interdependências complexas</td>
+                <td>Sim</td>
+                <td>Pipeline 3-agentes resolve cada fase com contexto isolado</td>
+              </tr>
+              <tr>
+                <td>Proof-of-concept de 1–3 dias</td>
+                <td>Não</td>
+                <td>Overhead de setup supera benefício; use Claude Code Solo</td>
+              </tr>
+              <tr>
+                <td>Script descartável ou task pontual</td>
+                <td>Não</td>
+                <td>GSD ou Claude Code Solo são suficientes e mais rápidos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Seção 2: Instalação -->
+      <section class="content-section">
+        <h2><i class="uil uil-download-alt"></i> Instalação</h2>
+        <p>O Cortex é distribuído via Homebrew tap oficial. A instalação completa — incluindo CLI, MCP server e configuração de projeto — leva menos de 5 minutos em uma máquina com Homebrew instalado.</p>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># 1. Instalar o CLI cx via Homebrew
+brew tap jsvitolo/tap && brew install cx
+
+# 2. Verificar instalação
+cx --version</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># 3. Inicializar Cortex no projeto
+cd meu-projeto
+cx init
+# Cria: .cortex/ (DB local), .claude/CLAUDE.md atualizado com regras Cortex,
+# e registra o MCP server no settings.json do Claude Code</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># 4. Instalar o plugin de skills dentro de uma sessão Claude Code
+/plugin marketplace add jsvitolo/cortex-plugins
+/plugin install cortex@cortex-plugins
+# Adiciona: /cortex:plan, /cortex:brainstorm, /cortex:implement,
+#           /cortex:pr, /cortex:merge, /cortex:session-end</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># 5. Configurar OpenAI API key (necessário para memória semântica com vetores)
+export OPENAI_API_KEY=sk-...
+# Ou adicionar ao ~/.zshrc / ~/.bashrc para persistir entre sessões
+echo 'export OPENAI_API_KEY=sk-...' >> ~/.zshrc
+
+# Sem OPENAI_API_KEY: Cortex usa apenas FTS5 (busca por texto).
+# Com OPENAI_API_KEY: habilita HNSW vectors para busca semântica por similaridade.</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># 6. Abrir dashboard visual (kanban + memória + logs de agentes)
+cx ui
+# Abre no navegador padrão em http://localhost:3737</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div><strong>cx init modifica o CLAUDE.md:</strong> O comando <code>cx init</code> injeta um bloco de regras no seu <code>CLAUDE.md</code> existente — incluindo restrições de segurança, padrões de commit e instrução para sempre usar as MCP tools do Cortex para criar tarefas. Revise o diff antes de commitar.</div>
+        </div>
+
+        <h3>O que cx init cria no projeto</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-text">meu-projeto/
+  .cortex/
+    cortex.db          # SQLite com FTS5 + HNSW: memória e tarefas
+    config.json        # Configuração do MCP server local
+  .claude/
+    settings.json      # MCP server registrado automaticamente
+    CLAUDE.md          # Regras Cortex injetadas (segurança, TDD, padrões)
+  CORTEX.md            # Visão geral do projeto para o research agent</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+      </section>
+
+      <!-- Seção 3: Diagrama do workflow -->
+      <section class="content-section">
+        <h2><i class="uil uil-sitemap"></i> Diagrama do Workflow</h2>
+        <p>O workflow Cortex conecta a intenção do desenvolvedor a um pipeline automatizado de 3 agentes, com memória semântica como entrada e saída de cada ciclo. A task é o eixo central — tudo gira em torno de uma referência CX-N rastreável.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart TD
+  A[Dev descreve task] --> B[mcp: cortex status]
+  B --> B1{Existe task similar\nna memória?}
+  B1 -->|Sim| B2[Recupera contexto\nsemântico]
+  B1 -->|Não| C
+  B2 --> C[/cortex:brainstorm ou\n/cortex:plan]
+  C --> D[mcp: task create CX-N]
+  D --> E[/cortex:implement CX-N]
+  E --> E1[research agent:\nlê codebase + memória]
+  E1 --> E2[implement agent:\nTDD-first]
+  E2 --> E3[verify agent:\ntestes + review]
+  E3 --> F{Passou?}
+  F -->|Não| G[Debug loop]
+  G --> E2
+  F -->|Sim| H[mcp: task update done]
+  H --> I[/cortex:pr]
+  I --> J[/cortex:merge]
+  J --> K[/cortex:session-end\nCaptura aprendizados]
+          </div>
+          <p class="diagram-caption">Pipeline completo do Cortex: da intenção ao merge, com memória semântica persistindo aprendizados ao final de cada ciclo.</p>
+        </div>
+
+        <p>Cada transição de estado (task create → progress → review → done) é persistida no banco local do Cortex e exposta no dashboard <code>cx ui</code>. O Claude Code acessa esses estados via MCP tools sem polling manual pelo desenvolvedor.</p>
+      </section>
+
+      <!-- Seção 4: Os 3 agentes do /implement -->
+      <section class="content-section">
+        <h2><i class="uil uil-robot"></i> Os 3 Agentes do /implement</h2>
+        <p>O comando <code>/cortex:implement CX-N</code> é o coração operacional do Cortex. Ele spawna três subagentes em sequência, cada um com contexto isolado e responsabilidade exclusiva. Essa separação é intencional: evita que o implement agent carregue o peso da análise do codebase, e evita que o verify agent seja influenciado pelo viés do implement agent.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div><strong>Context window por agente:</strong> Cada agente opera com no máximo 60K tokens de contexto inicial. O orquestrador (<code>/cortex:implement</code>) mantém menos de 80K tokens ativos. Handoffs acontecem via arquivos intermediários — nunca in-memory.</div>
+        </div>
+
+        <h3>Research Agent</h3>
+        <p>Responsabilidade única: <strong>compreender o território</strong> antes de qualquer linha de código ser escrita.</p>
+        <ul>
+          <li>Lê o codebase completo usando LSP navigation (go-to-definition, find-references, call hierarchy)</li>
+          <li>Busca na memória semântica do Cortex por decisões arquiteturais e padrões do time relacionados à task</li>
+          <li>Identifica os arquivos que serão modificados e seus contratos de interface</li>
+          <li>Produz <code>RESEARCH.md</code>: contexto compactado passado ao implement agent</li>
+        </ul>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-text"># RESEARCH.md — output do research agent (exemplo)
+## Task: CX-12 — Adicionar rate limiting no endpoint /api/orders
+
+### Padrões encontrados no codebase
+- Rate limiting já implementado em /api/auth (src/middleware/rateLimit.ts)
+- Padrão: sliding window com Redis, chave composta userId+IP
+- Configuração via env: RATE_LIMIT_WINDOW_MS, RATE_LIMIT_MAX_REQUESTS
+
+### Memória semântica relevante
+- [ADR-2024-03] Decidimos usar sliding window (não token bucket) por menor jitter
+- [Incidente-2024-11] Rate limit por IP apenas causou falso positivo em CG-NAT — sempre incluir userId
+
+### Arquivos a modificar
+- src/middleware/rateLimit.ts (adicionar config para /api/orders)
+- src/api/orders/route.ts (aplicar middleware)
+- src/api/orders/orders.test.ts (testes de integração do rate limit)</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Implement Agent</h3>
+        <p>Responsabilidade única: <strong>implementar TDD-first</strong> usando exclusivamente o contexto do <code>RESEARCH.md</code>. Nunca re-lê o codebase inteiro — parte do mapa já construído pelo research agent.</p>
+        <ul>
+          <li>Escreve o teste antes da implementação (Red phase)</li>
+          <li>Implementa o mínimo para passar (Green phase)</li>
+          <li>Refatora mantendo os testes passando (Refactor phase)</li>
+          <li>Respeita padrões identificados pelo research agent — sem reinventar wheel</li>
+          <li>Produz <code>IMPLEMENT.md</code>: resumo das mudanças e decisões tomadas durante a implementação</li>
+        </ul>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Ciclo TDD dentro do implement agent
+# RED: escreve teste que falha
+npm test -- src/api/orders/orders.test.ts  # deve falhar
+
+# GREEN: implementa mínimo
+# ... código de produção ...
+npm test -- src/api/orders/orders.test.ts  # deve passar
+
+# REFACTOR: limpa sem quebrar
+npm test -- src/api/orders/orders.test.ts  # ainda deve passar
+
+# Smoke test geral antes de passar ao verify agent
+npm test</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Verify Agent</h3>
+        <p>Responsabilidade única: <strong>validar sem viés</strong>. Recebe o código implementado e o <code>IMPLEMENT.md</code>, mas nunca viu o processo de implementação — avalia o resultado como um revisor externo.</p>
+        <ul>
+          <li>Executa a pirâmide de testes completa: unit, integration, E2E se aplicável</li>
+          <li>Realiza code review focado em OWASP Top 10 e SOLID</li>
+          <li>Executa <code>npm audit</code> e verifica vulnerabilidades em dependências novas</li>
+          <li>Se reprovar: retorna feedback estruturado ao implement agent (loop de debug)</li>
+          <li>Se aprovar: transita task para <code>review</code> e sinaliza para <code>/cortex:pr</code></li>
+        </ul>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Checklist do verify agent (executado automaticamente)
+npm test                          # todos os testes
+npm run test:integration          # testes de integração
+npm audit --audit-level=high      # vulnerabilidades de dependências
+# Code review interno via mcp__cortex__review()</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+      </section>
+
+      <!-- Seção 5: Memória semântica -->
+      <section class="content-section">
+        <h2><i class="uil uil-database"></i> Memória Semântica</h2>
+        <p>A memória do Cortex é o diferencial que separa este workflow de qualquer outra automação de Claude Code. Em vez de começar cada sessão do zero, o research agent encontra decisões arquiteturais anteriores, padrões consolidados do time e histórico de incidentes — reduzindo drasticamente perguntas repetidas e retrabalho.</p>
+
+        <h3>Como funciona internamente</h3>
+        <p>O banco SQLite em <code>.cortex/cortex.db</code> usa dois mecanismos complementares:</p>
+        <ul>
+          <li><strong>FTS5 (Full-Text Search):</strong> Busca lexical rápida por termos exatos, disponível sem OPENAI_API_KEY. Ideal para recuperar entradas com termos técnicos precisos como nomes de função, IDs de incidente ou siglas de padrão.</li>
+          <li><strong>HNSW vectors (Hierarchical Navigable Small World):</strong> Busca por similaridade semântica usando embeddings OpenAI. Encontra entradas conceitualmente relacionadas mesmo que não compartilhem termos exatos. Requer <code>OPENAI_API_KEY</code>.</li>
+        </ul>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div><strong>Valor prático:</strong> Claude não repete perguntas que já foram respondidas nas últimas sessões. Quando o research agent encontra "como autenticar requests entre microservices" na memória, não precisa reler ADRs, discutir trade-offs ou pedir ao engenheiro para explicar — usa o contexto persistido diretamente.</div>
+        </div>
+
+        <h3>O que salvar na memória</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-text"># Tipos de entrada recomendados
+
+type: "diary"
+  Decisões arquiteturais (por que X em vez de Y)
+  Resultado de spike técnico (o que foi testado e concluído)
+  Padrões consolidados do time após PR review
+
+type: "security"
+  Incidentes OWASP e suas correções
+  Auditoria de dependências com vulnerabilidades encontradas
+  Decisões de configuração de segurança em produção
+
+type: "pattern"
+  Exemplos de implementação de referência no codebase
+  Anti-patterns identificados e por que foram eliminados
+  Contratos de interface entre módulos críticos
+
+type: "incident"
+  Post-mortems de falhas em produção
+  Root cause + fix + medidas preventivas</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Como salvar via MCP tools</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-text"># Salvar uma decisão arquitetural (dentro de uma sessão Claude Code)
+mcp__cortex__memory(
+  action="save",
+  type="diary",
+  title="Rate limiting: sliding window escolhida sobre token bucket",
+  content="Optamos por sliding window no endpoint /api/orders por menor jitter
+           em picos de tráfego. Token bucket causava burst concentrado no
+           início de cada janela. Referência: ADR-2024-03.",
+  tags=["rate-limiting", "performance", "api"]
+)
+
+# Salvar incidente de segurança
+mcp__cortex__memory(
+  action="save",
+  type="security",
+  title="OWASP A01 - Rate limit por IP causou falso positivo em CG-NAT",
+  content="Usuários em redes corporativas com CG-NAT compartilham IP.
+           Rate limit por IP bloqueou 40+ usuários legítimos. Fix: chave
+           composta userId+IP. Qualquer novo rate limit deve usar essa chave.",
+  tags=["owasp-a01", "rate-limiting", "incident"]
+)</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Como acessar e buscar</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-text"># Listar entradas recentes
+mcp__cortex__memory(action="list")
+
+# Busca por termo (FTS5)
+mcp__cortex__memory(action="list", search="rate limiting")
+
+# Busca semântica (HNSW — requer OPENAI_API_KEY)
+mcp__cortex__memory(action="search", query="como autenticar requests entre serviços")
+
+# Acessar entrada específica por ID
+mcp__cortex__memory(action="get", id="mem_abc123")</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+      </section>
+
+      <!-- Seção 6: Task lifecycle -->
+      <section class="content-section">
+        <h2><i class="uil uil-kanban"></i> Task Lifecycle</h2>
+        <p>Cada unidade de trabalho no Cortex é uma task com identificador <code>CX-N</code> — rastreável, persistida no banco local e visível no dashboard. O lifecycle é um pipeline linear com quatro estados, cada transição disparada por uma MCP tool ou slash command.</p>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-text">backlog  →  in-progress  →  review  →  done
+   |              |              |         |
+task create    implement    verify    cortex:pr
+               /cortex:    aprovado    + merge
+              implement</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Transições via MCP tools</h3>
+        <div class="code-block-wrapper">
+          <pre><code class="language-text"># Criar task (entra em backlog)
+mcp__cortex__task(
+  action="create",
+  title="Adicionar rate limiting em /api/orders",
+  description="...",
+  priority="high"
+)
+# Retorna: { id: "CX-12", status: "backlog" }
+
+# Iniciar task (backlog → in-progress)
+mcp__cortex__task(action="start", id="CX-12")
+
+# Mover para review (in-progress → review)
+mcp__cortex__task(action="review", id="CX-12")
+
+# Concluir (review → done)
+mcp__cortex__task(action="done", id="CX-12")
+
+# Listar tasks por status
+mcp__cortex__task(action="list", status="in-progress")
+
+# Ver detalhes de task específica
+mcp__cortex__task(action="get", id="CX-12")</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Dashboard cx ui</h3>
+        <p>O comando <code>cx ui</code> abre um dashboard local em <code>http://localhost:3737</code> com três painéis principais:</p>
+        <ul>
+          <li><strong>Kanban:</strong> Visão de todas as tasks por status — backlog, in-progress, review, done. Arrastar cards actualiza o status via MCP automaticamente.</li>
+          <li><strong>Memória:</strong> Interface de busca sobre o banco semântico. Permite criar, editar e desativar entradas de memória sem usar a CLI ou MCP diretamente.</li>
+          <li><strong>Logs:</strong> Histórico de execução dos agentes — research, implement e verify — com tokens consumidos, duração e resultado de cada ciclo.</li>
+        </ul>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div><strong>cx ui é opcional:</strong> Todo o lifecycle pode ser gerenciado inteiramente via MCP tools dentro de sessões Claude Code. O dashboard é uma conveniência para visibilidade, não um pré-requisito operacional.</div>
+        </div>
+      </section>
+
+      <!-- Seção 7: TDD + OWASP no Cortex -->
+      <section class="content-section">
+        <h2><i class="uil uil-shield"></i> TDD + OWASP no Cortex</h2>
+        <p>O Cortex não apenas executa TDD como uma prática recomendada — ele a torna estruturalmente obrigatória ao separar implement agent e verify agent em processos independentes. O mesmo princípio se aplica à segurança: o verify agent executa um scan OWASP-aware em todo ciclo, e incidentes encontrados são salvos na memória para evitar reincidência.</p>
+
+        <h3>Como o verify agent aplica TDD check</h3>
+        <p>O verify agent recebe o output do implement agent e valida que o ciclo Red-Green-Refactor foi respeitado estruturalmente:</p>
+        <ul>
+          <li>Verifica que os arquivos de teste existiam antes dos arquivos de implementação (via git log --diff-filter=A)</li>
+          <li>Confere que o teste falhou no commit Red (esperado) e passou nos commits subsequentes</li>
+          <li>Rejeita PRs onde a implementação foi criada antes do teste — devolve ao implement agent com instrução explícita</li>
+        </ul>
+
+        <div class="code-block-wrapper">
+          <pre><code class="language-bash"># Verificação de ordem TDD executada pelo verify agent
+git log --diff-filter=A --name-only --pretty=format: HEAD~5..HEAD \
+  | grep -E '\.(test|spec)\.(ts|js)$'
+# Deve listar os arquivos de teste ANTES dos arquivos de implementação correspondentes
+
+# Se a ordem estiver errada, o verify agent retorna:
+# { status: "rejected", reason: "TDD_ORDER_VIOLATION",
+#   detail: "src/api/orders/route.ts criado antes de orders.test.ts" }</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>CLAUDE.md gerado pelo cx init</h3>
+        <p>O bloco de regras injetado pelo <code>cx init</code> inclui diretivas de segurança que o Claude Code respeita em toda sessão:</p>
+        <div class="code-block-wrapper">
+          <pre><code class="language-markdown">## Cortex Rules (geradas por cx init)
+
+### TDD obrigatório
+- NUNCA implementar antes de escrever o teste
+- Ciclo obrigatório: Red → Green → Refactor
+- Qualquer código sem teste correspondente será rejeitado pelo verify agent
+
+### Segurança (OWASP)
+- Parâmetros SQL sempre via prepared statements — nunca string concatenation (A03)
+- Secrets e API keys somente via env vars — nunca hardcoded (A02)
+- Autenticação obrigatória em todas as rotas — revisar A01 e A07 em cada nova rota
+- npm audit --audit-level=high antes de qualquer PR (A06)
+
+### Tasks
+- SEMPRE criar task via mcp__cortex__task antes de implementar
+- NUNCA pular a fase de research — usar mcp__cortex__memory para buscar contexto</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>Salvando incidentes OWASP na memória</h3>
+        <p>Quando o verify agent encontra uma vulnerabilidade ou quando um incidente de segurança ocorre em produção, o padrão é salvar na memória do Cortex para que o research agent alerte proativamente em tasks futuras relacionadas:</p>
+        <div class="code-block-wrapper">
+          <pre><code class="language-text"># Exemplo: verify agent encontrou potencial SQL injection
+mcp__cortex__memory(
+  action="save",
+  type="security",
+  title="OWASP A03 - SQL injection detectado em CX-15",
+  content="Implement agent usou string concatenation em query de busca de pedidos.
+           Rejeitado pelo verify agent. Fix obrigatório: Prisma parameterized queries.
+           Padrão correto: prisma.order.findMany({ where: { userId: userId } })
+           Nunca: db.query(`SELECT * FROM orders WHERE userId = ${userId}`)",
+  tags=["owasp-a03", "sql-injection", "database", "orders"]
+)
+
+# O research agent irá encontrar esta entrada em tasks futuras que envolvam
+# queries de banco — prevenindo a reincidência antes da implementação.</code></pre>
+          <button data-testid="copy-btn" class="copy-btn">Copiar</button>
+        </div>
+
+        <h3>OWASP Top 10 no pipeline Cortex</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>OWASP</th>
+                <th>Vulnerabilidade</th>
+                <th>Gate no Cortex</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>A01</td>
+                <td>Broken Access Control</td>
+                <td>Verify agent + testes de autorização obrigatórios</td>
+              </tr>
+              <tr>
+                <td>A02</td>
+                <td>Cryptographic Failures</td>
+                <td>CLAUDE.md rule + verify agent audita secrets e crypto</td>
+              </tr>
+              <tr>
+                <td>A03</td>
+                <td>Injection (SQL, NoSQL, Command)</td>
+                <td>CLAUDE.md rule + verify agent verifica concatenação de strings</td>
+              </tr>
+              <tr>
+                <td>A04</td>
+                <td>Insecure Design</td>
+                <td>Research agent busca na memória por threat models anteriores</td>
+              </tr>
+              <tr>
+                <td>A05</td>
+                <td>Security Misconfiguration</td>
+                <td>cx init gera checklist de configuração no CLAUDE.md</td>
+              </tr>
+              <tr>
+                <td>A06</td>
+                <td>Vulnerable Components</td>
+                <td><code>npm audit --audit-level=high</code> obrigatório no verify agent</td>
+              </tr>
+              <tr>
+                <td>A07</td>
+                <td>Auth &amp; Session Failures</td>
+                <td>Verify agent revisa fluxo de autenticação em rotas novas</td>
+              </tr>
+              <tr>
+                <td>A08</td>
+                <td>Integrity Failures</td>
+                <td>Verificação de integridade de dependências no verify agent</td>
+              </tr>
+              <tr>
+                <td>A09</td>
+                <td>Logging &amp; Monitoring Failures</td>
+                <td>Cortex logs + checklist de observabilidade no <code>session-end</code></td>
+              </tr>
+              <tr>
+                <td>A10</td>
+                <td>SSRF</td>
+                <td>CLAUDE.md rule + verify agent valida URLs em requests de saída</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Seção 8: Armadilhas -->
+      <section class="content-section">
+        <h2><i class="uil uil-exclamation-triangle"></i> Armadilhas</h2>
+        <p>O Cortex é uma ferramenta poderosa mas não universal. Engenheiros que adotam sem entender suas limitações perdem tempo corrigindo problemas que deveriam ter antecipado.</p>
+
+        <h3>Memória stale — decisões desatualizadas</h3>
+        <p>A memória semântica não tem mecanismo automático de expiração. Uma decisão arquitetural registrada há 8 meses pode estar obsoleta, mas o research agent a recupera com o mesmo peso de uma decisão recente.</p>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div><strong>Sintoma:</strong> O implement agent implementa com base em um padrão que o time abandonou há meses, e o verify agent aprova porque segue as regras antigas salvas na memória.</div>
+        </div>
+
+        <p><strong>Como gerenciar:</strong></p>
+        <ul>
+          <li>Adicionar campo <code>valid_until</code> nas entradas de memória de decisão arquitetural</li>
+          <li>Criar task de manutenção mensal: revisar entradas da memória e desativar as obsoletas via <code>cx ui</code> ou <code>mcp__cortex__memory(action="archive", id="...")</code></li>
+          <li>Usar ADRs versionados no Git como fonte de verdade para decisões críticas — memória do Cortex como cache de acesso rápido, não como fonte autoritativa</li>
+          <li>Incluir data explícita no <code>content</code> de entradas de decisão: "Decisão tomada em 2024-11 baseada em Next.js 14 — revisar se atualizar para Next.js 15+"</li>
+        </ul>
+
+        <h3>Overhead de setup não vale para projetos curtos</h3>
+        <p>O <code>cx init</code> leva minutos, mas o benefício real da memória semântica começa a aparecer apenas após semanas de uso — quando há decisões acumuladas suficientes para o research agent recuperar contexto útil. Em projetos com prazo menor que 2 semanas ou proofs-of-concept descartáveis, o overhead de:</p>
+        <ul>
+          <li>Configurar e manter o MCP server</li>
+          <li>Treinar a equipe nas MCP tools do Cortex</li>
+          <li>Criar e revisar entradas de memória após cada sessão</li>
+          <li>Depurar falhas no pipeline 3-agentes</li>
+        </ul>
+        <p>...supera o benefício. Use Claude Code Solo ou GSD nesses casos.</p>
+
+        <h3>Conflito com GSD — papéis precisam ser claros</h3>
+        <p>GSD e Cortex podem coexistir no mesmo repositório, mas têm áreas de responsabilidade que se sobrepõem se não forem delimitadas explicitamente:</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Responsabilidade</th>
+                <th>GSD</th>
+                <th>Cortex</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Planejamento de milestone</td>
+                <td>Sim (PLAN.md, fases)</td>
+                <td>Não (task-level apenas)</td>
+              </tr>
+              <tr>
+                <td>Task management diário</td>
+                <td>Parcial (phases)</td>
+                <td>Sim (CX-N kanban)</td>
+              </tr>
+              <tr>
+                <td>Memória entre sessões</td>
+                <td>Não (CONTEXT.md manual)</td>
+                <td>Sim (banco semântico)</td>
+              </tr>
+              <tr>
+                <td>Pipeline de agentes</td>
+                <td>Sim (/gsd:execute-phase)</td>
+                <td>Sim (/cortex:implement)</td>
+              </tr>
+              <tr>
+                <td>PR e merge</td>
+                <td>Sim (/gsd:ship)</td>
+                <td>Sim (/cortex:pr + merge)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>Regra de coexistência recomendada:</strong> Use GSD para planejamento macro (milestones, roadmap, fases) e Cortex para execução micro (tasks individuais, memória semântica, pipeline de implementação). Evite duplicar entidades — uma task não deve existir simultaneamente como GSD phase e CX-N task sem mapeamento explícito entre os dois sistemas.</p>
+
+        <div class="callout callout-error">
+          <i class="uil uil-times-circle"></i>
+          <div><strong>Anti-pattern fatal:</strong> Configurar dois agentes de PR independentes — <code>/gsd:ship</code> e <code>/cortex:pr</code> — sem definir qual tem autoridade final. Isso resulta em PRs duplicados, conflitos de branch ou estados inconsistentes no kanban do Cortex e no planning do GSD.</div>
+        </div>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next">
+          <a data-testid="btn-prev" href="/modules/06-workflows/02-gsd.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a>
+          <a data-testid="btn-next" href="/modules/06-workflows/04-feature-dev.html" class="btn btn-next">Próximo <i class="uil uil-arrow-right"></i></a>
+        </div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+      <section class="content-section">
+        <h2><i class="uil uil-shield-check"></i> Hooks neste workflow</h2>
+        <p>No Cortex, os hooks trabalham em conjunto com o verify agent do <code>/cortex:implement</code>. O verify agent faz revisão semântica; os hooks fazem os gates mecânicos determinísticos.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div><strong>Cortex + Hooks:</strong> O verify agent pode passar algo que viola uma regra de linting. Os hooks são o backstop — executam independentemente do que o verify agent avaliou.</div>
+        </div>
+
+        <h3>settings.json para W3 Cortex</h3>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{"type": "command", "command": "node scripts/quality-gate.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""}]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "node scripts/bash-guard.mjs"}]
+      }
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div><strong>Memória + Hooks:</strong> Quando o quality-gate bloquear, salve a causa raiz na memória Cortex: <code>mcp__cortex__memory(action="save", type="incident", title="ESLint bloqueou feature X", body="...")</code>. Assim o verify agent aprende com incidentes anteriores.</div>
+        </div>
+
+        <p>Scripts completos (<code>quality-gate.mjs</code>, <code>bash-guard.mjs</code>) no <a href="/modules/06-workflows/00-fundamentos.html">Módulo 22 — Fundamentos</a>.</p>
+      </section>
+    </article>
+    <footer class="site-footer"><span class="version-tag">v1.9.1</span></footer>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

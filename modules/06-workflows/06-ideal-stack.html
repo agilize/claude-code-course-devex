@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W6: O Stack Ideal — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border, #2a2a3e);
+      font-size: 0.92rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li i { margin-top: 2px; color: var(--accent, #6366f1); flex-shrink: 0; }
+    .checklist-group { margin-bottom: 1.5rem; }
+    .checklist-group-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted, #888);
+      margin-bottom: 0.5rem;
+    }
+    .phase-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      color: var(--text-muted, #888);
+      vertical-align: middle;
+      margin-left: 0.4rem;
+    }
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .agent-card {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+    }
+    .agent-card h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .agent-card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.84rem;
+      color: var(--text-secondary, #aaa);
+      line-height: 1.7;
+    }
+    .pyramid {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+      white-space: pre;
+      overflow-x: auto;
+      color: var(--text-secondary, #ccc);
+    }
+    .token-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 1rem 0; }
+    .token-table th, .token-table td { padding: 0.6rem 0.9rem; border: 1px solid var(--border, #2a2a3e); text-align: left; }
+    .token-table th { background: var(--surface-2, #1a1a2e); font-weight: 600; color: var(--text-secondary, #ccc); }
+    .owasp-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+    .owasp-table th, .owasp-table td { padding: 0.55rem 0.8rem; border: 1px solid var(--border, #2a2a3e); }
+    .owasp-table th { background: var(--surface-2, #1a1a2e); font-weight: 600; color: var(--text-secondary, #ccc); }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link active"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Stack Ideal</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Stack Ideal</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 28</div>
+        <h1 class="module-title">W6: O Stack Ideal</h1>
+        <p class="module-description">A proposta de maior qualidade. Combina GSD para estrutura, agentes paralelos para execução, TDD hard gate, pirâmide de testes completa, OWASP em CI, e PM integrado nos gates críticos.</p>
+        <span class="module-badge">Parte 6</span>
+      </div>
+
+      <!-- SEÇÃO 1: FILOSOFIA -->
+      <section class="content-section">
+        <h2><i class="uil uil-star"></i> Filosofia</h2>
+        <p>W6 não é o workflow mais rápido. É o workflow que você não vai se arrepender. Cada fase existe por uma razão de qualidade precisa — não há etapa decorativa, não há cerimônia vazia. Se uma fase parece lenta, é porque o custo de pular ela está escondido em retrabalho, incidentes e dívida técnica acumulada.</p>
+        <p>O PM está presente nos gates certos — Fase 0 (definição) e Fase 4 (validação) — e fora do caminho crítico durante a execução. Isso elimina o ciclo vicioso de interrupcões durante implementação sem abrir mão da validação de negócio onde ela realmente importa.</p>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Quando usar W6:</strong> Use este workflow quando o custo de um bug em produção é maior que o custo de fazer certo. Sistemas financeiros, saúde, infraestrutura crítica, features que afetam retenção de receita ou compliance regulatório. Para protótipos e MVPs internos, considere W2 (GSD) ou W3 (Cortex).
+          </div>
+        </div>
+
+        <p>Os cinco pilares que distinguem W6 dos outros workflows:</p>
+        <ul>
+          <li><strong>Arquitetura antes de código</strong> — hexagonal arch como contrato de qualidade, não como documentação post-hoc.</li>
+          <li><strong>TDD hard gate</strong> — o agente não avança sem teste existente e passando no nível anterior.</li>
+          <li><strong>Execução paralela com handoff formal</strong> — backend, frontend e security rodam em paralelo com protocolo de contrato via arquivo.</li>
+          <li><strong>Pirâmide de testes completa</strong> — unit, integration, E2E, load e stress com thresholds definidos que param o pipeline.</li>
+          <li><strong>PM integrado em gates, não em cada passo</strong> — validação de negócio sem interrupção de fluxo.</li>
+        </ul>
+      </section>
+
+      <!-- SEÇÃO 2: DIAGRAMA COMPLETO -->
+      <section class="content-section">
+        <h2><i class="uil uil-sitemap"></i> Diagrama completo do W6</h2>
+        <p>O fluxo abaixo mostra todos os atores, fases, handoffs e gates de decisão. Um ciclo completo bem executado leva de 2 a 5 dias dependendo da complexidade da feature.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart TD
+  PM[PM: PRD com critérios\nmensuráveis de aceite] --> F0
+
+  subgraph F0["FASE 0 — Product Discovery"]
+    F0A[/gsd:discuss-phase] --> F0B[Assumptions + ADR.md]
+    F0B --> F0C[UI-SPEC.md via\n/gsd:ui-phase]
+    F0C --> F0D[REQUIREMENTS.md aprovado pelo PM]
+  end
+
+  F0D --> F1
+
+  subgraph F1["FASE 1 — Architecture First"]
+    F1A[Claude desenha\nhexagonal arch] --> F1B[Domain model\nEntities + Use Cases]
+    F1B --> F1C[Ports: interfaces\nde contrato]
+    F1C --> F1D[Testes de contrato\nnos ports — RED]
+  end
+
+  F1D --> F2
+
+  subgraph F2["FASE 2 — Parallel Implementation"]
+    direction LR
+    BA2[Backend Agent\n< 60K tokens\nDomain → Ports → Adapters\nTDD rigoroso]
+    FA2[Frontend Agent\n< 60K tokens\nshadcn/ui + Lucide\nfrontend-design skill]
+    SA2[Security Agent\nOWASP Top 10\nem paralelo]
+    BA2 -.->|handoff via arquivo| FA2
+  end
+
+  F2 --> F3
+
+  subgraph F3["FASE 3 — Testing Pyramid Completa"]
+    T1[Unit: vitest\n> 80% coverage\ndomínio isolado] --> T2
+    T2[Integration: DB real\ntestcontainers\nsem mocks] --> T3
+    T3[E2E: Cypress\njornadas críticas\nheadless] --> T4
+    T4[Load: k6\nbaseline throughput\np95 latência] --> T5
+    T5[Stress: k6\nponto de ruptura\ndegradação graceful]
+  end
+
+  F3 --> F4
+
+  subgraph F4["FASE 4 — PM Review Gate"]
+    PR1[Preview deploy\nvercel --preview] --> PR2[PM valida contra\ncritérios de aceite]
+    PR2 --> PR3{Aprovado?}
+    PR3 -->|Não| PR4[Novo ciclo com\nfeedback capturado]
+    PR4 --> F0
+    PR3 -->|Sim| F5
+  end
+
+  subgraph F5["FASE 5 — Ship"]
+    SH1[/gsd:ship] --> SH2[gh pr create]
+    SH2 --> SH3[code-reviewer\nfinal pass]
+    SH3 --> SH4[npm audit\nOWASP A06]
+    SH4 --> SH5[Merge → Deploy]
+    SH5 --> SH6[Alertas configurados\npré-produção]
+  end
+          </div>
+          <p class="diagram-caption">W6 completo: 6 fases, 3 agentes paralelos, 5 níveis de teste, 2 gates de PM.</p>
+        </div>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div>
+            <strong>Leitura do diagrama:</strong> Setas sólidas representam fluxo sequencial obrigatório. A seta pontilhada de Backend Agent para Frontend Agent indica handoff via arquivo de contrato de API — os agentes nunca se comunicam in-memory. O loop de retorno de F4 para F0 não é retrabalho: é um ciclo de refinamento com feedback estruturado.
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3: FASE 0 — PRODUCT DISCOVERY -->
+      <section class="content-section">
+        <h2><i class="uil uil-search"></i> Fase 0 — Product Discovery</h2>
+        <p>A Fase 0 existe para eliminar ambiguidade antes que ela se torne código errado. O PM traz um PRD — o Claude entrevista, questiona, e produz artefatos de decisão que se tornam o contrato de qualidade para todas as fases seguintes.</p>
+
+        <h3>O que o PM precisa trazer</h3>
+        <p>Um PRD com critérios SMART de aceite. Critérios vagos como "o usuário deve conseguir fazer login" não são aceitos. O formato mínimo esperado:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># PRD — [Nome da Feature]
+
+## Critérios de aceite (SMART)
+- [ ] Tempo de resposta do endpoint POST /auth < 200ms no p95 sob 500 req/s
+- [ ] Taxa de erro < 0.1% em 1 hora de carga contínua
+- [ ] Fluxo de recuperação de senha completo em < 3 cliques
+- [ ] Compatível com WCAG 2.1 AA (acessibilidade)
+- [ ] Dados de PII encriptados em repouso (AES-256)
+
+## Fora de escopo (explícito)
+- SSO via SAML (próxima fase)
+- Login social (backlog)
+
+## Restrições técnicas conhecidas
+- PostgreSQL 15, sem migração de schema destrutiva
+- Deploy em edge functions Vercel</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>discuss-phase: como Claude entrevista</h3>
+        <p>O skill <code>/gsd:discuss-phase</code> conduz uma entrevista adaptativa para descobrir gaps no PRD. Claude faz perguntas até ter confiança suficiente para gerar o plano sem assumir decisões de negócio. Tipicamente 5 a 12 perguntas.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Iniciar a fase de discovery
+/gsd:discuss-phase
+
+# Claude vai perguntar sobre: edge cases, estados de erro,
+# integrações externas, volume esperado, rollback strategy,
+# dependências de outras features, critérios de performance</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>ADR.md — Architectural Decision Record</h3>
+        <p>Cada decisão arquitetural não-trivial gera uma entrada no ADR.md. O formato padrão usado no W6:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># ADR-001: JWT vs Session Tokens para autenticação
+
+**Data:** 2025-03-15
+**Status:** Aceito
+
+## Contexto
+Sistema SaaS multi-tenant, 50K usuários ativos, edge functions sem estado.
+
+## Decisão
+JWT com refresh token rotation (RFC 7519). Access token com TTL de 15min,
+refresh token com TTL de 7 dias armazenado em httpOnly cookie.
+
+## Consequências
++ Stateless: compatível com edge runtime sem Redis
++ Revogação granular via refresh token blacklist (Redis opcional)
+- Overhead de validação de assinatura em cada request
+- Payload público: não colocar dados sensíveis no token
+
+## Alternativas descartadas
+- Sessions com Redis: requer infraestrutura adicional, custo operacional
+- Opaque tokens: requer lookup no DB em cada request</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>UI-SPEC.md via /gsd:ui-phase</h3>
+        <p>O skill <code>/gsd:ui-phase</code> gera a especificação visual antes de qualquer linha de CSS. O Frontend Agent recebe esse arquivo como contrato de design — não há decisões visuais ad hoc durante a implementação.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Gerar UI-SPEC.md baseado no PRD
+/gsd:ui-phase
+
+# Resultado: UI-SPEC.md com:
+# - Layout wireframe em ASCII
+# - Componentes shadcn/ui mapeados
+# - Estados: default, loading, error, empty
+# - Paleta: zinc/slate, accent único
+# - Tokens tipográficos: Geist Sans + Geist Mono</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Gate obrigatório:</strong> O PM deve assinar o <code>REQUIREMENTS.md</code> antes de avançar para Fase 1. "Assinar" significa revisar e confirmar explicitamente — não apenas receber. Um <code>REQUIREMENTS.md</code> não aprovado bloqueia o spawn dos agentes de implementação.
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4: FASE 1 — ARCHITECTURE FIRST -->
+      <section class="content-section">
+        <h2><i class="uil uil-layer-group"></i> Fase 1 — Architecture First</h2>
+        <p>Antes de escrever uma linha de código de negócio, Claude produz o modelo arquitetural. Não como documentação — como contrato de qualidade que guia a implementação e os testes.</p>
+
+        <h3>Por que arquitetura antes de código</h3>
+        <p>Código escrito sem arquitetura explícita tende a violar Single Responsibility e Dependency Inversion desde o primeiro commit. Refatorar depois tem custo exponencial: testes precisam ser reescritos, contratos de API mudam, e o contexto que justificou a decisão original já se perdeu.</p>
+        <p>Na prática: 2 horas de design arquitetural evitam 2 dias de refatoração. O ROI é claro para qualquer feature com mais de 3 dias de implementação.</p>
+
+        <h3>Hexagonal Arch aplicada ao problema</h3>
+        <p>Claude recebe o PRD e os ADRs e produz o mapeamento hexagonal para aquela feature específica — não um template genérico. A sequência é domain first, depois ports, depois adapters:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// DOMAIN: sem dependências externas
+// src/domain/auth/entities/User.ts
+export class User {
+  constructor(
+    readonly id: UserId,
+    readonly email: Email,
+    private passwordHash: PasswordHash
+  ) {}
+
+  verifyPassword(candidate: string): boolean {
+    return this.passwordHash.verify(candidate);
+  }
+
+  static create(email: string, password: string): User {
+    return new User(
+      UserId.generate(),
+      Email.parse(email),        // lança InvalidEmailError
+      PasswordHash.bcrypt(password)
+    );
+  }
+}
+
+// PORT: interface de contrato (sem implementação)
+// src/domain/auth/ports/UserRepository.ts
+export interface UserRepository {
+  findByEmail(email: Email): Promise<User | null>;
+  save(user: User): Promise<void>;
+  delete(id: UserId): Promise<void>;
+}
+
+// ADAPTER: implementação concreta (depende da infra)
+// src/infra/postgres/PostgresUserRepository.ts
+export class PostgresUserRepository implements UserRepository {
+  constructor(private readonly db: PrismaClient) {}
+
+  async findByEmail(email: Email): Promise<User | null> {
+    const row = await this.db.user.findUnique({
+      where: { email: email.value }
+    });
+    return row ? UserMapper.toDomain(row) : null;
+  }
+  // ...
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Testes de contrato nos Ports</h3>
+        <p>Antes de qualquer adapter existir, Claude escreve testes de contrato para cada Port. Esses testes definem o comportamento esperado do contrato — qualquer adapter que implemente o Port deve passar nesses testes. Isso é TDD na camada de portas:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// src/domain/auth/ports/__tests__/UserRepository.contract.ts
+// Contrato: qualquer implementação de UserRepository DEVE passar nesses testes
+
+import type { UserRepository } from '../UserRepository';
+
+export function userRepositoryContract(
+  createRepo: () => UserRepository,
+  cleanup: () => Promise<void>
+) {
+  let repo: UserRepository;
+
+  beforeEach(() => { repo = createRepo(); });
+  afterEach(cleanup);
+
+  it('persiste e recupera usuário por email', async () => {
+    const user = User.create('alice@example.com', 'S3cr3t!');
+    await repo.save(user);
+
+    const found = await repo.findByEmail(Email.parse('alice@example.com'));
+    expect(found).not.toBeNull();
+    expect(found!.id.value).toBe(user.id.value);
+  });
+
+  it('retorna null para email inexistente', async () => {
+    const found = await repo.findByEmail(Email.parse('ghost@example.com'));
+    expect(found).toBeNull();
+  });
+
+  it('sobrescreve ao salvar usuário existente', async () => {
+    const user = User.create('bob@example.com', 'P4ss!');
+    await repo.save(user);
+    await repo.save(user); // idempotente
+    const found = await repo.findByEmail(Email.parse('bob@example.com'));
+    expect(found).not.toBeNull();
+  });
+}
+
+// Uso no teste do adapter concreto:
+// PostgresUserRepository.test.ts
+userRepositoryContract(
+  () => new PostgresUserRepository(testDb),
+  () => testDb.user.deleteMany()
+);</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Se você pular essa fase, vai refatorar depois. A questão é apenas quando.</strong> Features que chegam em produção com domain logic acoplada a infra são as que geram os maiores incidentes. A Fase 1 é o seguro mais barato que existe.
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 5: FASE 2 — EXECUÇÃO PARALELA -->
+      <section class="content-section">
+        <h2><i class="uil uil-robot"></i> Fase 2 — Execução Paralela</h2>
+        <p>Com arquitetura definida e testes de contrato escritos (RED), a implementação começa em paralelo. Três agentes rodam simultaneamente, cada um com escopo isolado e orçamento de contexto controlado.</p>
+
+        <h3>Como spawnar os agentes</h3>
+        <p>O Orchestrator Master (máximo 80K tokens) spawna os três agentes com contexto inicial mínimo e preciso. Cada agente recebe apenas o que precisa — não o histórico completo da conversa.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Orchestrator Master envia para cada subagente:
+
+# Backend Agent — contexto inicial:
+# - REQUIREMENTS.md
+# - ADR.md
+# - src/domain/ (entities + ports)
+# - Testes de contrato já escritos
+# - Instrução: "Implemente os adapters em TDD. RED já existe. GREEN e REFACTOR são sua responsabilidade."
+
+# Frontend Agent — contexto inicial:
+# - UI-SPEC.md
+# - API_CONTRACT.md (gerado pelo Backend Agent ao completar)
+# - Instrução: "Implemente a UI conforme UI-SPEC.md. Dados via API_CONTRACT.md."
+
+# Security Agent — contexto inicial:
+# - REQUIREMENTS.md
+# - ADR.md
+# - OWASP checklist ativa
+# - Instrução: "Audite em paralelo. Reporte em SECURITY_FINDINGS.md."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="agent-grid">
+          <div class="agent-card">
+            <h4><i class="uil uil-server"></i> Backend Agent</h4>
+            <ul>
+              <li>Contexto: &lt; 60K tokens</li>
+              <li>Implementa domain core</li>
+              <li>Implementa adapters (DB, HTTP)</li>
+              <li>TDD rigoroso: RED existente</li>
+              <li>Produz: API_CONTRACT.md</li>
+              <li>Produz: testes de integração</li>
+            </ul>
+          </div>
+          <div class="agent-card">
+            <h4><i class="uil uil-desktop"></i> Frontend Agent</h4>
+            <ul>
+              <li>Contexto: &lt; 60K tokens</li>
+              <li>Aguarda API_CONTRACT.md</li>
+              <li>shadcn/ui + Lucide Icons</li>
+              <li>Dark mode padrão</li>
+              <li>Geist Sans / Geist Mono</li>
+              <li>Testes: Testing Library</li>
+            </ul>
+          </div>
+          <div class="agent-card">
+            <h4><i class="uil uil-shield-check"></i> Security Agent</h4>
+            <ul>
+              <li>Contexto: &lt; 60K tokens</li>
+              <li>OWASP Top 10 (2021)</li>
+              <li>Audita em paralelo</li>
+              <li>Sem bloquear os outros</li>
+              <li>Produz: SECURITY_FINDINGS.md</li>
+              <li>Findings bloqueantes vs. observações</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Protocolo de handoff via arquivo</h3>
+        <p>Backend Agent e Frontend Agent nunca se comunicam in-memory. O handoff ocorre via arquivo <code>API_CONTRACT.md</code> escrito pelo Backend Agent ao completar os endpoints. O Frontend Agent começa apenas após esse arquivo existir.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># API_CONTRACT.md — gerado pelo Backend Agent
+
+## POST /api/auth/login
+**Request:**
+```json
+{ "email": "string", "password": "string" }
+```
+**Response 200:**
+```json
+{ "accessToken": "string", "expiresIn": 900 }
+```
+**Response 401:**
+```json
+{ "error": "INVALID_CREDENTIALS", "message": "string" }
+```
+**Headers de resposta:**
+- `Set-Cookie: refreshToken=...; HttpOnly; Secure; SameSite=Strict`
+
+## GET /api/auth/me
+**Headers:** `Authorization: Bearer {accessToken}`
+**Response 200:**
+```json
+{ "id": "string", "email": "string", "createdAt": "ISO8601" }
+```
+**Response 401:** Token inválido ou expirado</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Quando um agente falha</h3>
+        <p>Falhas de agente no W6 têm protocolo definido. Não existe "tenta de novo até funcionar":</p>
+        <ul>
+          <li><strong>Falha de lógica de domínio</strong> — agente reporta o bloqueio com contexto. Orchestrator avalia se é gap no PRD (volta para Fase 0) ou bug implementável (retry com contexto adicional).</li>
+          <li><strong>Context window excedida</strong> — o agente deve ter executado <code>/compact</code> ao atingir 50K. Se chegou ao limite sem compactar, abort e restart com instrução de compactar a cada 30K de saída acumulada.</li>
+          <li><strong>Testes não passando após 3 tentativas</strong> — escalar para o Orchestrator com o diff atual e a mensagem de erro. Não tentar corrigir o teste para forçar verde.</li>
+        </ul>
+      </section>
+
+      <!-- SEÇÃO 6: FASE 3 — PIRÂMIDE DE TESTES -->
+      <section class="content-section">
+        <h2><i class="uil uil-flask"></i> Fase 3 — Pirâmide de Testes</h2>
+        <p>O pipeline de testes no W6 é sequencial e bloqueante: cada nível deve passar antes de avançar para o próximo. Um único teste falhando em qualquer nível para o pipeline e impede o deploy.</p>
+
+        <div class="pyramid">              /\
+             /E2E\         ← Cypress: jornadas críticas do usuário
+            /──────\
+           / Integr \      ← Jest/Vitest: DB real (testcontainers), sem mocks
+          /──────────\
+         / Unit Tests \    ← Vitest: domínio isolado, < 500ms total
+        /______________\
+       /  Static Anal. \   ← TypeScript strict + ESLint (zero warnings)</div>
+
+        <h3>Nível 1 — Static Analysis (zero tolerance)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># TypeScript strict: nenhum erro permitido
+npx tsc --noEmit --strict
+
+# ESLint: zero warnings (warnings viram erros no CI)
+npx eslint . --max-warnings 0
+
+# Configuração tsconfig.json para projetos W6:
+# "strict": true
+# "noUncheckedIndexedAccess": true
+# "exactOptionalPropertyTypes": true</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Nível 2 — Unit Tests (&gt; 80% coverage no domínio)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Rodar apenas unit tests (padrão de naming: *.unit.test.ts)
+npx vitest run --reporter=verbose src/domain
+
+# Coverage com threshold que falha o build se não atingido
+npx vitest run --coverage --coverage.thresholds.lines=80 \
+  --coverage.thresholds.functions=85 \
+  --coverage.thresholds.branches=75 \
+  src/domain
+
+# vitest.config.ts
+coverage: {
+  provider: 'v8',
+  thresholds: { lines: 80, functions: 85, branches: 75 },
+  include: ['src/domain/**'],
+  exclude: ['**/*.d.ts', '**/__tests__/**']
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Nível 3 — Integration Tests (DB real, sem mocks)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Testcontainers sobe o Postgres real para os testes
+# Padrão de naming: *.integration.test.ts
+npx vitest run --reporter=verbose src/infra
+
+# setup de testcontainer:
+# src/test/setup-integration.ts
+import { PostgreSqlContainer } from '@testcontainers/postgresql';
+
+let container: PostgreSqlContainer;
+
+beforeAll(async () => {
+  container = await new PostgreSqlContainer('postgres:15')
+    .withDatabase('testdb')
+    .start();
+  process.env.DATABASE_URL = container.getConnectionUri();
+  await runMigrations(process.env.DATABASE_URL);
+}, 60_000);
+
+afterAll(async () => {
+  await container.stop();
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Nível 4 — E2E (Cypress, jornadas críticas)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Cypress em modo headless no CI
+npx cypress run --headless --browser chrome
+
+# cypress.config.ts
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.cy.ts',
+    // Apenas jornadas críticas: login, checkout, onboarding
+    // Não testar cada componente — isso é responsabilidade dos unit tests
+  },
+  video: false,  // desativa no CI para performance
+  screenshotOnRunFailure: true
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Nível 5 — Load e Stress (k6)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-javascript">// k6/load.js — baseline: 500 req/s por 5 minutos
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export const options = {
+  stages: [
+    { duration: '1m', target: 500 },   // ramp up
+    { duration: '3m', target: 500 },   // sustain
+    { duration: '1m', target: 0 },     // ramp down
+  ],
+  thresholds: {
+    http_req_duration: ['p95<200'],      // p95 < 200ms
+    http_req_failed: ['rate<0.001'],     // < 0.1% erro
+  },
+};
+
+export default function () {
+  const res = http.post('http://localhost:3000/api/auth/login', JSON.stringify({
+    email: 'load-test@example.com',
+    password: 'LoadTest123!'
+  }), { headers: { 'Content-Type': 'application/json' } });
+
+  check(res, { 'status is 200': (r) => r.status === 200 });
+  sleep(0.1);
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-javascript">// k6/stress.js — descobrir ponto de ruptura
+export const options = {
+  stages: [
+    { duration: '2m', target: 1000 },
+    { duration: '3m', target: 2000 },
+    { duration: '2m', target: 5000 },  // ponto de ruptura esperado aqui
+    { duration: '5m', target: 0 },     // observar degradação graceful
+  ],
+  thresholds: {
+    // Stress test: não falha o build — gera relatório de capacidade
+    http_req_duration: ['p99<5000'],
+  },
+};</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-error">
+          <i class="uil uil-times-circle"></i>
+          <div>
+            <strong>O que para o pipeline:</strong> Qualquer falha em TypeScript strict, ESLint com warnings, coverage abaixo do threshold, teste de contrato falhando, teste de integração falhando, E2E falhando em jornada crítica, ou p95 de latência acima de 200ms no load test. Stress test gera relatório mas não bloqueia o deploy.
+          </div>
+        </div>
+
+        <h3>Relatório consolidado</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Gerar relatório consolidado antes de avançar para Fase 4
+npm run test:report
+
+# package.json scripts sugeridos:
+"test:ci": "tsc --noEmit && eslint . --max-warnings 0 && vitest run --coverage && cypress run --headless && k6 run k6/load.js",
+"test:report": "vitest run --reporter=json --outputFile=test-results/unit.json && open coverage/index.html"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- SEÇÃO 7: FASE 4 — PM REVIEW GATE -->
+      <section class="content-section">
+        <h2><i class="uil uil-users-alt"></i> Fase 4 — PM Review Gate</h2>
+        <p>O PM Review Gate é o momento em que o produto volta para validação de negócio. A implementação está completa, todos os testes passando — agora o PM verifica se o que foi construído resolve o problema original conforme os critérios de aceite definidos na Fase 0.</p>
+
+        <h3>Preview deploy</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Deploy de preview — URL única por branch/commit
+vercel --preview
+
+# A URL gerada é enviada para o PM junto com:
+# 1. Link para o REQUIREMENTS.md (critérios de aceite originais)
+# 2. Lista de testes que passaram (relatório da Fase 3)
+# 3. SECURITY_FINDINGS.md (findings do Security Agent)
+# 4. Instruções específicas de como testar cada critério</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Como o PM valida</h3>
+        <p>O PM recebe a URL de preview, o REQUIREMENTS.md e o guia de teste. A validação é contra os critérios SMART definidos na Fase 0 — não contra uma impressão subjetiva. Cada critério é marcado como aprovado ou rejeitado com evidência.</p>
+
+        <h3>Template de feedback estruturado</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># PM Review — [Feature Name] — [Data]
+
+## Resultado geral: [ ] APROVADO  [ ] REJEITAR COM FEEDBACK
+
+## Critérios de aceite
+
+| Critério | Status | Evidência / Observação |
+|---|---|---|
+| Tempo de resposta < 200ms p95 | APROVADO | Testei com DevTools: 145ms p95 |
+| Taxa de erro < 0.1% | APROVADO | 0 erros em 30 min de uso |
+| Fluxo em < 3 cliques | REJEITADO | Recuperação de senha exige 4 cliques |
+| WCAG 2.1 AA | APROVADO | aXe extension: 0 violations |
+| PII encriptado em repouso | A VERIFICAR | Requer confirmação do Security Agent |
+
+## Feedback específico (apenas se REJEITADO)
+
+### Critério: Fluxo de recuperação de senha
+**Problema:** Tela de confirmação de email tem um passo extra desnecessário.
+**Critério original:** "Fluxo de recuperação em < 3 cliques"
+**Sugestão:** Remover a tela de "email enviado com sucesso" e redirecionar diretamente.
+**Bloqueante:** Sim — não vai para prod assim.
+
+## Próximos passos
+- [ ] Time ajusta o fluxo de recuperação de senha
+- [ ] Novo deploy de preview
+- [ ] Re-validação apenas do critério afetado</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Novo ciclo não é retrabalho — é refinamento.</strong> Quando a Fase 4 retorna para Fase 0, o feedback capturado no template acima torna o próximo ciclo mais rápido e mais preciso. O custo de um ciclo de refinamento no W6 é significativamente menor que o custo de um rollback em produção.
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 8: FASE 5 — SHIP -->
+      <section class="content-section">
+        <h2><i class="uil uil-rocket"></i> Fase 5 — Ship</h2>
+        <p>Com o PM Review aprovado, a Fase 5 orquestra o processo de ship. <code>/gsd:ship</code> não é apenas criar um PR — é um conjunto de verificações finais que garantem que nada foi esquecido entre a validação e o merge.</p>
+
+        <h3>/gsd:ship — o que acontece</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Executa o processo completo de ship
+/gsd:ship
+
+# Internamente, /gsd:ship faz:
+# 1. Verifica que todos os testes estão passando no estado atual
+# 2. Cria o PR via gh pr create com template padronizado
+# 3. Executa o code-reviewer final pass
+# 4. Roda npm audit para OWASP A06
+# 5. Checa SECURITY_FINDINGS.md — findings bloqueantes impedem merge
+# 6. Gera o CHANGELOG entry
+# 7. Aguarda aprovação de reviewer humano antes de merge</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Final pass do code-reviewer</h3>
+        <p>O code-reviewer no W6 não é uma revisão de estilo — é uma auditoria técnica contra padrões SOLID e Clean Code configurados no CLAUDE.md do projeto:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># CLAUDE.md — seção de code review padrão W6
+
+## Code Review Checklist (obrigatório antes de qualquer PR)
+
+### Clean Code
+- [ ] Funções com responsabilidade única (< 20 linhas na maioria dos casos)
+- [ ] Nomes que revelam intenção (sem abbreviações obscuras)
+- [ ] Zero comentários que explicam o que o código faz (apenas o porquê)
+- [ ] Sem números mágicos — use constantes nomeadas
+
+### SOLID
+- [ ] SRP: nenhuma classe com mais de uma razão para mudar
+- [ ] OCP: extensão via interface, não modificação de classe existente
+- [ ] LSP: subclasses substituem superclasses sem surpresas
+- [ ] ISP: interfaces pequenas e focadas (max 3-5 métodos)
+- [ ] DIP: injeção de dependência via construtor, não instanciação direta
+
+### Hexagonal Arch
+- [ ] Domain core sem imports de infra (prisma, express, etc.)
+- [ ] Adapters implementam Ports — nunca ao contrário
+- [ ] Use cases dependem de Ports, nunca de Adapters diretamente</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>npm audit — gate OWASP A06</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Audit obrigatório — vulnerabilidades críticas e high bloqueiam o merge
+npm audit --audit-level=high
+
+# Se houver vulnerabilidades:
+npm audit fix        # tenta auto-fix
+npm audit fix --force  # USAR COM CUIDADO: pode introduzir breaking changes
+
+# O que fazer com falsos positivos ou vulnerabilidades sem fix:
+# 1. Criar .nsprc ou npm audit exception com justificativa documentada
+# 2. Abrir issue de tracking com prazo de resolução
+# 3. Revisor humano deve aprovar explicitamente a exceção</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Alertas pré-produção (não depois)</h3>
+        <p>Os alertas de observabilidade são configurados como parte do processo de ship — nunca como uma tarefa de "fazer depois do deploy":</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Checklist de alertas antes de merge para main
+
+# 1. Error rate alert: > 1% em 5 minutos → PagerDuty
+# 2. P95 latência > 500ms por 3 minutos → Slack #incidents
+# 3. CPU > 80% por 5 minutos → auto-scale trigger
+# 4. DB connections > 80% do pool → alerta preventivo
+
+# Vercel Observability — configurar antes do deploy prod:
+# - Log drain para sistema centralizado
+# - Speed Insights habilitado
+# - Web Analytics habilitado para monitorar Core Web Vitals</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Post-mortem template (quando algo der errado em prod)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># Post-Mortem — [Título do Incidente]
+
+**Severidade:** P0 / P1 / P2
+**Duração:** [início] → [resolução]
+**Impacto:** X usuários afetados, R$ Y de receita impactada
+
+## Timeline
+- 14:23 — Deploy de prod (commit abc123)
+- 14:31 — Primeiros erros no Sentry (error rate 12%)
+- 14:35 — Alerta PagerDuty disparado
+- 14:40 — Rollback executado via `vercel rollback`
+- 14:45 — Sistema estável, investigação iniciada
+
+## Root Cause
+[Análise técnica objetiva — sem culpar pessoas]
+
+## O que o W6 detectou / não detectou
+- [ ] TypeScript strict: não detectou (runtime error, não type error)
+- [ ] Testes de integração: não cobriram esse edge case
+- [ ] Load test: cobriu o volume, não a combinação de inputs
+
+## Ações corretivas
+- [ ] Adicionar teste de regressão para o caso exato que falhou
+- [ ] Adicionar ao load test o padrão de tráfego que causou o incidente
+- [ ] Revisar cobertura de testes na área afetada</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- SEÇÃO 9: CONTEXT WINDOW NO W6 -->
+      <section class="content-section">
+        <h2><i class="uil uil-setting"></i> Context Window no W6</h2>
+        <p>Context Window Discipline é um cross-cutting concern em todos os workflows, mas no W6 tem regras mais rígidas porque múltiplos agentes rodam em paralelo e o Orchestrator Master precisa manter coerência entre todos.</p>
+
+        <table class="token-table">
+          <thead>
+            <tr>
+              <th>Ator</th>
+              <th>Limite</th>
+              <th>Acao quando se aproxima</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Orchestrator Master</td>
+              <td>&lt; 80K tokens ativos</td>
+              <td><code>/compact</code> antes de spawnar agentes da Fase 2</td>
+            </tr>
+            <tr>
+              <td>Backend Agent</td>
+              <td>&lt; 60K tokens</td>
+              <td><code>/compact</code> ao atingir 50K; estado persiste em arquivos</td>
+            </tr>
+            <tr>
+              <td>Frontend Agent</td>
+              <td>&lt; 60K tokens</td>
+              <td><code>/compact</code> ao atingir 50K; UI-SPEC.md permanece no contexto</td>
+            </tr>
+            <tr>
+              <td>Security Agent</td>
+              <td>&lt; 60K tokens</td>
+              <td>Escreve SECURITY_FINDINGS.md incremental; compacta early</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>/compact obrigatório entre Fase 1 e Fase 2</h3>
+        <p>O ponto mais crítico de Context Window Discipline no W6 é a transição entre Fase 1 e Fase 2. A Fase 1 acumula contexto de arquitetura denso. Antes de spawnar os três agentes paralelos, o Orchestrator deve compactar:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Ao final da Fase 1, antes de spawnar agentes:
+/compact
+
+# O que preservar no CONTEXT.md antes de compactar:
+# - Decisões arquiteturais tomadas (resumo dos ADRs)
+# - Estrutura de diretórios acordada
+# - Interfaces (Ports) definidas
+# - Quais testes de contrato já existem e qual seu status
+# - Dependências entre os agentes (qual aguarda o quê)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Handoffs via arquivo — nunca in-memory</h3>
+        <p>Todos os handoffs entre fases e entre agentes ocorrem via arquivos explícitos. Um agente que termina escreve seu output em um arquivo. O próximo agente começa lendo esse arquivo. Isso garante que o estado do projeto sobrevive a resets de contexto, reinicializações e sessões diferentes.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Estrutura de arquivos de handoff no W6:
+docs/
+  REQUIREMENTS.md      # Fase 0 → Fase 1 (assinado pelo PM)
+  ADR.md               # Fase 0 → todas as fases
+  UI-SPEC.md           # Fase 0 → Frontend Agent
+  API_CONTRACT.md      # Backend Agent → Frontend Agent
+  SECURITY_FINDINGS.md # Security Agent → Fase 5 (ship gate)
+  CONTEXT.md           # Orchestrator → /compact summary
+  CHANGELOG.md         # Atualizado em cada ship</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Agentes são stateless por design.</strong> O estado do projeto vive nos arquivos — não na memória do agente. Um agente destruído e recriado deve ser capaz de retomar de onde parou apenas lendo os arquivos de handoff. Se isso não for verdade, os arquivos de handoff estão incompletos.
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 10: CHECKLIST START HERE -->
+      <section class="content-section">
+        <h2><i class="uil uil-check-circle"></i> Checklist "Start Here"</h2>
+        <p>Use esta checklist antes de iniciar cada fase. Pode ser copiada para o <code>CLAUDE.md</code> do projeto ou impressa como card de referência. Nenhuma fase deve iniciar com itens abertos da fase anterior.</p>
+
+        <div class="checklist-group">
+          <div class="checklist-group-title">Fase 0 — Product Discovery <span class="phase-badge">antes de iniciar</span></div>
+          <ul class="checklist">
+            <li><i class="uil uil-check-circle"></i> PRD entregue pelo PM com critérios SMART mensuráveis</li>
+            <li><i class="uil uil-check-circle"></i> Itens fora de escopo explicitamente listados no PRD</li>
+            <li><i class="uil uil-check-circle"></i> /gsd:discuss-phase executado — sem gaps no entendimento</li>
+            <li><i class="uil uil-check-circle"></i> ADR.md criado com pelo menos uma entrada por decisão arquitetural relevante</li>
+            <li><i class="uil uil-check-circle"></i> UI-SPEC.md gerado via /gsd:ui-phase</li>
+            <li><i class="uil uil-check-circle"></i> REQUIREMENTS.md aprovado e assinado pelo PM</li>
+            <li><i class="uil uil-check-circle"></i> Restrições técnicas documentadas (versões, constraints de infra)</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="checklist-group-title">Fase 1 — Architecture First <span class="phase-badge">antes de escrever código</span></div>
+          <ul class="checklist">
+            <li><i class="uil uil-check-circle"></i> Mapeamento hexagonal desenhado: domain core, ports, adapters identificados</li>
+            <li><i class="uil uil-check-circle"></i> Entities e Value Objects definidos — sem dependências externas</li>
+            <li><i class="uil uil-check-circle"></i> Interfaces (Ports) escritas como TypeScript interfaces</li>
+            <li><i class="uil uil-check-circle"></i> Testes de contrato escritos para cada Port (status: RED)</li>
+            <li><i class="uil uil-check-circle"></i> Estrutura de diretórios criada (src/domain/, src/infra/, src/app/)</li>
+            <li><i class="uil uil-check-circle"></i> tsconfig.json com strict mode habilitado</li>
+            <li><i class="uil uil-check-circle"></i> /compact executado no Orchestrator antes de avançar</li>
+            <li><i class="uil uil-check-circle"></i> CONTEXT.md atualizado com resumo das decisões arquiteturais</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="checklist-group-title">Fase 2 — Execução Paralela <span class="phase-badge">antes de spawnar agentes</span></div>
+          <ul class="checklist">
+            <li><i class="uil uil-check-circle"></i> Contexto do Orchestrator Master está abaixo de 80K tokens</li>
+            <li><i class="uil uil-check-circle"></i> Backend Agent recebeu: REQUIREMENTS.md + ADR.md + src/domain/ + testes de contrato</li>
+            <li><i class="uil uil-check-circle"></i> Frontend Agent recebeu: UI-SPEC.md (API_CONTRACT.md será provido pelo Backend Agent)</li>
+            <li><i class="uil uil-check-circle"></i> Security Agent recebeu: REQUIREMENTS.md + ADR.md + OWASP checklist</li>
+            <li><i class="uil uil-check-circle"></i> Protocolo de handoff definido: Backend Agent escreve API_CONTRACT.md antes do Frontend iniciar endpoints</li>
+            <li><i class="uil uil-check-circle"></i> Limite de 60K tokens por agente configurado na instrução inicial</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="checklist-group-title">Fase 3 — Testing Pyramid <span class="phase-badge">antes de avançar para PM review</span></div>
+          <ul class="checklist">
+            <li><i class="uil uil-check-circle"></i> tsc --noEmit --strict: zero erros</li>
+            <li><i class="uil uil-check-circle"></i> eslint . --max-warnings 0: zero warnings</li>
+            <li><i class="uil uil-check-circle"></i> Vitest unit: coverage &gt; 80% no domínio (lines, functions, branches)</li>
+            <li><i class="uil uil-check-circle"></i> Vitest integration: todos os testes de contrato passando (GREEN)</li>
+            <li><i class="uil uil-check-circle"></i> Cypress E2E: todas as jornadas críticas passando headless</li>
+            <li><i class="uil uil-check-circle"></i> k6 load test: p95 &lt; 200ms, error rate &lt; 0.1%</li>
+            <li><i class="uil uil-check-circle"></i> k6 stress test: relatório de capacidade gerado (não necessariamente passando)</li>
+            <li><i class="uil uil-check-circle"></i> SECURITY_FINDINGS.md revisado — findings bloqueantes endereçados</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="checklist-group-title">Fase 4 — PM Review Gate <span class="phase-badge">antes de ship</span></div>
+          <ul class="checklist">
+            <li><i class="uil uil-check-circle"></i> vercel --preview executado — URL de preview disponível</li>
+            <li><i class="uil uil-check-circle"></i> PM recebeu: URL + REQUIREMENTS.md + relatório de testes + SECURITY_FINDINGS.md</li>
+            <li><i class="uil uil-check-circle"></i> PM validou cada critério SMART individualmente</li>
+            <li><i class="uil uil-check-circle"></i> Template de feedback preenchido (mesmo que resultado seja aprovação)</li>
+            <li><i class="uil uil-check-circle"></i> Resultado: APROVADO (caso contrário, retorna para Fase 0 com feedback)</li>
+          </ul>
+        </div>
+
+        <div class="checklist-group">
+          <div class="checklist-group-title">Fase 5 — Ship <span class="phase-badge">antes de merge</span></div>
+          <ul class="checklist">
+            <li><i class="uil uil-check-circle"></i> /gsd:ship executado</li>
+            <li><i class="uil uil-check-circle"></i> gh pr create com template completo (contexto, testes, evidência de PM approval)</li>
+            <li><i class="uil uil-check-circle"></i> code-reviewer final pass: SOLID, Clean Code, Hexagonal Arch</li>
+            <li><i class="uil uil-check-circle"></i> npm audit --audit-level=high: zero vulnerabilidades críticas ou high sem exceção documentada</li>
+            <li><i class="uil uil-check-circle"></i> Alertas de observabilidade configurados (error rate, latência, recursos)</li>
+            <li><i class="uil uil-check-circle"></i> Log drain e Speed Insights habilitados no Vercel</li>
+            <li><i class="uil uil-check-circle"></i> CHANGELOG.md atualizado</li>
+            <li><i class="uil uil-check-circle"></i> Revisor humano aprovou o PR</li>
+            <li><i class="uil uil-check-circle"></i> Post-mortem template disponível na wiki (para quando — não se — algo der errado)</li>
+          </ul>
+        </div>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div>
+            <strong>Copie para seu CLAUDE.md:</strong> Cole esta checklist na seção <code>## Pre-ship Checklist</code> do CLAUDE.md do projeto. O Claude vai referenciar automaticamente antes de cada operação de ship, garantindo que nenhum item seja esquecido independentemente de quem está na sessão.
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+  <h2><i class="uil uil-shield-check"></i> Hooks no Stack Ideal</h2>
+  <p>O W6 usa o conjunto mais completo de hooks — incluindo o gate de import boundaries para arquitetura hexagonal, cobertura mínima de testes e verificação de segredos. É a camada determinística que complementa cada fase do workflow.</p>
+
+  <div class="callout callout-info">
+    <i class="uil uil-info-circle"></i>
+    <div><strong>Filosofia:</strong> No Stack Ideal, hooks não são opcionais. Cada fase tem gates mecânicos. O PM não revisa código com testes falhando ou vulnerabilidades — os hooks impedem que isso aconteça.</div>
+  </div>
+
+  <h3>settings.json completo — W6 Stack Ideal</h3>
+  <div class="code-block-wrapper"><pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {"type": "command", "command": "node scripts/quality-gate.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""},
+          {"type": "command", "command": "node scripts/check-boundaries.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""}
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "node scripts/bash-guard.mjs"}]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [{"type": "command", "command": "node scripts/coverage-check.mjs"}]
+      }
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <h3>coverage-check.mjs — gate de cobertura mínima</h3>
+  <div class="code-block-wrapper"><pre><code class="language-javascript">#!/usr/bin/env node
+// coverage-check.mjs — verifica cobertura mínima ao final de cada resposta
+import { execSync } from 'node:child_process';
+
+try {
+  execSync(
+    'npx vitest run --coverage --coverage.thresholds.lines=80 --coverage.thresholds.functions=80 --reporter=dot',
+    { stdio: 'inherit' }
+  );
+  console.log('[coverage-check] OK: cobertura acima dos thresholds mínimos');
+} catch {
+  console.error('[coverage-check] AVISO: cobertura abaixo do mínimo (80% lines, 80% functions)');
+  console.error('[coverage-check] Verifique: domain/ deve ter 80%+, use cases críticos 100%');
+  // Warning, não bloqueia — o PM gate é quem decide
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <h3>Mapeamento hooks x fases do W6</h3>
+  <table class="data-table">
+    <thead><tr><th>Fase</th><th>Hook ativo</th><th>Gate</th></tr></thead>
+    <tbody>
+      <tr><td>Fase 1 — Architecture First</td><td>PostToolUse Write + check-boundaries</td><td>import boundaries da arquitetura hexagonal</td></tr>
+      <tr><td>Fase 2 — Implementação paralela</td><td>PostToolUse Write + quality-gate</td><td>tsc + ESLint + secrets + testes</td></tr>
+      <tr><td>Fase 3 — Testing Pyramid</td><td>Stop + coverage-check</td><td>cobertura mínima 80%</td></tr>
+      <tr><td>Fase 5 — Ship</td><td>PreToolUse Bash + bash-guard</td><td>bloqueia force push + comandos destrutivos</td></tr>
+    </tbody>
+  </table>
+
+  <p>Scripts completos (<code>quality-gate.mjs</code>, <code>bash-guard.mjs</code>, <code>check-boundaries.mjs</code>) no <a href="/modules/06-workflows/00-fundamentos.html#hooks">Módulo 22 — Fundamentos</a>.</p>
+</section>
+
+    </article>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

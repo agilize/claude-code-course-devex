@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W2: Claude Code + GSD — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link active"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Claude Code + GSD</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Claude Code + GSD</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 24</div>
+        <h1 class="module-title">W2: Claude Code + GSD</h1>
+        <p class="module-description">Get Shit Done — o framework de desenvolvimento estruturado para times. Fases definidas, milestones rastreados, PM integrado nos gates, e testes como cidadão de primeira classe.</p>
+      </div>
+
+      <!-- SEÇÃO 1: O que é GSD -->
+      <section class="content-section">
+        <h2><i class="uil uil-package"></i> O que é GSD</h2>
+        <p>GSD (Get Shit Done) é um plugin de skills para Claude Code que transforma o agente em um co-desenvolvedor com estrutura de projeto real. Onde o workflow Solo é livre-forma, o GSD introduz fases, milestones, gates de qualidade e integração com PM — sem tolher a criatividade técnica do desenvolvedor.</p>
+
+        <h3>Instalação</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Instalar o plugin GSD via marketplace de skills
+/plugin marketplace add gsd
+
+# Verificar instalação
+/gsd:help
+
+# Inicializar um projeto novo
+/gsd:new-project</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Filosofia</h3>
+        <p>O GSD parte de uma premissa simples: Claude Code é capaz de executar qualquer tarefa de desenvolvimento, mas sem estrutura, a execução livre gera desvios, retrabalho e entregas que não correspondem ao que o PM aprovou. O GSD resolve isso com um ciclo de fases explícitas:</p>
+        <ul>
+          <li><strong>Discuss</strong> — entrevista o dev e o PM antes de qualquer linha de código</li>
+          <li><strong>Plan</strong> — pesquisa, arquitetura e quebra em tasks atômicas</li>
+          <li><strong>UI Phase</strong> — gera contrato visual antes de implementar frontend</li>
+          <li><strong>Execute</strong> — implementação wave-based com TDD embutido</li>
+          <li><strong>Verify</strong> — validação funcional e aprovação de PM</li>
+          <li><strong>Ship</strong> — PR, review automatizado e deploy</li>
+        </ul>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Quando usar GSD</strong>
+            <p>Use GSD quando: a feature tem mais de 1 dia de implementação, envolve mais de um dev ou PM, requer integrações com sistemas externos, ou exige rastreabilidade de decisões. Para tarefas triviais (&lt;2h, sem risco), o workflow Solo é mais eficiente.</p>
+          </div>
+        </div>
+
+        <h3>Quando NÃO usar</h3>
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>GSD adiciona overhead intencional</strong>
+            <p>Hotfixes urgentes, experimentos descartáveis e protótipos de validade de hipótese não precisam de GSD. O overhead das fases Discuss e Plan é justificado apenas quando o custo do retrabalho supera o custo do planejamento.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2: Diagrama do workflow -->
+      <section class="content-section">
+        <h2><i class="uil uil-sitemap"></i> Diagrama do Workflow GSD</h2>
+        <p>O fluxo completo do GSD, desde o PRD do PM até o deploy em produção. Cada nó representa um comando ou gate de qualidade explícito.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart TD
+  PM["PM escreve PRD\nCritérios de aceite"] --> A["/gsd:new-project"]
+  A --> B["Roadmap com fases\ne milestones"]
+  B --> C["/gsd:discuss-phase"]
+  C --> C1["Claude entrevista Dev + PM\nperguntas adaptativas"]
+  C1 --> C2["Assumptions, gaps,\nriscos documentados"]
+  C2 --> D["/gsd:plan-phase"]
+  D --> D1["RESEARCH.md\narquitetura + precedentes"]
+  D1 --> D2["PLAN.md\ntasks atômicas + critérios"]
+  D2 --> E{"Frontend?"}
+  E -->|"Sim"| F["/gsd:ui-phase\nUI-SPEC.md"]
+  E -->|"Não"| G
+  F --> G["/gsd:execute-phase"]
+  G --> G1["Wave: implement\ndomínio + adapters"]
+  G1 --> G2["Wave: TDD tests\nunit + integration"]
+  G2 --> G3["Wave: verify\nlinting + type-check"]
+  G3 --> G4{"&gt; 70K tokens?"}
+  G4 -->|"Sim"| G5["/compact\npreserva contexto essencial"]
+  G5 --> G1
+  G4 -->|"Não"| H["/gsd:verify-work"]
+  H --> I["Testing Gate"]
+  I --> I1["vitest unit + integration"]
+  I1 --> I2["cypress run --headless"]
+  I2 --> I3["k6 load + stress"]
+  I3 --> J["PM review\nno preview URL"]
+  J --> K{"Aprovado?"}
+  K -->|"Não"| L["Novo ciclo\ncom feedback do PM"]
+  L --> C
+  K -->|"Sim"| M["/gsd:ship\nPR + review + merge + deploy"]
+          </div>
+          <p class="diagram-caption">Workflow GSD completo: do PRD ao deploy, com gates de qualidade e integração PM em cada transição de fase.</p>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 3: Comandos GSD por fase -->
+      <section class="content-section">
+        <h2><i class="uil uil-terminal"></i> Comandos GSD por Fase</h2>
+        <p>Cada fase do GSD tem um comando dedicado com comportamento e output bem definidos. Entender o que cada comando faz — e quando usá-lo — é o que diferencia um uso superficial de um uso efetivo do framework.</p>
+
+        <h3>/gsd:new-project</h3>
+        <p><strong>Fase:</strong> Inicialização | <strong>Output:</strong> estrutura de diretórios GSD, CLAUDE.md configurado, roadmap de milestones</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">/gsd:new-project
+
+# Claude pergunta:
+#   - Nome e descrição do projeto
+#   - Stack técnico
+#   - Milestones planejados
+#   - PM e devs envolvidos
+#
+# Gera:
+#   .gsd/
+#     PROJECT.md    — contexto permanente do projeto
+#     milestones/   — um diretório por milestone
+#     phases/       — fases do milestone atual
+#   CLAUDE.md       — atualizado com regras GSD + stack</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>/gsd:discuss-phase</h3>
+        <p><strong>Fase:</strong> Discovery | <strong>Output:</strong> ASSUMPTIONS.md com gaps, riscos e decisões capturadas</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">/gsd:discuss-phase
+
+# Claude conduz entrevista adaptativa com o dev:
+#   - Qual o objetivo de negócio desta fase?
+#   - Quais são os critérios de aceite do PM?
+#   - Há dependências externas ou bloqueadores?
+#   - Qual é a abordagem técnica preferida?
+#
+# Output: ASSUMPTIONS.md
+#   ## Entendimento
+#   ## Critérios de aceite
+#   ## Riscos identificados
+#   ## Decisões tomadas
+#   ## Perguntas em aberto para o PM</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>/gsd:plan-phase</h3>
+        <p><strong>Fase:</strong> Planejamento | <strong>Output:</strong> RESEARCH.md + PLAN.md com tasks atômicas e critérios de conclusão</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">/gsd:plan-phase
+
+# Claude pesquisa antes de planejar:
+#   1. Analisa codebase existente (padrões, dependências)
+#   2. Pesquisa abordagens técnicas para o problema
+#   3. Documenta decisões de arquitetura em RESEARCH.md
+#
+# Depois quebra em PLAN.md:
+#   - Tasks atômicas (cada uma com critério de done)
+#   - Sequência de implementação (domain-first)
+#   - Estimativa de waves necessárias
+#   - Dependências entre tasks</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># PLAN.md — Fase 1.2: Sistema de Notificações
+
+## Tasks
+
+### T1: Domain layer
+- [ ] Criar entidade Notification (id, userId, type, payload, readAt)
+- [ ] Criar NotificationRepository interface (port)
+- [ ] Testes unitários da entidade
+Critério: `vitest run --testPathPattern='notification.unit'` passa
+
+### T2: Persistence adapter
+- [ ] Implementar PostgresNotificationRepository
+- [ ] Migration Prisma: tabela notifications
+- [ ] Testes de integração com DB real
+Critério: `vitest run --testPathPattern='notification.integration'` passa
+
+### T3: WebSocket adapter
+- [ ] Implementar WebSocketNotificationService
+- [ ] Handler de conexão e broadcast
+- [ ] Testes de integração com socket mock
+Critério: cobertura &gt;= 80% no adapter</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>/gsd:ui-phase</h3>
+        <p><strong>Fase:</strong> Design (apenas projetos com frontend) | <strong>Output:</strong> UI-SPEC.md com contrato visual completo antes de implementar</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">/gsd:ui-phase
+
+# Gera UI-SPEC.md com:
+#   - Componentes necessários (lista com props)
+#   - Layout e responsividade
+#   - Estados (loading, empty, error, populated)
+#   - Interações e animações
+#   - Tokens de design a usar
+#
+# PM aprova UI-SPEC.md ANTES de execute-phase
+# Evita retrabalho de "não era bem isso que eu imaginei"</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>/gsd:execute-phase</h3>
+        <p><strong>Fase:</strong> Implementação | <strong>Output:</strong> código funcionando + testes passando, por waves</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">/gsd:execute-phase
+
+# Executa tasks do PLAN.md em waves:
+#   Wave 1: domain core + ports (sem dependências externas)
+#   Wave 2: adapters (DB, HTTP, WebSocket)
+#   Wave 3: testes unitários + integração
+#   Wave 4: verificação (lint, type-check, testes)
+#
+# Entre waves pesadas: /compact automático
+# Cada wave é idempotente — pode ser re-executada
+# Falhas são documentadas em BLOCKERS.md</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>/gsd:verify-work</h3>
+        <p><strong>Fase:</strong> Validação | <strong>Output:</strong> relatório de qualidade + URL de preview para PM</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">/gsd:verify-work
+
+# Executa a pirâmide de testes completa:
+#   1. npm run lint && npx tsc --noEmit
+#   2. vitest run --testPathPattern='*.unit.test'
+#   3. vitest run --testPathPattern='*.integration.test'
+#   4. npx cypress run --headless
+#   5. k6 run k6/load.js
+#
+# Gera VERIFY-REPORT.md com resultados
+# Abre preview URL para revisão do PM
+# Bloqueia /gsd:ship se algum gate falhar</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>/gsd:ship</h3>
+        <p><strong>Fase:</strong> Entrega | <strong>Output:</strong> PR criado, revisado e pronto para merge</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash">/gsd:ship
+
+# Só executável após /gsd:verify-work com aprovação do PM
+#
+# Sequência:
+#   1. git diff main — review final do diff
+#   2. Cria PR com descrição automática (mudanças, testes, decisões)
+#   3. Executa /gsd:review — peer review por agente separado
+#   4. Aguarda CI passar
+#   5. Merge + tag de milestone se fase for a última</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div>
+            <strong>Resumo dos outputs por fase</strong>
+            <p><code>new-project</code> → PROJECT.md, CLAUDE.md | <code>discuss-phase</code> → ASSUMPTIONS.md | <code>plan-phase</code> → RESEARCH.md, PLAN.md | <code>ui-phase</code> → UI-SPEC.md | <code>execute-phase</code> → código + testes | <code>verify-work</code> → VERIFY-REPORT.md | <code>ship</code> → PR merged</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4: Integração com PM -->
+      <section class="content-section">
+        <h2><i class="uil uil-users-alt"></i> Integração com PM</h2>
+        <p>O GSD trata o PM como participante ativo do processo de desenvolvimento, não como receptor passivo de entregas. Há três pontos de contato obrigatórios onde o PM entra no ciclo.</p>
+
+        <h3>Onde o PM entra no ciclo GSD</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Fase</th>
+                <th>Papel do PM</th>
+                <th>Artefato produzido</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>discuss-phase</code></td>
+                <td>Fornece critérios de aceite; responde perguntas abertas do Claude</td>
+                <td>ASSUMPTIONS.md validado</td>
+              </tr>
+              <tr>
+                <td><code>ui-phase</code></td>
+                <td>Aprova UI-SPEC.md antes de qualquer linha de código de UI</td>
+                <td>UI-SPEC.md com status "aprovado"</td>
+              </tr>
+              <tr>
+                <td><code>verify-work</code></td>
+                <td>Testa feature no preview URL; aprova ou rejeita com feedback</td>
+                <td>VERIFY-REPORT.md com decisão do PM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>O que o PM precisa ter antes de iniciar</h3>
+        <p>O GSD falha ruidosamente se o PM chegar com requisitos vagos. Antes de rodar <code>/gsd:new-project</code>, o PM precisa ter documentado:</p>
+        <ul>
+          <li><strong>Problema de negócio</strong> — por que esta feature existe (não o que, o por que)</li>
+          <li><strong>Critérios de aceite mensuráveis</strong> — "usuário consegue X em menos de Y segundos" é critério; "experiência fluida" não é</li>
+          <li><strong>Escopo negativo</strong> — o que explicitamente está fora do escopo desta entrega</li>
+          <li><strong>Personas afetadas</strong> — quem usa a feature e qual é o fluxo principal</li>
+          <li><strong>Restrições técnicas conhecidas</strong> — integrações obrigatórias, SLAs existentes</li>
+        </ul>
+
+        <h3>Template de PRD mínimo para GSD</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># PRD: [Nome da Feature]
+**Data:** YYYY-MM-DD | **PM:** [nome] | **Dev lead:** [nome]
+
+## Problema
+[1-2 parágrafos: situação atual, por que é um problema, impacto mensurável]
+
+## Solução proposta
+[Descrição de alto nível — O QUE, não COMO]
+
+## Critérios de aceite
+- [ ] CA-01: [ação do usuário] resulta em [comportamento esperado] em [tempo máximo]
+- [ ] CA-02: [condição de erro] exibe [mensagem específica]
+- [ ] CA-03: [caso de borda] é tratado com [comportamento]
+
+## Escopo desta entrega (in scope)
+- Item 1
+- Item 2
+
+## Fora do escopo (out of scope)
+- Item A (próximo milestone)
+- Item B (decisão separada)
+
+## Métricas de sucesso
+- Métrica 1: [baseline atual] → [target após entrega]
+- Métrica 2: [como medir]
+
+## Dependências e riscos
+- Dependência: [sistema externo / equipe / decisão pendente]
+- Risco: [o que pode dar errado] — mitigação: [como evitar]</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>PRD incompleto bloqueia discuss-phase</strong>
+            <p>Claude vai identificar lacunas nos critérios de aceite durante o <code>discuss-phase</code> e gerar uma lista de perguntas abertas. O dev não deve avançar para <code>plan-phase</code> enquanto o PM não responder. Este atrito intencional evita que 3 dias de implementação resultem em "não era isso que eu queria".</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 5: Testing dentro do GSD -->
+      <section class="content-section">
+        <h2><i class="uil uil-flask"></i> Testing dentro do GSD</h2>
+        <p>O GSD não trata testes como uma fase separada ao final. Testes são parte integrante do <code>execute-phase</code>, escritos na mesma wave em que o código de produção é escrito — TDD como default, não como opção.</p>
+
+        <h3>Como o execute-phase incorpora TDD</h3>
+        <p>O executor GSD recebe instrução explícita no CLAUDE.md do projeto para seguir o ciclo Red-Green-Refactor em cada task do PLAN.md:</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># .gsd/CLAUDE.md — regras de execução injetadas pelo GSD
+
+## Regras de implementação (não negociáveis)
+
+### TDD obrigatório
+Para cada task do PLAN.md:
+1. RED: escreve o teste primeiro — `npm test` deve FALHAR
+2. GREEN: implementa o mínimo para o teste passar — `npm test` deve PASSAR
+3. REFACTOR: limpa o código sem quebrar — `npm test` ainda deve passar
+
+NUNCA commita código sem teste correspondente.
+NUNCA pula testes por "falta de tempo" — se não tem tempo, reduz escopo.
+
+### Pirâmide de testes
+- Unit: domínio isolado, sem IO, < 50ms cada — `*.unit.test.ts`
+- Integration: DB real em container, sem mocks de infra — `*.integration.test.ts`
+- E2E: apenas jornadas críticas do usuário — `cypress/e2e/*.cy.ts`</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Configurando gates de teste no GSD</h3>
+        <p>Os gates são configurados no PROJECT.md e executados automaticamente pelo <code>verify-work</code>. Thresholds abaixo do mínimo bloqueiam <code>ship</code>:</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># .gsd/PROJECT.md — seção quality gates
+
+## Quality Gates (obrigatórios para /gsd:ship)
+
+| Gate | Comando | Threshold |
+|------|---------|-----------|
+| Lint | `npm run lint` | zero erros |
+| Types | `npx tsc --noEmit` | zero erros |
+| Unit | `vitest run --coverage` | cobertura >= 80% |
+| Integration | `vitest run --testPathPattern='*.integration'` | 100% pass |
+| E2E | `npx cypress run --headless` | 100% pass |
+| Security | `npm audit --audit-level=high` | zero high/critical |
+| Load | `k6 run k6/load.js` | p95 < 500ms, error rate < 1% |</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Como instruir o executor GSD a respeitar a pirâmide</h3>
+        <p>A pirâmide é uma restrição de arquitetura, não uma sugestão. O PLAN.md deve especificar o tipo de teste de cada task para que o executor não escolha o caminho mais fácil (sempre E2E, que é lento e frágil):</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># Exemplo de task com tipo de teste explícito
+
+### T3: Cálculo de desconto por volume
+**Tipo de teste:** unit (lógica de negócio pura, sem IO)
+**Arquivo:** `src/domain/pricing/discount.unit.test.ts`
+**Cobertura esperada:** 100% dos branches
+
+### T7: Busca de produtos por categoria
+**Tipo de teste:** integration (requer DB com fixtures)
+**Arquivo:** `src/infra/repositories/product.integration.test.ts`
+**Precondição:** container PostgreSQL rodando via docker-compose
+
+### T12: Checkout completo de pedido
+**Tipo de teste:** E2E (jornada crítica de usuário)
+**Arquivo:** `cypress/e2e/checkout.cy.ts`
+**Precondição:** seed de dados no ambiente de staging</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- SEÇÃO 6: OWASP no GSD -->
+      <section class="content-section">
+        <h2><i class="uil uil-shield"></i> OWASP no GSD</h2>
+        <p>Segurança no GSD é tratada de duas formas complementares: como regras transversais no CLAUDE.md (presentes em toda fase de execução) e como gate explícito no <code>verify-work</code> antes do ship.</p>
+
+        <h3>CLAUDE.md do projeto com regras OWASP</h3>
+        <p>O <code>/gsd:new-project</code> injeta um bloco de segurança padrão no CLAUDE.md, que o executor lê em toda sessão:</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># .gsd/CLAUDE.md — bloco de segurança (gerado pelo new-project)
+
+## Regras de segurança OWASP (não negociáveis)
+
+### A01 — Broken Access Control
+- Todo endpoint verifica autorização ANTES de acessar recurso
+- Testes de autorização: usuário sem permissão deve receber 403, não 404
+
+### A02 — Cryptographic Failures
+- Nunca armazena senha em texto plano — bcrypt com salt rounds >= 12
+- Secrets apenas em variáveis de ambiente — nunca hardcoded, nunca em logs
+
+### A03 — Injection
+- Sempre usa ORM/query builder parametrizado — nunca string concatenation
+- Valida e sanitiza inputs com zod/yup antes de qualquer operação
+
+### A04 — Insecure Design
+- Arquitetura hexagonal: domínio sem dependências de infra
+- Threat model revisado durante discuss-phase para features de auth
+
+### A05 — Security Misconfiguration
+- Headers de segurança: CSP, HSTS, X-Frame-Options em produção
+- Desabilita endpoints de debug antes do ship
+
+### A06 — Vulnerable Components
+- `npm audit --audit-level=high` como gate obrigatório
+- Dependências diretas atualizadas; indiretas auditadas
+
+### A07 — Auth & Session Failures
+- Tokens JWT com expiração curta (15min access, 7d refresh)
+- Invalidação de sessão em logout e troca de senha
+
+### A08 — Integrity Failures
+- lockfile (package-lock.json) sempre commitado
+- Verificar checksums de dependências críticas
+
+### A09 — Logging & Monitoring Failures
+- Logs estruturados (JSON) com correlation ID em todos os requests
+- Nunca loga dados pessoais ou tokens
+
+### A10 — SSRF
+- Valida e restringe URLs de chamadas de saída a allowlist
+- Nunca repassa URL de request externo diretamente para fetch interno</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>npm audit como gate obrigatório</h3>
+        <p>O <code>verify-work</code> bloqueia o ship se <code>npm audit</code> retornar vulnerabilidades de severidade alta ou crítica. Vulnerabilidades moderadas geram warning mas não bloqueiam:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Gate de segurança no verify-work
+npm audit --audit-level=high
+
+# Se retornar vulnerabilidades high/critical:
+#   1. Claude lista as dependências afetadas
+#   2. Tenta atualizar automaticamente com npm audit fix
+#   3. Se não for possível fix automático, documenta em BLOCKERS.md
+#   4. /gsd:ship fica bloqueado até resolver
+
+# Exemplo de output quando tudo está ok:
+# found 0 vulnerabilities
+# Gate SECURITY: PASSED</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>
+            <strong>Segurança como fase vs. transversal</strong>
+            <p>O GSD não cria uma "fase de segurança" separada porque isso cria o anti-pattern de "segurança como afterthought". As regras OWASP vivem no CLAUDE.md e são aplicadas durante o <code>execute-phase</code>. O gate do <code>verify-work</code> confirma que foram respeitadas — não as implementa tardiamente.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 7: Context Window no GSD -->
+      <section class="content-section">
+        <h2><i class="uil uil-setting"></i> Context Window no GSD</h2>
+        <p>O GSD tem gestão de contexto embutida. O problema clássico de "sessão longa que perde o fio" é tratado estruturalmente, não dependendo de disciplina individual do desenvolvedor.</p>
+
+        <h3>Como o GSD gerencia contexto automaticamente</h3>
+        <p>O <code>execute-phase</code> monitora o uso de tokens a cada wave. Quando o contexto ultrapassa 70K tokens, executa <code>/compact</code> automaticamente antes de iniciar a próxima wave:</p>
+        <div class="code-block-wrapper"><pre><code class="language-text">Execute-phase — gestão de contexto por wave
+
+Wave 1 iniciada — contexto: 12K tokens
+  [implementa domain core]
+Wave 1 concluída — contexto: 28K tokens
+
+Wave 2 iniciada — contexto: 28K tokens
+  [implementa adapters]
+Wave 2 concluída — contexto: 55K tokens
+
+Wave 3 iniciada — contexto: 55K tokens
+  [implementa testes]
+Wave 3 concluída — contexto: 74K tokens
+
+AVISO: contexto > 70K tokens
+Executando /compact para preservar contexto essencial...
+Contexto após compact: 31K tokens
+
+Wave 4 iniciada — contexto: 31K tokens
+  [verificação e lint]
+Wave 4 concluída — contexto: 38K tokens</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>O que o compact preserva</h3>
+        <p>O <code>/compact</code> do GSD é instruído a preservar sempre:</p>
+        <ul>
+          <li>Tasks concluídas e pendentes do PLAN.md atual</li>
+          <li>Decisões de arquitetura e blockers documentados</li>
+          <li>Estado atual dos testes (quais passam, quais falham)</li>
+          <li>Regras de CLAUDE.md (reinjetadas automaticamente)</li>
+        </ul>
+        <p>O que é descartado no compact: raciocínio intermediário, código já escrito (está em disco), logs de comandos anteriores.</p>
+
+        <h3>Handoffs entre sessões via arquivos</h3>
+        <p>Nunca in-memory. Todo estado relevante persiste em arquivos no diretório <code>.gsd/phases/</code>. Ao retomar trabalho em uma nova sessão, o GSD relê esses arquivos para reconstituir o contexto:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Pausar trabalho (fim do dia)
+/gsd:pause-work
+# Gera .gsd/phases/current/HANDOFF.md com:
+#   - tasks concluídas, pendentes, bloqueadas
+#   - contexto necessário para continuar
+#   - próximo passo recomendado
+
+# Retomar trabalho (próxima sessão)
+/gsd:resume-work
+# Lê HANDOFF.md e reconstitui contexto
+# Não precisa re-explicar o projeto do zero</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Quando intervir manualmente</h3>
+        <div class="callout callout-warning">
+          <i class="uil uil-exclamation-triangle"></i>
+          <div>
+            <strong>Sinais de que o contexto está corrompido</strong>
+            <p>Intervenha manualmente com <code>/compact</code> se Claude começar a contradizer decisões já tomadas, repetir código que já foi escrito, ou ignorar restrições do CLAUDE.md. Estes são sintomas de contexto degradado, não de bugs no GSD.</p>
+          </div>
+        </div>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Intervenção manual de contexto
+/compact "mantém: tasks pendentes do PLAN.md, blockers, regras OWASP, stack técnico"
+
+# Limites recomendados
+# Orquestrador GSD:  máximo 80K tokens ativos
+# Subagente executor: máximo 60K tokens de contexto inicial
+# Agente de review:  máximo 40K tokens (apenas o diff + PLAN.md)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- SEÇÃO 8: Exemplo concreto -->
+      <section class="content-section">
+        <h2><i class="uil uil-code-branch"></i> Exemplo Concreto: Notificações em Tempo Real</h2>
+        <p>Um walkthrough completo do ciclo GSD para uma feature real: sistema de notificações em tempo real via WebSocket, com preferências de usuário e marcação de leitura.</p>
+
+        <h3>PRD mínimo (escrito pelo PM)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># PRD: Sistema de Notificações em Tempo Real
+**Data:** 2026-03-29 | **PM:** Ana Costa | **Dev lead:** Bruno Lima
+
+## Problema
+Usuários perdem eventos importantes (novos comentários, menções, atualizações de
+status) porque o sistema atual só notifica via e-mail, com delay de até 5 minutos.
+Taxa de engajamento com notificações por e-mail: 12%. Meta: 45%.
+
+## Solução proposta
+Notificações push em tempo real no browser via WebSocket. Painel de notificações
+no header com badge de contagem não lida. Preferências por tipo de notificação.
+
+## Critérios de aceite
+- [ ] CA-01: notificação aparece no browser do destinatário em < 2s após o evento
+- [ ] CA-02: badge mostra contagem correta de não lidas (max "99+")
+- [ ] CA-03: clicar em notificação marca como lida e navega para o contexto
+- [ ] CA-04: usuário pode desabilitar tipos específicos de notificação
+- [ ] CA-05: notificações persistem (usuário offline recebe ao reconectar)
+
+## Fora do escopo
+- App mobile (próximo milestone)
+- Notificações por SMS
+- Notificações em lote (digest diário)
+
+## Métricas de sucesso
+- Taxa de engajamento com notificações: 12% → 40%
+- Latência de entrega (p95): < 2 segundos
+
+## Dependências
+- Backend: Node.js + Socket.IO (já usado em outro módulo)
+- DB: PostgreSQL (schema existente)
+- Risco: volume de conexões simultâneas — mitigação: Redis adapter para Socket.IO</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>discuss-phase output</h3>
+        <p>Claude conduziu entrevista de 12 perguntas com o dev. ASSUMPTIONS.md gerado:</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># ASSUMPTIONS.md — Notificações em Tempo Real
+
+## Entendimento
+Sistema de notificações WebSocket com persistência. Usuário recebe notificações
+em tempo real se online; ao reconectar, recebe as perdidas. Preferências por tipo
+são salvas por usuário. Badge no header é atualizado em tempo real.
+
+## Decisões de arquitetura
+- Socket.IO com Redis adapter (já disponível na infra)
+- Notificações persistidas em PostgreSQL (tabela nova: notifications)
+- Frontend: React hook useNotifications() para consumo
+- Tipos de notificação: enum no domínio (COMMENT, MENTION, STATUS_CHANGE)
+
+## Critérios de aceite confirmados com PM
+- CA-01 a CA-05: confirmados sem alterações
+- Adição: CA-06: reconexão automática em até 3 tentativas (5s, 15s, 30s)
+
+## Riscos identificados
+- RISCO-01: N conexões simultâneas — mitigação: Redis adapter (já planejado)
+- RISCO-02: notificações duplicadas em reconexão — mitigação: idempotency key por evento
+
+## Perguntas em aberto RESOLVIDAS
+- Q: quais são os tipos de notificação do MVP? → COMMENT, MENTION, STATUS_CHANGE
+- Q: notificações expiram? → sim, após 30 dias
+- Q: quem pode enviar notificações? → apenas o sistema (não user-to-user ainda)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>plan-phase output (tasks exemplo)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># PLAN.md — Fase 2.3: Notificações em Tempo Real
+
+## Estimativa: 3 waves, ~4h de execução
+
+### Wave 1 — Domain layer
+- [ ] T1: Entidade Notification com campos e validações (unit test)
+- [ ] T2: Enum NotificationType (COMMENT | MENTION | STATUS_CHANGE)
+- [ ] T3: Interface NotificationRepository (port)
+- [ ] T4: Interface NotificationService (port) com método broadcast()
+- [ ] T5: Value Object NotificationPreference (unit test)
+Critério wave: `vitest run --testPathPattern='notification.unit'` — 100% pass, cobertura >= 90%
+
+### Wave 2 — Adapters
+- [ ] T6: PostgresNotificationRepository (integration test com DB real)
+- [ ] T7: Migration Prisma: tabelas notifications + notification_preferences
+- [ ] T8: SocketIONotificationService com Redis adapter (integration test)
+- [ ] T9: NotificationController (HTTP: GET /notifications, PATCH /notifications/:id/read)
+Critério wave: `vitest run --testPathPattern='notification.integration'` — 100% pass
+
+### Wave 3 — Frontend
+- [ ] T10: Hook useNotifications() com Socket.IO client (unit test com mock)
+- [ ] T11: Componente NotificationBell com badge (UI-SPEC.md aprovado)
+- [ ] T12: Painel NotificationList com virtual scroll (até 100 itens sem lag)
+- [ ] T13: Página de preferências /settings/notifications
+Critério wave: `npx cypress run --spec 'cypress/e2e/notifications.cy.ts'` — CA-01 a CA-06 pass</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>execute-phase com TDD (Wave 1 — exemplo)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// T1 — RED: teste escrito primeiro
+// src/domain/notifications/notification.unit.test.ts
+
+import { Notification } from './notification';
+import { NotificationType } from './notification-type';
+
+describe('Notification', () => {
+  it('deve criar notificação válida com todos os campos obrigatórios', () => {
+    const n = Notification.create({
+      userId: 'user-123',
+      type: NotificationType.COMMENT,
+      payload: { commentId: 'c-456', postId: 'p-789' },
+    });
+    expect(n.id).toBeDefined();
+    expect(n.readAt).toBeNull();
+    expect(n.createdAt).toBeInstanceOf(Date);
+  });
+
+  it('deve rejeitar payload vazio', () => {
+    expect(() =>
+      Notification.create({ userId: 'u-1', type: NotificationType.MENTION, payload: {} })
+    ).toThrow('payload cannot be empty');
+  });
+
+  it('deve marcar como lida com timestamp', () => {
+    const n = Notification.create({
+      userId: 'u-1', type: NotificationType.STATUS_CHANGE, payload: { status: 'done' },
+    });
+    n.markAsRead();
+    expect(n.readAt).toBeInstanceOf(Date);
+  });
+});
+
+// npm test -- notification.unit → FALHA (Notification não existe ainda) = RED ✓
+
+// GREEN: implementação mínima
+// src/domain/notifications/notification.ts
+
+import { randomUUID } from 'crypto';
+import { NotificationType } from './notification-type';
+
+interface NotificationProps {
+  userId: string;
+  type: NotificationType;
+  payload: Record&lt;string, unknown&gt;;
+}
+
+export class Notification {
+  readonly id: string;
+  readonly userId: string;
+  readonly type: NotificationType;
+  readonly payload: Record&lt;string, unknown&gt;;
+  readonly createdAt: Date;
+  readAt: Date | null = null;
+
+  private constructor(props: NotificationProps) {
+    if (Object.keys(props.payload).length === 0) {
+      throw new Error('payload cannot be empty');
+    }
+    this.id = randomUUID();
+    this.userId = props.userId;
+    this.type = props.type;
+    this.payload = props.payload;
+    this.createdAt = new Date();
+  }
+
+  static create(props: NotificationProps): Notification {
+    return new Notification(props);
+  }
+
+  markAsRead(): void {
+    this.readAt = new Date();
+  }
+}
+
+// npm test -- notification.unit → PASSA = GREEN ✓
+// REFACTOR: extrair validação de payload para método privado (sem quebrar testes)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>verify-work resultado</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text"># VERIFY-REPORT.md — Notificações em Tempo Real
+
+## Quality Gates
+
+| Gate              | Resultado       | Detalhe                              |
+|-------------------|-----------------|--------------------------------------|
+| Lint              | PASSED          | 0 erros, 0 warnings                  |
+| TypeScript        | PASSED          | 0 erros em strict mode               |
+| Unit tests        | PASSED          | 47 testes, cobertura 94%             |
+| Integration tests | PASSED          | 12 testes, DB PostgreSQL real        |
+| E2E (Cypress)     | PASSED          | CA-01 a CA-06 todos validados        |
+| Load (k6)         | PASSED          | p95=340ms, error rate=0.02%          |
+| Security audit    | PASSED          | 0 vulnerabilidades high/critical     |
+
+## Status: APROVADO PARA SHIP
+
+## Preview URL
+https://pr-142-notif.preview.vercel.app
+
+## Checklist PM (Ana Costa)
+- [x] CA-01: notificação em < 2s ✓ (testado no preview)
+- [x] CA-02: badge com contagem correta ✓
+- [x] CA-03: clique marca como lida e navega ✓
+- [x] CA-04: preferências por tipo funcionando ✓
+- [x] CA-05: reconexão recebe notificações perdidas ✓
+- [x] CA-06: reconexão automática em 3 tentativas ✓
+
+Aprovado por: Ana Costa — 2026-03-29 16:45
+Próximo passo: /gsd:ship</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-success">
+          <i class="uil uil-check-circle"></i>
+          <div>
+            <strong>Resultado do ciclo completo</strong>
+            <p>Discuss → Plan → UI-Phase → Execute (3 waves, 2 compacts) → Verify → Ship. Duração: 1 sprint de 2 dias. Zero retrabalho pós-aprovação de PM. 47 testes unitários + 12 integration + 6 E2E. PR merged sem comentários de revisão bloqueantes.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+  <h2><i class="uil uil-shield-check"></i> Hooks neste workflow</h2>
+  <p>No GSD, hooks complementam as waves do execute-phase. Enquanto o GSD organiza <em>quando</em> e <em>o quê</em>, os hooks garantem <em>qualidade</em> em cada arquivo escrito — independente da wave.</p>
+
+  <div class="callout callout-info">
+    <i class="uil uil-info-circle"></i>
+    <div><strong>Integração com GSD:</strong> O execute-phase já tem /compact entre waves. Os hooks adicionam gates automáticos em cada Write/Edit — sem intervenção manual entre tasks.</div>
+  </div>
+
+  <h3>settings.json para W2 GSD</h3>
+  <div class="code-block-wrapper"><pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{"type": "command", "command": "node scripts/quality-gate.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""}]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "node scripts/bash-guard.mjs"}]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [{"type": "command", "command": "node scripts/wave-summary.mjs"}]
+      }
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <h3>wave-summary.mjs — resumo ao final de cada wave</h3>
+  <div class="code-block-wrapper"><pre><code class="language-javascript">#!/usr/bin/env node
+// wave-summary.mjs — exibe resumo de qualidade ao final de cada resposta
+import { execSync } from 'node:child_process';
+
+try {
+  const result = execSync('npx vitest run --reporter=verbose 2>&1', { encoding: 'utf8' });
+  const passing = (result.match(/✓/g) || []).length;
+  const failing = (result.match(/×/g) || []).length;
+  console.log(`[wave-summary] Testes: ${passing} passando, ${failing} falhando`);
+} catch (e) {
+  console.log('[wave-summary] Testes falhando — verifique antes de iniciar a próxima wave');
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+  <p>Os scripts <code>quality-gate.mjs</code> e <code>bash-guard.mjs</code> estão documentados no <a href="/modules/06-workflows/00-fundamentos.html#hooks">Módulo 22 — Fundamentos</a>.</p>
+</section>
+
+    </article>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/prism.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

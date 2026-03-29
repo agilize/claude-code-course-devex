@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundamentos de Qualidade de Software — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Mermaid container styling */
+    .mermaid-wrapper {
+      background: var(--surface-2, #1a1a2e);
+      border: 1px solid var(--border, #2a2a3e);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrapper .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted, #888);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <a href="/" class="logo-link">
+        <span class="logo-icon"><i class="uil uil-bolt-alt"></i></span>
+        <span class="logo-text">Claude Code<br><small>Course</small></span>
+      </a>
+      <div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div>
+      <span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link active"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header">
+      <button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button>
+      <span class="mobile-title">Fundamentos de Qualidade</span>
+      <button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button>
+    </header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> › <span>Parte 6</span> › <span>Fundamentos de Qualidade</span>
+      </nav>
+      <div class="topbar-right">
+        <div class="search-container">
+          <input data-testid="search-input" type="text" class="search-input" placeholder="Buscar...">
+          <div data-testid="search-results" class="search-results"></div>
+        </div>
+        <button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button>
+      </div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 22</div>
+        <h1 class="module-title">Fundamentos de Qualidade de Software</h1>
+        <p class="module-description">O glossário de referência para todos os workflows. Clean Code, SOLID, arquitetura hexagonal, TDD, pirâmide de testes, OWASP Top 10 e disciplina de janela de contexto.</p>
+        <span class="module-badge">Parte 6</span>
+      </div>
+
+      <!-- Seção 1: Clean Code + SOLID -->
+      <section class="content-section">
+        <h2><i class="uil uil-code-branch"></i> Clean Code + SOLID</h2>
+        <p>SOLID é um conjunto de cinco princípios de design orientado a objetos formulados por Robert C. Martin. Cada princípio resolve uma categoria específica de problema de manutenibilidade. Violações custam caro: código difícil de testar, de estender e de entender. Quando você instrui o Claude a seguir SOLID explicitamente no CLAUDE.md, o modelo aplica esses critérios sem necessidade de reforço por sessão.</p>
+
+        <h3>S — Single Responsibility Principle</h3>
+        <p>Uma classe ou função deve ter uma única razão para mudar. O sinal prático: se você precisa de "e" para descrever o que a função faz, ela viola SRP.</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Ruim — valida E persiste E envia email
+async function processUserRegistration(data: unknown) {
+  if (!data || typeof data !== 'object') throw new Error('invalid');
+  const user = await db.users.create(data as any);
+  await mailer.send({ to: user.email, subject: 'Welcome' });
+  return user;
+}
+
+// Bom — cada função tem uma responsabilidade
+function validateRegistrationPayload(data: unknown): RegistrationDTO {
+  const parsed = RegistrationSchema.safeParse(data);
+  if (!parsed.success) throw new ValidationError(parsed.error);
+  return parsed.data;
+}
+
+async function createUser(dto: RegistrationDTO): Promise&lt;User&gt; {
+  return db.users.create(dto);
+}
+
+async function sendWelcomeEmail(user: User): Promise&lt;void&gt; {
+  await mailer.send({ to: user.email, subject: 'Welcome' });
+}
+
+// Orquestrador — apenas sequencia, não conhece detalhes
+async function registerUser(data: unknown): Promise&lt;User&gt; {
+  const dto = validateRegistrationPayload(data);
+  const user = await createUser(dto);
+  await sendWelcomeEmail(user);
+  return user;
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>O — Open/Closed Principle</h3>
+        <p>Entidades devem estar abertas para extensão e fechadas para modificação. Em TypeScript, estratégia e polimorfismo são os mecanismos centrais.</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Ruim — cada novo método de pagamento exige modificar a função
+function processPayment(method: string, amount: number) {
+  if (method === 'credit') { /* ... */ }
+  else if (method === 'pix') { /* ... */ }
+  else if (method === 'boleto') { /* ... */ } // nova linha a cada método
+}
+
+// Bom — extensão via implementação de interface, zero modificação
+interface PaymentStrategy {
+  process(amount: number): Promise&lt;PaymentResult&gt;;
+}
+
+class CreditCardStrategy implements PaymentStrategy {
+  async process(amount: number): Promise&lt;PaymentResult&gt; { /* ... */ }
+}
+
+class PixStrategy implements PaymentStrategy {
+  async process(amount: number): Promise&lt;PaymentResult&gt; { /* ... */ }
+}
+
+class PaymentProcessor {
+  constructor(private strategy: PaymentStrategy) {}
+  execute(amount: number) { return this.strategy.process(amount); }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>L — Liskov Substitution Principle</h3>
+        <p>Subtipos devem ser substituíveis por seus tipos base sem alterar a corretude do programa. O violação clássica: sobrescrever um método lançando uma exceção que a classe base não lança.</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Ruim — ReadOnlyRepository não suporta o contrato completo de Repository
+class Repository&lt;T&gt; {
+  async save(entity: T): Promise&lt;T&gt; { /* persiste */ }
+  async findById(id: string): Promise&lt;T | null&gt; { /* busca */ }
+}
+
+class ReadOnlyRepository&lt;T&gt; extends Repository&lt;T&gt; {
+  async save(_entity: T): Promise&lt;T&gt; {
+    throw new Error('Read-only!'); // viola LSP — quem usa Repository espera que save funcione
+  }
+}
+
+// Bom — hierarquia honesta, contratos separados
+interface ReadRepository&lt;T&gt; {
+  findById(id: string): Promise&lt;T | null&gt;;
+  findAll(): Promise&lt;T[]&gt;;
+}
+
+interface WriteRepository&lt;T&gt; extends ReadRepository&lt;T&gt; {
+  save(entity: T): Promise&lt;T&gt;;
+  delete(id: string): Promise&lt;void&gt;;
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>I — Interface Segregation Principle</h3>
+        <p>Clientes não devem ser forçados a depender de interfaces que não utilizam. Interfaces gordas geram acoplamento desnecessário e dificultam mocks em testes.</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Ruim — interface monolítica, implementadores carregam métodos que não usam
+interface UserService {
+  createUser(dto: CreateUserDTO): Promise&lt;User&gt;;
+  deleteUser(id: string): Promise&lt;void&gt;;
+  sendNotification(userId: string, msg: string): Promise&lt;void&gt;;
+  generateReport(userId: string): Promise&lt;Report&gt;;
+}
+
+// Bom — interfaces coesas e focadas
+interface UserWriter {
+  createUser(dto: CreateUserDTO): Promise&lt;User&gt;;
+  deleteUser(id: string): Promise&lt;void&gt;;
+}
+
+interface UserNotifier {
+  sendNotification(userId: string, message: string): Promise&lt;void&gt;;
+}
+
+interface UserReporter {
+  generateReport(userId: string): Promise&lt;Report&gt;;
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>D — Dependency Inversion Principle</h3>
+        <p>Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações. Em prática: injete interfaces, nunca instancie dependências dentro das classes de negócio.</p>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Ruim — OrderService conhece e instancia a implementação concreta
+class OrderService {
+  private repo = new PrismaOrderRepository(); // acoplamento direto à infra
+  async placeOrder(dto: OrderDTO) {
+    return this.repo.save(dto);
+  }
+}
+
+// Bom — OrderService depende da abstração, não da concreção
+interface OrderRepository {
+  save(dto: OrderDTO): Promise&lt;Order&gt;;
+  findById(id: string): Promise&lt;Order | null&gt;;
+}
+
+class OrderService {
+  constructor(private readonly repo: OrderRepository) {} // injeção via construtor
+  async placeOrder(dto: OrderDTO) {
+    return this.repo.save(dto);
+  }
+}
+
+// Wiring no ponto de entrada da aplicação
+const orderService = new OrderService(new PrismaOrderRepository());</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Diretivas SOLID no CLAUDE.md</h3>
+        <p>Adicione o seguinte bloco ao seu CLAUDE.md para que o Claude aplique esses critérios automaticamente em todo o código gerado:</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># CLAUDE.md — diretivas de qualidade
+
+- Siga SOLID rigorosamente. SRP em particular: uma função = uma responsabilidade
+- Nunca use nomes como data, info, result, temp, x, y
+- Funções com mais de 20 linhas provavelmente violam SRP
+- Se vai copiar código, prefira extrair uma função
+- Interfaces sempre antes de implementações concretas
+- Injeção de dependência via construtor, nunca instancie dentro da classe</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- Seção 2: Arquitetura Hexagonal -->
+      <section class="content-section">
+        <h2><i class="uil uil-layer-group"></i> Arquitetura Hexagonal</h2>
+        <p>A arquitetura hexagonal (Ports &amp; Adapters, Alistair Cockburn, 2005) isola o domínio de negócio de toda infraestrutura: banco de dados, HTTP, filas, SDKs externos. O resultado: domínio testável sem mocks de infra, substituição de adaptadores sem tocar regras de negócio, e deploys que variam de provedor sem reescritas.</p>
+
+        <div class="callout callout-info">
+          <strong>Regra de ouro:</strong> O domain core nunca importa nada de infra. Se você ver um <code>import</code> de Prisma, Axios, AWS SDK ou qualquer biblioteca de infraestrutura dentro de <code>src/domain/</code>, a arquitetura foi violada.
+        </div>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+graph TD
+    subgraph Adapters["Adapters (Infra)"]
+        HTTP["HTTP Controller\n(Express / Fastify)"]
+        DB["DB Adapter\n(Prisma / TypeORM)"]
+        EXT["External Services\n(Stripe, SendGrid)"]
+        CLI["CLI Adapter"]
+    end
+
+    subgraph Ports["Ports (Interfaces)"]
+        IP["Inbound Ports\n(Use Case interfaces)"]
+        OP["Outbound Ports\n(Repository interfaces)"]
+    end
+
+    subgraph Domain["Domain Core"]
+        UC["Use Cases"]
+        ENT["Entities"]
+        VO["Value Objects"]
+    end
+
+    HTTP --> IP
+    CLI --> IP
+    IP --> UC
+    UC --> ENT
+    UC --> VO
+    UC --> OP
+    OP --> DB
+    OP --> EXT
+          </div>
+          <p class="diagram-caption">Arquitetura hexagonal: domain core no centro, adapters na periferia, ports como contratos</p>
+        </div>
+
+        <h3>Estrutura de pastas</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">src/
+  domain/          &lt;-- entidades, use cases, value objects
+    entities/
+      user.ts
+      order.ts
+    use-cases/
+      create-user.ts
+      place-order.ts
+    value-objects/
+      email.ts
+      money.ts
+
+  ports/           &lt;-- interfaces (contratos)
+    repositories/
+      user-repository.ts
+      order-repository.ts
+    services/
+      payment-service.ts
+      notification-service.ts
+
+  adapters/        &lt;-- implementações concretas
+    http/
+      user-controller.ts
+      order-controller.ts
+    database/
+      prisma-user-repository.ts
+      prisma-order-repository.ts
+    external/
+      stripe-payment-service.ts
+      sendgrid-notification-service.ts</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Sequência de implementação</h3>
+        <p>Sempre implemente nesta ordem — nunca comece pelo adapter:</p>
+        <ol>
+          <li><strong>Domain:</strong> Entidades e value objects com suas invariantes. Zero dependências externas.</li>
+          <li><strong>Ports:</strong> Interfaces que o domínio precisa (outbound) e que o domínio expõe (inbound). Apenas TypeScript puro.</li>
+          <li><strong>Use Cases:</strong> Orquestram entidades e chamam ports outbound. Testáveis com mocks das interfaces.</li>
+          <li><strong>Adapters:</strong> Implementam os ports. Aqui entram Prisma, Axios, AWS SDK etc.</li>
+        </ol>
+
+        <h3>Estratégia de testes por camada</h3>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Testes de domínio: sem mocks, sem infra — apenas lógica pura
+describe('Order entity', () => {
+  it('should not allow negative quantity', () => {
+    expect(() => new Order({ quantity: -1 })).toThrow(InvalidQuantityError);
+  });
+});
+
+// Testes de use case: mocks apenas das interfaces (ports)
+describe('PlaceOrderUseCase', () => {
+  it('should persist order and notify customer', async () => {
+    const repo = mock&lt;OrderRepository&gt;();
+    const notifier = mock&lt;NotificationService&gt;();
+    repo.save.mockResolvedValue(buildOrder());
+
+    const useCase = new PlaceOrderUseCase(repo, notifier);
+    await useCase.execute(buildOrderDTO());
+
+    expect(repo.save).toHaveBeenCalledOnce();
+    expect(notifier.notify).toHaveBeenCalledOnce();
+  });
+});
+
+// Testes de adapter: infra real via testcontainers
+describe('PrismaOrderRepository (integration)', () => {
+  let pg: StartedPostgreSqlContainer;
+
+  beforeAll(async () => {
+    pg = await new PostgreSqlContainer().start();
+    process.env.DATABASE_URL = pg.getConnectionUri();
+    await runMigrations();
+  });
+
+  afterAll(() => pg.stop());
+
+  it('should persist and retrieve order by id', async () => {
+    const repo = new PrismaOrderRepository(prisma);
+    const saved = await repo.save(buildOrderDTO());
+    const found = await repo.findById(saved.id);
+    expect(found).toEqual(saved);
+  });
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- Seção 3: TDD -->
+      <section class="content-section">
+        <h2><i class="uil uil-sync"></i> TDD — Red, Green, Refactor</h2>
+        <p>Test-Driven Development é uma disciplina de design, não de cobertura. O ciclo de três etapas força o engenheiro a pensar na interface e no comportamento antes de qualquer linha de implementação. Isso resulta em APIs mais limpas, menos acoplamento e código que já nasce testável.</p>
+
+        <div class="callout callout-warning">
+          <strong>TDD nao e sobre coverage.</strong> E sobre design. O teste forca voce a pensar na interface antes da implementacao. Coverage e um subproduto — nao o objetivo.
+        </div>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+stateDiagram-v2
+    [*] --> Red: Escreva o teste\n(falha esperada)
+    Red --> Green: Implemente o mínimo\npara passar
+    Green --> Refactor: Melhore o código\nsem quebrar testes
+    Refactor --> Red: Próxima\nfuncionalidade
+          </div>
+          <p class="diagram-caption">Ciclo TDD: Red (teste falha) → Green (implementacao minima) → Refactor (qualidade)</p>
+        </div>
+
+        <h3>Exemplo completo em TypeScript</h3>
+        <p>Implementando um serviço de cálculo de frete do zero com TDD:</p>
+
+        <h4>Passo 1 — Red: escreva o teste (ele falha, a classe nem existe)</h4>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// shipping.spec.ts
+import { ShippingCalculator } from './shipping-calculator';
+
+describe('ShippingCalculator', () => {
+  describe('calculate', () => {
+    it('should return free shipping for orders above R$ 299', () => {
+      const calc = new ShippingCalculator();
+      expect(calc.calculate({ subtotal: 300, weightKg: 1 })).toBe(0);
+    });
+
+    it('should charge R$ 15 per kg for orders below threshold', () => {
+      const calc = new ShippingCalculator();
+      expect(calc.calculate({ subtotal: 100, weightKg: 2 })).toBe(30);
+    });
+
+    it('should throw for negative weight', () => {
+      const calc = new ShippingCalculator();
+      expect(() => calc.calculate({ subtotal: 100, weightKg: -1 }))
+        .toThrow('Weight must be positive');
+    });
+  });
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h4>Passo 2 — Green: implementação mínima para os testes passarem</h4>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// shipping-calculator.ts
+const FREE_SHIPPING_THRESHOLD = 299;
+const PRICE_PER_KG = 15;
+
+interface ShippingInput {
+  subtotal: number;
+  weightKg: number;
+}
+
+export class ShippingCalculator {
+  calculate({ subtotal, weightKg }: ShippingInput): number {
+    if (weightKg &lt; 0) throw new Error('Weight must be positive');
+    if (subtotal &gt; FREE_SHIPPING_THRESHOLD) return 0;
+    return weightKg * PRICE_PER_KG;
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h4>Passo 3 — Refactor: melhore sem quebrar nenhum teste</h4>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// shipping-calculator.ts (após refactor)
+export class ShippingCalculator {
+  private static readonly FREE_THRESHOLD = 299;
+  private static readonly RATE_PER_KG = 15;
+
+  calculate(input: ShippingInput): number {
+    this.validate(input);
+    return this.isFreeShipping(input.subtotal)
+      ? 0
+      : this.computeShippingCost(input.weightKg);
+  }
+
+  private validate({ weightKg }: ShippingInput): void {
+    if (weightKg &lt; 0) throw new Error('Weight must be positive');
+  }
+
+  private isFreeShipping(subtotal: number): boolean {
+    return subtotal &gt; ShippingCalculator.FREE_THRESHOLD;
+  }
+
+  private computeShippingCost(weightKg: number): number {
+    return weightKg * ShippingCalculator.RATE_PER_KG;
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Configuração Vitest</h3>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// vitest.config.ts
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov'],
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 80,
+      },
+      include: ['src/domain/**', 'src/use-cases/**'],
+    },
+  },
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Como instruir o Claude para TDD</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">Implemente ShippingCalculator seguindo TDD estrito:
+1. Escreva os testes PRIMEIRO em src/domain/shipping-calculator.spec.ts
+2. PARE e mostre os testes — aguarde minha aprovação antes de implementar
+3. Implemente o mínimo em src/domain/shipping-calculator.ts para os testes passarem
+4. Refatore mantendo todos os testes verdes
+5. Nunca escreva código de produção sem um teste que o justifique</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- Seção 4: Pirâmide de Testes -->
+      <section class="content-section">
+        <h2><i class="uil uil-chart-bar"></i> Pirâmide de Testes</h2>
+        <p>A pirâmide de testes (Mike Cohn) define a proporção ideal entre tipos de teste: muitos testes unitários rápidos na base, menos testes de integração no meio, poucos testes E2E lentos no topo. Inverter essa pirâmide é um dos erros mais caros em projetos de software — suítes lentas, frágeis e difíceis de diagnosticar.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+graph BT
+    A["Unit Tests\n(Vitest)\nRápidos, isolados, muitos\n~70% da suíte"]
+    B["Integration Tests\n(Testcontainers)\nInfra real, moderados\n~20% da suíte"]
+    C["E2E Tests\n(Cypress)\nJornadas críticas, lentos\n~8% da suíte"]
+    D["Load / Stress\n(k6)\nPré-produção\n~2% da suíte"]
+
+    A --> B
+    B --> C
+    C --> D
+          </div>
+          <p class="diagram-caption">Pirâmide de testes: base larga de unitários, topo restrito de E2E e carga</p>
+        </div>
+
+        <h3>Unit Tests com Vitest</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">npm install -D vitest @vitest/coverage-v8 @vitest/ui
+npx vitest run              # execucao CI
+npx vitest                  # watch mode desenvolvimento
+npx vitest --coverage       # com relatorio de cobertura
+npx vitest --ui             # interface visual</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>Cobertura mínima recomendada: 80% em todo o domain core, 100% nos use cases críticos (checkout, pagamento, autenticação).</p>
+
+        <h3>Integration Tests com Testcontainers</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">npm install -D @testcontainers/postgresql @testcontainers/core</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// user-repository.integration.spec.ts
+import { PostgreSqlContainer } from '@testcontainers/postgresql';
+import { PrismaClient } from '@prisma/client';
+
+describe('UserRepository (integration)', () => {
+  let container: StartedPostgreSqlContainer;
+  let prisma: PrismaClient;
+
+  beforeAll(async () => {
+    container = await new PostgreSqlContainer('postgres:16').start();
+    process.env.DATABASE_URL = container.getConnectionUri();
+    prisma = new PrismaClient();
+    await prisma.$executeRaw`CREATE TABLE users (id uuid PRIMARY KEY, email text NOT NULL)`;
+  }, 60_000);
+
+  afterAll(async () => {
+    await prisma.$disconnect();
+    await container.stop();
+  });
+
+  it('should persist and retrieve user', async () => {
+    const repo = new PrismaUserRepository(prisma);
+    const user = await repo.create({ email: 'dev@example.com' });
+    const found = await repo.findById(user.id);
+    expect(found?.email).toBe('dev@example.com');
+  });
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <strong>Nunca mocke o banco em integration tests.</strong> O objetivo e testar o adapter com infra real. Mocks enganam — voce aprende com falhas reais (constraint violations, index misses, transaction isolation).
+        </div>
+
+        <h3>E2E com Cypress</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">npm install -D cypress
+npx cypress open            # interface interativa
+npx cypress run --headless  # CI (sem GUI)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// cypress.config.ts
+import { defineConfig } from 'cypress';
+
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.cy.ts',
+    video: false,
+    screenshotOnRunFailure: true,
+    viewportWidth: 1280,
+    viewportHeight: 720,
+  },
+});
+
+// cypress/e2e/checkout.cy.ts — foco em jornadas críticas
+describe('Checkout flow', () => {
+  it('should complete purchase as authenticated user', () => {
+    cy.login('user@example.com', 'password');
+    cy.visit('/products/notebook-pro');
+    cy.get('[data-testid="add-to-cart"]').click();
+    cy.get('[data-testid="checkout-btn"]').click();
+    cy.get('[data-testid="card-number"]').type('4111111111111111');
+    cy.get('[data-testid="submit-payment"]').click();
+    cy.get('[data-testid="order-confirmation"]').should('be.visible');
+  });
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Load Tests com k6</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">brew install k6
+k6 run k6/load.js           # load test padrao
+k6 run k6/stress.js         # stress test</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-javascript">// k6/load.js — load test padrao (baseline de producao)
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export const options = {
+  stages: [
+    { duration: '1m', target: 50 },   // ramp up
+    { duration: '3m', target: 50 },   // steady state
+    { duration: '1m', target: 0 },    // ramp down
+  ],
+  thresholds: {
+    http_req_duration: ['p(95)&lt;500'], // p95 abaixo de 500ms
+    http_req_failed: ['rate&lt;0.01'],   // error rate abaixo de 1%
+  },
+};
+
+export default function () {
+  const res = http.get('https://api.example.com/products');
+  check(res, { 'status 200': (r) => r.status === 200 });
+  sleep(1);
+}
+
+// k6/stress.js — stress test (encontrar ponto de ruptura)
+export const options = {
+  stages: [
+    { duration: '2m', target: 100 },
+    { duration: '5m', target: 200 },
+    { duration: '2m', target: 300 },
+    { duration: '5m', target: 300 },
+    { duration: '2m', target: 0 },
+  ],
+};</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Quando usar cada nivel</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Nivel</th>
+                <th>Ferramenta</th>
+                <th>Quando usar</th>
+                <th>Velocidade</th>
+                <th>Custo de manutencao</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Unit</td>
+                <td>Vitest</td>
+                <td>Logica de dominio, value objects, utilitarios</td>
+                <td>Milissegundos</td>
+                <td>Baixo</td>
+              </tr>
+              <tr>
+                <td>Integration</td>
+                <td>Testcontainers</td>
+                <td>Adapters de banco, HTTP clients, queues</td>
+                <td>Segundos</td>
+                <td>Medio</td>
+              </tr>
+              <tr>
+                <td>E2E</td>
+                <td>Cypress</td>
+                <td>Jornadas criticas do usuario (checkout, login)</td>
+                <td>Minutos</td>
+                <td>Alto</td>
+              </tr>
+              <tr>
+                <td>Load</td>
+                <td>k6</td>
+                <td>Pre-release em producao simulada</td>
+                <td>Minutos</td>
+                <td>Baixo</td>
+              </tr>
+              <tr>
+                <td>Stress</td>
+                <td>k6</td>
+                <td>Encontrar ponto de ruptura, validar auto-scaling</td>
+                <td>Decadas de minutos</td>
+                <td>Baixo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Seção 5: OWASP Top 10 -->
+      <section class="content-section">
+        <h2><i class="uil uil-shield"></i> OWASP Top 10</h2>
+        <p>O OWASP Top 10 é o padrão de referência para riscos de segurança em aplicações web. Cada categoria representa uma classe de vulnerabilidade com impacto mensurável em produção. Um engenheiro sênior usa esta lista como checklist de design — não apenas como referência pós-auditoria.</p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Vulnerabilidade</th>
+                <th>Como mitigar</th>
+                <th>Gate no workflow</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>A01</strong></td>
+                <td>Broken Access Control</td>
+                <td>Checar permissoes em todo endpoint; deny-by-default; testes de autorizacao por role</td>
+                <td>Code review obrigatorio + testes de autorizacao</td>
+              </tr>
+              <tr>
+                <td><strong>A02</strong></td>
+                <td>Cryptographic Failures</td>
+                <td>TLS 1.3+; AES-256 para dados em repouso; nunca MD5/SHA1 para senhas (use bcrypt/argon2)</td>
+                <td>Config review + secrets scanner no CI</td>
+              </tr>
+              <tr>
+                <td><strong>A03</strong></td>
+                <td>Injection (SQL, NoSQL, OS)</td>
+                <td>Parameterized queries sempre; ORM com prepared statements; validacao na borda com Zod/Joi</td>
+                <td>Linting com regras anti-concatenacao + SAST</td>
+              </tr>
+              <tr>
+                <td><strong>A04</strong></td>
+                <td>Insecure Design</td>
+                <td>Threat modeling antes de implementar; arquitetura hexagonal com limites claros</td>
+                <td>Design review na fase de planejamento</td>
+              </tr>
+              <tr>
+                <td><strong>A05</strong></td>
+                <td>Security Misconfiguration</td>
+                <td>Headers de seguranca (CSP, HSTS, X-Frame-Options); remover endpoints de debug em producao</td>
+                <td>Helmet.js + auditoria de headers pre-deploy</td>
+              </tr>
+              <tr>
+                <td><strong>A06</strong></td>
+                <td>Vulnerable Components</td>
+                <td><code>npm audit</code> no CI; atualizacoes automaticas via Dependabot; lock de versoes</td>
+                <td><code>npm audit --audit-level=high</code> como gate obrigatorio</td>
+              </tr>
+              <tr>
+                <td><strong>A07</strong></td>
+                <td>Auth &amp; Session Failures</td>
+                <td>Rate limiting em login; MFA para admins; tokens de sessao com expiracao e rotacao</td>
+                <td>Testes de brute force + revisao de configuracao JWT</td>
+              </tr>
+              <tr>
+                <td><strong>A08</strong></td>
+                <td>Software &amp; Data Integrity Failures</td>
+                <td>Verificar assinaturas em dependencias; CI/CD pipeline protegido; SRI para assets externos</td>
+                <td>Assinatura de commits + revisao de pipeline</td>
+              </tr>
+              <tr>
+                <td><strong>A09</strong></td>
+                <td>Security Logging &amp; Monitoring</td>
+                <td>Logar tentativas de autenticacao; alertas em anomalias; retencao de logs por 90 dias</td>
+                <td>Validacao de observabilidade pre-launch</td>
+              </tr>
+              <tr>
+                <td><strong>A10</strong></td>
+                <td>Server-Side Request Forgery (SSRF)</td>
+                <td>Validar e restringir URLs fornecidas pelo usuario; allowlist de dominios externos; bloquear IPs internos</td>
+                <td>Code review em toda funcionalidade que faz HTTP outbound</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning">
+          <strong><code>npm audit</code> deve ser gate obrigatorio em todo CI.</strong> Um <code>npm audit --audit-level=high</code> que falha deve bloquear o merge. Nunca deixe vulnerabilidades high/critical em dependencias de producao.
+        </div>
+
+        <h3>Diretivas de seguranca no CLAUDE.md</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown"># CLAUDE.md — seguranca
+
+- Sempre use parameterized queries. Nunca concatene SQL.
+- Nunca commite secrets. Use variaveis de ambiente.
+- Valide TODA entrada do usuario na borda (sem trusts implicitos).
+- npm audit deve passar sem vulnerabilidades high/critical.
+- Headers de seguranca: Helmet.js em todo servidor Express/Fastify.
+- Autenticacao: nunca implemente JWT do zero — use uma lib auditada (jose, jsonwebtoken).
+- Senhas: bcrypt com cost factor >= 12 ou argon2id.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Validacao de entrada com Zod (A03)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-typescript">import { z } from 'zod';
+
+// Schema de validacao — define o contrato na borda
+const CreateUserSchema = z.object({
+  email: z.string().email().max(255),
+  password: z.string().min(12).max(128),
+  name: z.string().min(1).max(100).regex(/^[a-zA-Z\s]+$/),
+  role: z.enum(['user', 'admin']).default('user'),
+});
+
+type CreateUserDTO = z.infer&lt;typeof CreateUserSchema&gt;;
+
+// Controller — valida antes de tocar o dominio
+app.post('/users', async (req, res) => {
+  const result = CreateUserSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({ errors: result.error.flatten() });
+  }
+  const user = await userService.create(result.data); // dados ja validados e tipados
+  return res.status(201).json(user);
+});</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- Seção 6: Context Window Discipline -->
+      <section class="content-section">
+        <h2><i class="uil uil-setting"></i> Context Window Discipline</h2>
+        <p>A janela de contexto do Claude Code tem limite finito — e esse limite e compartilhado entre instrucoes do sistema, historico da conversa, conteudo de arquivos lidos e output gerado. Um contexto mal gerido degrada a qualidade das respostas, aumenta custo e pode causar perda silenciosa de instrucoes importantes. Discipline de contexto e uma skill operacional de primeiro nivel.</p>
+
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+graph LR
+    A["Sessao inicia\n~5K tokens"] --> B["Codigo gerado\n+30K tokens"]
+    B --> C["Arquivos lidos\n+20K tokens"]
+    C --> D{70K tokens?}
+    D -->|Nao| E["Continua\ntrabalhando"]
+    E --> C
+    D -->|Sim| F["/compact\nresume contexto"]
+    F --> G["Continua com\ncontexto comprimido"]
+    G --> C
+          </div>
+          <p class="diagram-caption">Ciclo de crescimento de contexto e quando acionar /compact</p>
+        </div>
+
+        <h3>Regras de ouro</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">Limites recomendados por agente:
+  Orquestrador:  max 80K tokens de contexto ativo
+  Subagente:     contexto inicial max 60K tokens
+  /compact:      obrigatorio ao cruzar 70K tokens
+
+Handoffs entre agentes:
+  - Sempre via arquivos no sistema de arquivos
+  - Nunca via variaveis in-memory ou estado de sessao
+  - Formato recomendado: HANDOFF.md com estado atual + proximos passos
+
+Monitoramento:
+  /usage    — tokens consumidos na sessao atual
+  /compact  — comprime historico mantendo contexto essencial
+  /clear    — limpa totalmente (use apenas para nova tarefa)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Calculadora rapida de tokens</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">Regra de estimativa rapida:
+  1K tokens  ~  750 palavras  ~  50 linhas de codigo
+
+Exemplos praticos:
+  CLAUDE.md bem escrito:       ~2K tokens
+  Arquivo TypeScript tipico:   ~1-3K tokens
+  Schema Prisma completo:      ~3-5K tokens
+  Output de npm ls --all:      ~10-30K tokens (nao leia isso!)
+
+Janela total disponivel:
+  claude-opus-4:     200K tokens
+  claude-sonnet-4:   200K tokens
+
+Orçamento util por sessao de desenvolvimento:
+  Reserva para instrucoes + historico: ~20K tokens
+  Disponivel para codigo e contexto:   ~150K tokens
+  Zona de alerta (/compact):           acima de 70K usados</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <strong>Handoffs via arquivos, nunca in-memory.</strong> Quando um orquestrador delega trabalho a um subagente, o estado deve ser serializado em um arquivo (ex: <code>TASK.md</code>, <code>HANDOFF.md</code>). Se o subagente falhar, o trabalho nao se perde — o proximo agente le o arquivo e retoma.
+        </div>
+
+        <h3>Estrategia de contexto por tipo de tarefa</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">Tarefa pequena (bug fix, util function):
+  - Uma sessao, contexto direto, sem /compact necessario
+
+Tarefa media (nova feature, refactor):
+  - Sessao focada na feature
+  - /compact ao atingir 50% da janela
+  - Commit antes de /compact para nao perder estado
+
+Tarefa grande (novo modulo, migracao):
+  - Divida em sub-tarefas com handoffs via arquivo
+  - Orquestrador gera PLAN.md com fases
+  - Cada subagente recebe contexto minimo necessario
+  - Estado persistido em arquivos entre fases</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- Seção 7: Frontend Design Standards -->
+      <section class="content-section">
+        <h2><i class="uil uil-desktop"></i> Frontend Design Standards</h2>
+        <p>Para projetos com UI, um conjunto coerente de decisoes de design elimina bikeshedding e garante consistencia visual sem esforco. As tres pecas fundamentais para stacks Next.js/React modernas: shadcn/ui para componentes, Lucide para iconografia e Geist para tipografia.</p>
+
+        <h3>shadcn/ui</h3>
+        <p>shadcn/ui nao e uma biblioteca instalada como dependencia — e um conjunto de componentes copiados diretamente para o projeto, buildados sobre Radix UI e estilizados com Tailwind CSS. Voce e dono do codigo; atualizacoes sao explicitas, nao silenciosas.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Inicializacao
+npx shadcn@latest init
+
+# Adicionar componentes individualmente
+npx shadcn@latest add button
+npx shadcn@latest add input
+npx shadcn@latest add dialog
+npx shadcn@latest add form
+npx shadcn@latest add data-table
+
+# Componentes ficam em src/components/ui/
+# Personalize diretamente — voce e o dono do codigo</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Uso tipico com shadcn/ui
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+
+export function CreateUserDialog({ onSubmit }: { onSubmit: (data: FormData) => void }) {
+  return (
+    &lt;Dialog&gt;
+      &lt;DialogContent&gt;
+        &lt;DialogHeader&gt;
+          &lt;DialogTitle&gt;Novo usuario&lt;/DialogTitle&gt;
+        &lt;/DialogHeader&gt;
+        &lt;form onSubmit={onSubmit}&gt;
+          &lt;Input name="email" type="email" placeholder="email@exemplo.com" /&gt;
+          &lt;Button type="submit"&gt;Criar&lt;/Button&gt;
+        &lt;/form&gt;
+      &lt;/DialogContent&gt;
+    &lt;/Dialog&gt;
+  );
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Lucide Icons (outlined)</h3>
+        <p>Lucide e a biblioteca de icones padrao para stacks com shadcn/ui. Sempre use a variante outlined (padrao). Consistencia e inegociavel: misturar Lucide com heroicons ou FontAwesome no mesmo projeto e um antipadrao visual.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash">npm install lucide-react</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// Import pattern correto — sempre named imports, nunca default
+import { User, Mail, Settings, AlertTriangle, CheckCircle2 } from 'lucide-react';
+
+// Tamanhos padrao
+&lt;User size={16} /&gt;        // inline com texto
+&lt;User size={20} /&gt;        // botoes e inputs
+&lt;User size={24} /&gt;        // headings (padrao Lucide)
+&lt;User size={32} /&gt;        // icones standalone
+
+// Com className para Tailwind
+&lt;AlertTriangle className="h-4 w-4 text-yellow-500" /&gt;
+&lt;CheckCircle2 className="h-5 w-5 text-green-500" /&gt;</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Geist Fonts</h3>
+        <p>Geist e a familia tipografica criada pela Vercel para interfaces de software. Geist Sans para UI geral; Geist Mono obrigatorio para blocos de codigo, terminais e qualquer dado tecnico (IDs, hashes, endpoints).</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// app/layout.tsx (Next.js App Router)
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang="pt-BR" className={`${GeistSans.variable} ${GeistMono.variable}`}&gt;
+      &lt;body className="font-sans"&gt;
+        {children}
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+
+// tailwind.config.ts
+export default {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
+      },
+    },
+  },
+};</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Dark mode por padrao</h3>
+        <p>Para aplicacoes voltadas a desenvolvedores, dark mode deve ser o padrao — nao uma opcao opcional. Configure no Tailwind com a classe <code>dark</code> no elemento <code>html</code> e implemente a troca via <code>next-themes</code>.</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash">npm install next-themes</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="code-block-wrapper"><pre><code class="language-typescript">// app/layout.tsx
+import { ThemeProvider } from 'next-themes';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang="pt-BR" suppressHydrationWarning&gt;
+      &lt;body&gt;
+        &lt;ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+        &gt;
+          {children}
+        &lt;/ThemeProvider&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Quando invocar o skill frontend-design</h3>
+        <div class="callout callout-info">
+          <strong>Antes de implementar qualquer nova UI</strong>, invoque <code>skill: frontend-design</code> para gerar um contrato visual (UI-SPEC.md) com paleta, componentes, espacamento e comportamentos definidos. Implementar sem spec visual e a principal causa de inconsistencia em projetos de longa duracao.
+        </div>
+
+        <div class="code-block-wrapper"><pre><code class="language-text"># Como invocar no Claude Code
+skill: frontend-design
+
+# O skill gera:
+# - UI-SPEC.md com todas as decisoes de design
+# - Paleta de cores com variaveis CSS
+# - Mapa de componentes necessarios
+# - Regras de espacamento e tipografia
+# - Comportamentos de estado (hover, focus, disabled, loading)</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <!-- Seção 8: Hooks como Quality Gates -->
+      <section class="content-section">
+        <h2><i class="uil uil-shield-check"></i> Hooks como Quality Gates</h2>
+
+        <h3>O conceito central</h3>
+        <p>Hooks nao substituem o CLAUDE.md — eles o completam. O CLAUDE.md opera no plano das instrucoes: influencia o comportamento do modelo de forma probabilistica, com eficacia em torno de 90%. Hooks operam no plano do output: interceptam o resultado e bloqueiam qualquer saida que nao atenda ao criterio definido, com eficacia de 100%.</p>
+        <ul>
+          <li><strong>CLAUDE.md</strong> = influencia o comportamento (probabilistico ~90%)</li>
+          <li><strong>Hooks</strong> = bloqueiam output invalido (deterministico 100%)</li>
+        </ul>
+        <div class="callout callout-info">
+          <strong>CLAUDE.md ensina como trabalhar. Hooks garantem o resultado.</strong> Juntos voce sai do territorio probabilistico para o deterministico nos criterios que importam.
+        </div>
+
+        <h3>Tabela de hooks por categoria</h3>
+        <div class="table-wrapper" style="overflow-x:auto;margin:1.5rem 0">
+          <table style="width:100%;border-collapse:collapse;font-size:0.9rem">
+            <thead>
+              <tr style="border-bottom:2px solid var(--border,#2a2a3e)">
+                <th style="text-align:left;padding:0.6rem 0.8rem">Hook</th>
+                <th style="text-align:left;padding:0.6rem 0.8rem">Trigger</th>
+                <th style="text-align:left;padding:0.6rem 0.8rem">Verifica</th>
+                <th style="text-align:left;padding:0.6rem 0.8rem">Deterministico?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border,#2a2a3e)">
+                <td style="padding:0.6rem 0.8rem"><code>PostToolUse Write/Edit</code></td>
+                <td style="padding:0.6rem 0.8rem">arquivos .ts/.js/.tsx</td>
+                <td style="padding:0.6rem 0.8rem">ESLint + tsc --noEmit</td>
+                <td style="padding:0.6rem 0.8rem">Sim</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border,#2a2a3e)">
+                <td style="padding:0.6rem 0.8rem"><code>PostToolUse Write/Edit</code></td>
+                <td style="padding:0.6rem 0.8rem">arquivos .ts fonte</td>
+                <td style="padding:0.6rem 0.8rem">vitest run (testes devem passar)</td>
+                <td style="padding:0.6rem 0.8rem">Sim</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border,#2a2a3e)">
+                <td style="padding:0.6rem 0.8rem"><code>PostToolUse Write/Edit</code></td>
+                <td style="padding:0.6rem 0.8rem">package.json</td>
+                <td style="padding:0.6rem 0.8rem">npm audit --audit-level high (OWASP A06)</td>
+                <td style="padding:0.6rem 0.8rem">Sim</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border,#2a2a3e)">
+                <td style="padding:0.6rem 0.8rem"><code>PostToolUse Write/Edit</code></td>
+                <td style="padding:0.6rem 0.8rem">src/domain/**</td>
+                <td style="padding:0.6rem 0.8rem">import boundaries — domain nao importa adapters</td>
+                <td style="padding:0.6rem 0.8rem">Sim</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border,#2a2a3e)">
+                <td style="padding:0.6rem 0.8rem"><code>PostToolUse Write/Edit</code></td>
+                <td style="padding:0.6rem 0.8rem">qualquer arquivo</td>
+                <td style="padding:0.6rem 0.8rem">regex de secrets (OWASP A02)</td>
+                <td style="padding:0.6rem 0.8rem">Sim</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border,#2a2a3e)">
+                <td style="padding:0.6rem 0.8rem"><code>PreToolUse Bash</code></td>
+                <td style="padding:0.6rem 0.8rem">qualquer comando</td>
+                <td style="padding:0.6rem 0.8rem">bloqueia comandos destrutivos</td>
+                <td style="padding:0.6rem 0.8rem">Sim</td>
+              </tr>
+              <tr>
+                <td style="padding:0.6rem 0.8rem"><code>PostToolUse Write/Edit</code></td>
+                <td style="padding:0.6rem 0.8rem">arquivos .ts/.js</td>
+                <td style="padding:0.6rem 0.8rem">vitest coverage &ge; 80% domain core</td>
+                <td style="padding:0.6rem 0.8rem">Sim</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Configuracao base — settings.json</h3>
+        <div class="code-block-wrapper"><pre><code class="language-json">{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{"type": "command", "command": "node scripts/quality-gate.mjs \"$CLAUDE_TOOL_INPUT_FILE_PATH\""}]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "node scripts/bash-guard.mjs"}]
+      }
+    ]
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Script quality-gate.mjs</h3>
+        <div class="code-block-wrapper"><pre><code class="language-javascript">#!/usr/bin/env node
+// quality-gate.mjs — gate de qualidade pos-escrita
+import { execSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { extname } from 'node:path';
+
+const file = process.argv[2];
+if (!file) process.exit(0);
+
+const ext = extname(file);
+
+// OWASP A02 — Secret detection em qualquer arquivo
+try {
+  const content = readFileSync(file, 'utf8');
+  const secretPattern = /(?:api_key|secret_key|password|private_key|token)\s*[:=]\s*['"][^'"]{8,}/i;
+  if (secretPattern.test(content)) {
+    console.error(`[quality-gate] BLOQUEADO: possivel secret detectado em ${file}`);
+    process.exit(1);
+  }
+} catch {}
+
+// TypeScript + ESLint — Clean Code gate
+if (['.ts', '.tsx', '.js', '.jsx'].includes(ext) &amp;&amp; !file.includes('.test.') &amp;&amp; !file.includes('.spec.')) {
+  try {
+    execSync('npx tsc --noEmit', { stdio: 'inherit', cwd: process.cwd() });
+  } catch {
+    console.error('[quality-gate] BLOQUEADO: TypeScript errors encontrados');
+    process.exit(1);
+  }
+  try {
+    execSync(`npx eslint --max-warnings 0 "${file}"`, { stdio: 'inherit' });
+  } catch {
+    console.error('[quality-gate] BLOQUEADO: ESLint warnings/errors encontrados');
+    process.exit(1);
+  }
+  // TDD gate — testes devem passar apos qualquer mudanca em source
+  try {
+    execSync('npx vitest run --reporter=dot --passWithNoTests', { stdio: 'inherit' });
+  } catch {
+    console.error('[quality-gate] BLOQUEADO: testes falhando');
+    process.exit(1);
+  }
+}
+
+// OWASP A06 — Vulnerable Components
+if (file.endsWith('package.json') &amp;&amp; !file.includes('node_modules')) {
+  try {
+    execSync('npm audit --audit-level high', { stdio: 'inherit' });
+  } catch {
+    console.error('[quality-gate] BLOQUEADO: vulnerabilidades high/critical em dependencias');
+    process.exit(1);
+  }
+}
+
+console.log(`[quality-gate] OK: ${file}`);</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Script bash-guard.mjs</h3>
+        <div class="code-block-wrapper"><pre><code class="language-javascript">#!/usr/bin/env node
+// bash-guard.mjs — bloqueia comandos bash destrutivos
+const cmd = process.env.CLAUDE_TOOL_INPUT_COMMAND ?? '';
+
+const blocked = [
+  { pattern: /DROP\s+TABLE/i, reason: 'DROP TABLE detectado' },
+  { pattern: /rm\s+-rf\s+\/(?!tmp)/, reason: 'rm -rf em diretorio raiz' },
+  { pattern: /git\s+push\s+--force\s+(?:origin\s+)?main/i, reason: 'force push em main' },
+  { pattern: /git\s+reset\s+--hard\s+HEAD/i, reason: 'git reset --hard HEAD' },
+  { pattern: /TRUNCATE\s+TABLE/i, reason: 'TRUNCATE TABLE detectado' },
+];
+
+for (const { pattern, reason } of blocked) {
+  if (pattern.test(cmd)) {
+    console.error(`[bash-guard] BLOQUEADO: ${reason}`);
+    console.error(`[bash-guard] Comando: ${cmd}`);
+    process.exit(1);
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Check de import boundaries (arquitetura hexagonal)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-javascript">#!/usr/bin/env node
+// check-boundaries.mjs — enforca arquitetura hexagonal
+import { readFileSync } from 'node:fs';
+
+const file = process.argv[2];
+if (!file || !file.includes('/domain/')) process.exit(0);
+
+const content = readFileSync(file, 'utf8');
+
+// Domain core nao pode importar de adapters ou infrastructure
+const violations = [
+  { pattern: /from\s+['"].*\/adapters\//, label: 'adapters' },
+  { pattern: /from\s+['"].*\/infrastructure\//, label: 'infrastructure' },
+  { pattern: /from\s+['"].*\/database\//, label: 'database' },
+  { pattern: /from\s+['"].*\/http\//, label: 'http' },
+];
+
+for (const { pattern, label } of violations) {
+  if (pattern.test(content)) {
+    console.error(`[boundaries] BLOQUEADO: domain/ importa de ${label} em ${file}`);
+    console.error('[boundaries] Domain core nao pode depender de adapters/infrastructure.');
+    process.exit(1);
+  }
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-warning">
+          Este hook e a garantia mecanica da arquitetura hexagonal. Sem ele, a regra de ouro ("domain core nao importa infra") existe apenas no CLAUDE.md — probabilistica. Com o hook, e inviolavel.
+        </div>
+
+        <h3>O que NAO pode ser enforcado por Hooks</h3>
+        <p>Hooks sao ferramentas de verificacao de output — eles inspecionam o resultado, nao o processo. Existe uma categoria de criterios de qualidade que permanece fora do alcance deterministico dos hooks:</p>
+        <ul>
+          <li><strong>TDD ORDER</strong> (testes escritos antes da impl) — hooks apenas verificam que testes existem e passam, nao a ordem de criacao</li>
+          <li><strong>SOLID semanticamente</strong> — linter so pega sintaxe (complexidade ciclomatica, max-lines); responsabilidade conceitual exige revisao humana</li>
+          <li><strong>OWASP A01 (Broken Access Control)</strong> — requer analise semantica de logica de negocio, que hooks de arquivo nao conseguem realizar</li>
+        </ul>
+        <div class="callout callout-warning">
+          Hooks sao guards do output, nao teachers do processo. O processo e responsabilidade do CLAUDE.md + disciplina do dev.
+        </div>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluido</button>
+        <div class="nav-prev-next">
+          <a data-testid="btn-prev" href="/modules/06-workflows/" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a>
+          <a data-testid="btn-next" href="/modules/06-workflows/01-solo.html" class="btn btn-next">Proximo <i class="uil uil-arrow-right"></i></a>
+        </div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+    <footer class="site-footer"><span class="version-tag">v1.9.1</span></footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#e2e8f0',
+        primaryBorderColor: '#4f46e5',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a',
+        background: '#0f172a',
+        mainBkg: '#1e293b',
+        nodeBorder: '#4f46e5',
+        clusterBkg: '#1e293b',
+        titleColor: '#e2e8f0',
+        edgeLabelBackground: '#1e293b'
+      }
+    });
+  </script>
+</body>
+</html>

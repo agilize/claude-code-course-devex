@@ -1108,6 +1108,20 @@ html.light .hierarchy-icon {
   font-size: 14px;
   color: var(--text-secondary);
   line-height: 1.5;
+  flex: 1;
+}
+
+.skill-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* --- Use Cases Grid --- */

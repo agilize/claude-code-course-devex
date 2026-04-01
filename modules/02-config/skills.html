@@ -91,11 +91,12 @@
 
       <section class="module-section">
         <h2>Formato do SKILL.md</h2>
-        <p>Cada skill é um arquivo Markdown com um frontmatter YAML que define o nome, descrição e trigger:</p>
+        <p>Cada skill é um arquivo Markdown com um frontmatter YAML. Os campos principais são <code>name</code>, <code>description</code> e <code>user-invocable</code>:</p>
         <div class="code-block-wrapper"><pre><code class="language-markdown">---
 name: review-pr
 description: Review a pull request for code quality, security, and best practices
-trigger: /review-pr
+user-invocable: true
+argument-hint: "[PR number] (opcional)"
 ---
 
 # Review PR
@@ -111,6 +112,9 @@ Verifique:
 6. Documentação
 
 Formate a revisão com severidade: CRITICAL, MAJOR, MINOR, INFO.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <div class="callout callout-warning">
+          <strong>Atenção:</strong> O campo <code>trigger:</code> <strong>não existe</strong> na API de skills. O nome da pasta define o comando — <code>~/.claude/skills/review-pr/SKILL.md</code> vira <code>/review-pr</code>. Use <code>user-invocable: true</code> para tornar a skill invocável pelo usuário.
+        </div>
       </section>
 
       <section class="module-section">
@@ -122,7 +126,10 @@ Formate a revisão com severidade: CRITICAL, MAJOR, MINOR, INFO.</code></pre><bu
       </section>
 
       <section class="module-section">
-        <h2>Skills úteis para o dia a dia</h2>
+        <h2>Ideias de skills para criar</h2>
+        <div class="callout callout-info">
+          <strong>Importante:</strong> As skills abaixo <strong>não vêm pré-instaladas</strong> — são inspirações para você criar. Cada uma vira uma pasta com <code>SKILL.md</code> dentro de <code>~/.claude/skills/</code>.
+        </div>
         <div class="skill-catalog">
           <div class="skill-row">
             <span class="skill-trigger">/commit</span>
@@ -213,7 +220,7 @@ Use Jest/Vitest. Salve em __tests__/[filename].test.ts</code></pre><button data-
             <div class="code-block-wrapper"><pre><code class="language-markdown">---
 name: daily-review
 description: Gera resumo das atividades do dia
-trigger: /daily-review
+user-invocable: true
 ---
 
 # Daily Review

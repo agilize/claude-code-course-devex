@@ -653,7 +653,7 @@ a.btn-next:hover {
   color: var(--accent);
   text-decoration: none;
 }
-.module-body a:not(.resource-card):hover {
+.module-body a:not(.resource-card):not(.academy-card):hover {
   text-decoration: underline;
 }
 
@@ -894,6 +894,24 @@ a.btn-next:hover {
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 2px 7px;
+}
+
+/* Academy sidebar link highlight */
+.nav-link-academy {
+  margin-top: 8px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 6px;
+}
+.nav-link-academy .nav-title {
+  color: var(--accent);
+  font-weight: 600;
+}
+.nav-link-academy .nav-num {
+  color: var(--accent);
+}
+.nav-link-academy:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 /* ============================================================
@@ -1602,7 +1620,7 @@ html {
 
 .academy-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 

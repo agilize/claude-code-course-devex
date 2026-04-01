@@ -1597,7 +1597,15 @@ html {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-top: 48px;
   margin-bottom: 20px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.content-section:first-of-type .academy-group-header {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
 }
 .academy-group-header h2 {
   font-size: 1.125rem;

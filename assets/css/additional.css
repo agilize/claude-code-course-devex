@@ -653,7 +653,7 @@ a.btn-next:hover {
   color: var(--accent);
   text-decoration: none;
 }
-.module-body a:hover {
+.module-body a:not(.resource-card):hover {
   text-decoration: underline;
 }
 

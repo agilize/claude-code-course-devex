@@ -182,6 +182,57 @@ await server.connect(transport);</code></pre><button data-testid="copy-btn" clas
       </section>
 
       <section class="content-section">
+        <h2>As 3 Primitivas do MCP</h2>
+        <p>Todo servidor MCP expõe dados e ações através de três primitivas distintas. Entender quando usar cada uma é fundamental para criar servidores bem projetados.</p>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Primitiva</th>
+                <th>Controlado por</th>
+                <th>Uso</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tools</strong></td>
+                <td>Modelo (Claude decide quando chamar)</td>
+                <td>Ações e chamadas externas — qualquer coisa que <em>executa</em></td>
+                <td><code>create_issue()</code>, <code>query_db()</code>, <code>send_email()</code></td>
+              </tr>
+              <tr>
+                <td><strong>Resources</strong></td>
+                <td>Aplicação (a app decide o que expor)</td>
+                <td>Dados somente-leitura — arquivos, registros, configurações</td>
+                <td><code>file://readme.md</code>, <code>db://users/123</code></td>
+              </tr>
+              <tr>
+                <td><strong>Prompts</strong></td>
+                <td>Usuário (invocado explicitamente)</td>
+                <td>Templates pré-elaborados para fluxos comuns</td>
+                <td><code>/review-pr</code>, <code>/summarize-ticket</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-tip">
+          <i class="uil uil-lightbulb-alt"></i>
+          <div><strong>Regra prática:</strong> Use <strong>Tools</strong> para tudo que faz algo (criar, modificar, consultar). Use <strong>Resources</strong> para expor dados que o Claude lê passivamente. Use <strong>Prompts</strong> para encapsular fluxos de trabalho frequentes que o usuário ativa explicitamente.</div>
+        </div>
+        <h3>MCP Inspector — testando seu servidor</h3>
+        <p>O SDK Python inclui o MCP Inspector, uma interface visual para testar e depurar servidores MCP sem precisar conectar o Claude:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Instalar o MCP Inspector
+npx @modelcontextprotocol/inspector
+
+# Rodar seu servidor e abrir o inspector
+npx @modelcontextprotocol/inspector python server.py
+
+# O Inspector abre em http://localhost:5173
+# Permite testar tools, resources e prompts interativamente</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
         <h2>Servidores MCP populares da comunidade</h2>
         <div class="table-wrapper">
           <table class="data-table">

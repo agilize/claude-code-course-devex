@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anthropic Academy — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 28</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-21" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">21</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v1.9.1</span></div>
+  </aside>
+
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">Anthropic Academy</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <a href="/modules/05-avancado/resources.html">Recursos &amp; Referências</a> › <span>Anthropic Academy</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number"><i class="uil uil-university"></i> Anthropic Academy</div>
+        <h1 class="module-title">Cursos Oficiais Gratuitos da Anthropic</h1>
+        <p class="module-description">16 cursos oficiais e gratuitos cobrindo Claude Code, API, MCP, integrações cloud e fluência em IA. Todos com certificado de conclusão.</p>
+      </div>
+
+      <section class="content-section">
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div>Todos os cursos são <strong>gratuitos</strong> e disponíveis em <a href="https://anthropic.skilljar.com/" target="_blank" rel="noopener">anthropic.skilljar.com</a>. É necessário criar uma conta Skilljar para acompanhar progresso e receber o certificado de conclusão.</div>
+        </div>
+      </section>
+
+      <!-- ===================== CLAUDE CODE ===================== -->
+      <section class="content-section">
+        <div class="academy-group-header">
+          <i class="uil uil-terminal"></i>
+          <h2>Claude Code</h2>
+          <span class="academy-group-count">3 cursos</span>
+        </div>
+
+        <div class="academy-grid">
+
+          <a href="https://anthropic.skilljar.com/claude-code-in-action" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-code">Claude Code</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Claude Code in Action</h3>
+            <p class="academy-card-desc">Treinamento abrangente sobre como usar Claude Code para tarefas de desenvolvimento real — do gerenciamento de contexto à integração com GitHub e servidores MCP.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Gerenciamento de contexto</span>
+              <span class="academy-highlight">Extensão via MCP</span>
+              <span class="academy-highlight">Integração GitHub</span>
+              <span class="academy-highlight">Workflows visuais</span>
+              <span class="academy-highlight">Extended thinking</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Devs que querem IA nos workflows</span>
+                <span><i class="uil uil-lock"></i> Pré-req: CLI básico, Git</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/introduction-to-agent-skills" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-code">Claude Code</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Introduction to Agent Skills</h3>
+            <p class="academy-card-desc">Crie, configure e distribua Skills no Claude Code — desde a primeira SKILL.md até distribuição via plugins e configuração enterprise.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Formato SKILL.md</span>
+              <span class="academy-highlight">allowed-tools</span>
+              <span class="academy-highlight">Progressive disclosure</span>
+              <span class="academy-highlight">Plugins &amp; distribuição</span>
+              <span class="academy-highlight">Enterprise settings</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Usuários Claude Code</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Claude Code básico</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/introduction-to-subagents" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-code">Claude Code</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Introduction to Subagents</h3>
+            <p class="academy-card-desc">Use e crie subagentes no Claude Code para gerenciar contexto, delegar tarefas e construir workflows especializados que mantêm a sessão principal limpa e focada.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Como subagentes funcionam</span>
+              <span class="academy-highlight">Comando /agents</span>
+              <span class="academy-highlight">Outputs estruturados</span>
+              <span class="academy-highlight">Quando usar (e quando não)</span>
+              <span class="academy-highlight">Anti-padrões</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Usuários intermediários/avançados</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Claude Code básico</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ===================== FUNDAMENTOS CLAUDE ===================== -->
+      <section class="content-section">
+        <div class="academy-group-header">
+          <i class="uil uil-book-open"></i>
+          <h2>Fundamentos Claude</h2>
+          <span class="academy-group-count">3 cursos</span>
+        </div>
+
+        <div class="academy-grid">
+
+          <a href="https://anthropic.skilljar.com/claude-101" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-foundation">Fundamentos</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Claude 101</h3>
+            <p class="academy-card-desc">Aprenda a usar Claude para tarefas do dia a dia, entenda as funcionalidades principais e explore recursos para aprendizado mais avançado.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Tarefas cotidianas</span>
+              <span class="academy-highlight">Features principais</span>
+              <span class="academy-highlight">Prompts eficazes</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Qualquer profissional</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Nenhum</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/introduction-to-claude-cowork" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-foundation">Fundamentos</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Introduction to Claude Cowork</h3>
+            <p class="academy-card-desc">Trabalhe ao lado do Claude em arquivos e projetos reais. Cobre o task loop do Cowork, plugins, skills, workflows de arquivo e como direcionar tarefas multi-etapas com responsabilidade.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Task loop Cowork</span>
+              <span class="academy-highlight">Plugins &amp; skills</span>
+              <span class="academy-highlight">Workflows de arquivo</span>
+              <span class="academy-highlight">Steering multi-etapas</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Novos usuários do Cowork</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Nenhum</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/ai-capabilities-and-limitations" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-foundation">Fundamentos</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">AI Capabilities and Limitations</h3>
+            <p class="academy-card-desc">Compreenda como funcionam os sistemas de IA generativa modernos. Complementa o 4D Framework focando nas propriedades das máquinas — capacidades, limitações e comportamentos inesperados.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Modelos mentais de IA</span>
+              <span class="academy-highlight">Continuum capacidade-limitação</span>
+              <span class="academy-highlight">Comportamentos inesperados</span>
+              <span class="academy-highlight">Correções direcionadas</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Qualquer profissional</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Nenhum</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ===================== API & DESENVOLVIMENTO ===================== -->
+      <section class="content-section">
+        <div class="academy-group-header">
+          <i class="uil uil-brackets-curly"></i>
+          <h2>API &amp; Desenvolvimento</h2>
+          <span class="academy-group-count">1 curso</span>
+        </div>
+
+        <div class="academy-grid">
+
+          <a href="https://anthropic.skilljar.com/claude-with-the-anthropic-api" target="_blank" rel="noopener" class="academy-card academy-card-wide">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-api">API</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Building with the Claude API</h3>
+            <p class="academy-card-desc">Curso completo em vídeo cobrindo desde operações básicas da API até padrões arquiteturais avançados: RAG, tool use, extended thinking, prompt caching, MCP e sistemas de agentes.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Fundamentos da API</span>
+              <span class="academy-highlight">Prompt engineering (XML, few-shot)</span>
+              <span class="academy-highlight">Tool use &amp; batch</span>
+              <span class="academy-highlight">RAG (embeddings, BM25)</span>
+              <span class="academy-highlight">Extended thinking</span>
+              <span class="academy-highlight">Prompt caching</span>
+              <span class="academy-highlight">MCP servers &amp; clients</span>
+              <span class="academy-highlight">Sistemas de agentes</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Devs backend, ML engineers, full-stack</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Python, JSON</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ===================== MCP ===================== -->
+      <section class="content-section">
+        <div class="academy-group-header">
+          <i class="uil uil-plug"></i>
+          <h2>Model Context Protocol</h2>
+          <span class="academy-group-count">2 cursos</span>
+        </div>
+
+        <div class="academy-grid">
+
+          <a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-mcp">MCP</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Introduction to Model Context Protocol</h3>
+            <p class="academy-card-desc">Construa servidores e clientes MCP com o SDK Python. Aprenda as 3 primitivas centrais — Tools, Resources e Prompts — e quando usar cada uma.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Tools (controlado pelo modelo)</span>
+              <span class="academy-highlight">Resources (somente-leitura)</span>
+              <span class="academy-highlight">Prompts (templates)</span>
+              <span class="academy-highlight">Python SDK com decorators</span>
+              <span class="academy-highlight">MCP Inspector</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Devs que querem criar MCP servers</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Python, HTTP básico</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/model-context-protocol-advanced-topics" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-mcp">MCP</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Model Context Protocol: Advanced Topics</h3>
+            <p class="academy-card-desc">Padrões avançados de MCP: sampling, notificações em tempo real, controle de acesso a arquivos (roots), transportes stdio vs HTTP, e considerações de produção.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Sampling</span>
+              <span class="academy-highlight">Notificações &amp; logging</span>
+              <span class="academy-highlight">Roots (acesso a arquivos)</span>
+              <span class="academy-highlight">stdio vs HTTP (SSE)</span>
+              <span class="academy-highlight">Produção &amp; escalabilidade</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Devs com MCP básico</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Python async, SSE</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ===================== CLOUD ===================== -->
+      <section class="content-section">
+        <div class="academy-group-header">
+          <i class="uil uil-cloud"></i>
+          <h2>Integrações Cloud</h2>
+          <span class="academy-group-count">2 cursos</span>
+        </div>
+
+        <div class="academy-grid">
+
+          <a href="https://anthropic.skilljar.com/claude-in-amazon-bedrock" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-cloud">Cloud</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Claude with Amazon Bedrock</h3>
+            <p class="academy-card-desc">Guia completo de integração e deploy do Claude via Amazon Bedrock — desde a API básica até RAG, tool use, MCP, extended thinking e agentes autônomos no ecossistema AWS.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">API Bedrock</span>
+              <span class="academy-highlight">Tool use &amp; batch</span>
+              <span class="academy-highlight">RAG (chunking, embeddings)</span>
+              <span class="academy-highlight">Prompt caching</span>
+              <span class="academy-highlight">MCP em Bedrock</span>
+              <span class="academy-highlight">Agentes autônomos</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Devs AWS, ML engineers</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Python, AWS Bedrock</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/claude-with-google-vertex" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-cloud">Cloud</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Claude with Google Cloud's Vertex AI</h3>
+            <p class="academy-card-desc">Integração e deploy do Claude via Vertex AI — conversas multi-turn, RAG, tool use, MCP, computer use e workflows baseados em agentes dentro do GCP.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Vertex AI setup</span>
+              <span class="academy-highlight">RAG &amp; embeddings</span>
+              <span class="academy-highlight">Tool use</span>
+              <span class="academy-highlight">MCP em GCP</span>
+              <span class="academy-highlight">Computer use</span>
+              <span class="academy-highlight">Agentes &amp; paralelização</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Devs GCP, ML engineers</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Python, GCP</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ===================== AI FLUENCY ===================== -->
+      <section class="content-section">
+        <div class="academy-group-header">
+          <i class="uil uil-brain"></i>
+          <h2>AI Fluency</h2>
+          <span class="academy-group-count">5 cursos</span>
+        </div>
+
+        <div class="callout callout-tip">
+          <i class="uil uil-info-circle"></i>
+          <div>Os cursos de AI Fluency usam o <strong>4D Framework</strong>: <em>Delegation, Description, Discernment e Diligence</em>. Comece por <strong>Framework &amp; Foundations</strong> — os demais cursos (Educators, Students, Teaching, Nonprofits) dependem dele.</div>
+        </div>
+
+        <div class="academy-grid">
+
+          <a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-fluency">AI Fluency</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">AI Fluency: Framework &amp; Foundations</h3>
+            <p class="academy-card-desc">Colaboração eficaz, eficiente, ética e segura com IA. Parceria Anthropic + Prof. Joseph Feller (UCC) e Prof. Rick Dakan (Ringling College). Base para todos os outros cursos de AI Fluency.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">4D Framework</span>
+              <span class="academy-highlight">Delegation</span>
+              <span class="academy-highlight">Description</span>
+              <span class="academy-highlight">Discernment</span>
+              <span class="academy-highlight">Diligence</span>
+              <span class="academy-highlight">Ética e segurança</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Qualquer profissional</span>
+                <span><i class="uil uil-lock"></i> Pré-req: Nenhum — comece aqui</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/ai-fluency-for-educators" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-fluency">AI Fluency</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">AI Fluency for Educators</h3>
+            <p class="academy-card-desc">Capacita professores, designers instrucionais e líderes educacionais a aplicar fluência em IA em suas práticas de ensino e estratégia institucional.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Prática de ensino com IA</span>
+              <span class="academy-highlight">Estratégia institucional</span>
+              <span class="academy-highlight">4D Framework aplicado</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Professores e educadores</span>
+                <span><i class="uil uil-lock"></i> Pré-req: AI Fluency Framework</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/ai-fluency-for-students" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-fluency">AI Fluency</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">AI Fluency for Students</h3>
+            <p class="academy-card-desc">Desenvolva habilidades de fluência em IA que potencializam aprendizado, planejamento de carreira e sucesso acadêmico através de colaboração responsável com IA.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Aprendizado com IA</span>
+              <span class="academy-highlight">Planejamento de carreira</span>
+              <span class="academy-highlight">Sucesso acadêmico</span>
+              <span class="academy-highlight">Colaboração responsável</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Estudantes universitários</span>
+                <span><i class="uil uil-lock"></i> Pré-req: AI Fluency Framework</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/teaching-ai-fluency" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-fluency">AI Fluency</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">Teaching AI Fluency</h3>
+            <p class="academy-card-desc">Capacita professores, designers instrucionais e outros a ensinar e avaliar fluência em IA em ambientes presenciais ou síncronos liderados por instrutores.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">Ensino presencial/síncrono</span>
+              <span class="academy-highlight">Avaliação de AI Fluency</span>
+              <span class="academy-highlight">Ambientes instructor-led</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Instrutores e formadores</span>
+                <span><i class="uil uil-lock"></i> Pré-req: AI Fluency Framework</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+          <a href="https://anthropic.skilljar.com/ai-fluency-for-nonprofits" target="_blank" rel="noopener" class="academy-card">
+            <div class="academy-card-top">
+              <span class="academy-card-category academy-cat-fluency">AI Fluency</span>
+              <span class="academy-card-cert"><i class="uil uil-award"></i> Certificado</span>
+            </div>
+            <h3 class="academy-card-title">AI Fluency for Nonprofits</h3>
+            <p class="academy-card-desc">Parceria Anthropic + GivingTuesday. Capacita profissionais de ONGs a desenvolver fluência em IA para aumentar impacto organizacional mantendo fidelidade à missão.</p>
+            <div class="academy-card-highlights">
+              <span class="academy-highlight">4D Framework para ONGs</span>
+              <span class="academy-highlight">Arrecadação &amp; comunicações</span>
+              <span class="academy-highlight">Operações com IA</span>
+              <span class="academy-highlight">Impacto responsável</span>
+            </div>
+            <div class="academy-card-footer">
+              <div class="academy-card-meta">
+                <span><i class="uil uil-user"></i> Profissionais de ONGs</span>
+                <span><i class="uil uil-lock"></i> Pré-req: AI Fluency Framework (recomendado)</span>
+              </div>
+              <span class="academy-card-cta">Inscrever-se ↗</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="callout callout-tip">
+          <i class="uil uil-graduation-cap"></i>
+          <div><strong>Dica de sequência:</strong> Se você chegou até aqui pelo nosso curso, seu próximo passo natural é <strong>Claude Code in Action</strong> (reforça tudo que vimos na prática) e <strong>Introduction to Agent Skills</strong> (aprofunda o que vimos no módulo 06). Para a API, vá direto para <strong>Building with the Claude API</strong>.</div>
+        </div>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <a href="/modules/05-avancado/resources.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Recursos &amp; Referências</a>
+      </nav>
+
+    </article>
+    <footer class="site-footer"><span class="version-tag">v1.9.1</span></footer>
+  </div>
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>

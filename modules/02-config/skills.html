@@ -181,6 +181,27 @@ Use Jest/Vitest. Salve em __tests__/[filename].test.ts</code></pre><button data-
       </section>
 
       <section class="module-section">
+        <h2>Restringindo ferramentas com <code>allowed-tools</code></h2>
+        <p>O campo <code>allowed-tools</code> limita quais ferramentas o Claude pode usar durante a execução da skill. Isso aumenta a segurança e evita efeitos colaterais indesejados:</p>
+        <div class="code-block-wrapper"><pre><code class="language-markdown">---
+name: review-pr
+description: Revisa pull requests sem modificar nenhum arquivo
+user-invocable: true
+allowed-tools: Bash(gh pr view *), Bash(git diff *), WebFetch, Read
+---
+
+# Review PR
+
+Analise o PR $ARGUMENTS...
+# O Claude só pode usar as ferramentas listadas — não pode editar arquivos</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-tip">
+          <i class="uil uil-lightbulb-alt"></i>
+          <div><strong>Padrão glob:</strong> <code>Bash(git *)</code> permite qualquer comando git. <code>Bash(gh pr *)</code> permite somente comandos <code>gh pr</code>. Sem <code>allowed-tools</code>, a skill herda todas as permissões da sessão atual.</div>
+        </div>
+      </section>
+
+      <section class="module-section">
         <h2>Skills globais vs. de projeto</h2>
         <div class="table-wrapper">
           <table class="data-table">

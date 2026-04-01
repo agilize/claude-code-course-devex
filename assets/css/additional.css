@@ -1571,3 +1571,150 @@ html {
     padding: 2px 6px;
   }
 }
+
+/* ---------------------------------------------------------------
+   Anthropic Academy — Cards
+--------------------------------------------------------------- */
+.academy-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.academy-group-header h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+.academy-group-header > i {
+  font-size: 1.25rem;
+  color: var(--accent);
+}
+.academy-group-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 10px;
+  margin-left: auto;
+}
+
+.academy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.academy-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.academy-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+}
+.academy-card-wide {
+  grid-column: 1 / -1;
+}
+.academy-card-wide .academy-card-highlights {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.academy-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.academy-card-category {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.academy-cat-code    { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+.academy-cat-api     { background: color-mix(in srgb, var(--info) 15%, transparent);   color: var(--info); }
+.academy-cat-mcp     { background: color-mix(in srgb, var(--success) 15%, transparent); color: var(--success); }
+.academy-cat-cloud   { background: color-mix(in srgb, #a78bfa 15%, transparent); color: #a78bfa; }
+.academy-cat-foundation { background: color-mix(in srgb, var(--warning) 15%, transparent); color: var(--warning); }
+.academy-cat-fluency { background: color-mix(in srgb, #f472b6 15%, transparent); color: #f472b6; }
+
+.academy-card-cert {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.academy-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--text-primary);
+}
+.academy-card-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  flex: 1;
+}
+.academy-card-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.academy-highlight {
+  font-size: 0.6875rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.academy-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.academy-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.academy-card-meta span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.academy-card-cta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .academy-grid { grid-template-columns: 1fr; }
+  .academy-card-wide { grid-column: 1; }
+}

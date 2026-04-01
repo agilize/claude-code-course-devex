@@ -748,6 +748,67 @@ POR QUÊ IMPORTA:
   sem reprocessar os 9 que funcionaram.</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
       </section>
 
+      <!-- ==================== SUBAGENTES CUSTOMIZADOS ==================== -->
+
+      <section class="content-section">
+        <h2><i class="uil uil-robot"></i> Criando Subagentes Customizados com <code>/agents</code></h2>
+        <p>O Claude Code permite criar <strong>subagentes customizados</strong> — agentes pré-configurados com papéis, ferramentas e comportamentos específicos — usando o comando <code>/agents</code> ou criando arquivos <code>.claude/agents/nome.md</code>.</p>
+
+        <h3>Formato do arquivo de agente</h3>
+        <div class="code-block-wrapper"><pre><code class="language-markdown">---
+name: code-reviewer
+description: Revisor de código especializado em segurança e performance.
+  Use quando precisar de revisão detalhada de PRs ou funções específicas.
+allowed-tools: Read, Glob, Grep, WebFetch
+---
+
+# Code Reviewer
+
+Você é um revisor de código especializado. Sua missão:
+
+1. Leia os arquivos solicitados
+2. Identifique problemas de: segurança, performance, legibilidade, testes ausentes
+3. Classifique cada issue: CRITICAL / HIGH / MEDIUM / LOW
+4. Retorne um JSON estruturado:
+
+{
+  "summary": "...",
+  "issues": [{ "file": "...", "line": N, "severity": "...", "description": "..." }],
+  "score": 0-10
+}</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Onde criar os arquivos</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">~/.claude/agents/          ← global (disponível em todos os projetos)
+└── code-reviewer.md
+
+.claude/agents/            ← específico do projeto (pode ser commitado)
+└── feature-analyzer.md</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-info">
+          <i class="uil uil-info-circle"></i>
+          <div><strong>Como o Claude escolhe o subagente:</strong> A <code>description</code> no frontmatter é o que o Claude usa para decidir quando acionar automaticamente o subagente. Escreva descrições claras que incluam os casos de uso ("Use quando...") e palavras-chave relevantes.</div>
+        </div>
+
+        <h3>Boas práticas para subagentes eficazes</h3>
+        <div class="code-block-wrapper"><pre><code class="language-text">OUTPUTS ESTRUTURADOS (sempre):
+  Defina o formato de retorno no corpo do agente.
+  JSON com campos fixos é mais confiável que texto livre.
+  O orquestrador sabe exatamente onde encontrar cada dado.
+
+FERRAMENTAS RESTRITAS (allowed-tools):
+  Dê ao agente somente as ferramentas que ele precisa.
+  Um revisor só precisa de leitura — não de Bash ou Edit.
+  Isso evita side-effects acidentais e aumenta a segurança.
+
+PAPEL BEM DEFINIDO:
+  Um subagente = um papel. Não misture "analisa E corrige E documenta".
+  Quanto mais específico, mais confiável e previsível.
+
+INSTRUÇÃO DE REPORTE DE BLOQUEIOS:
+  "Se você não conseguir completar a tarefa, retorne
+  { 'status': 'blocked', 'reason': '...' } em vez de tentar algo diferente."</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
       <!-- ==================== PARTE 8: ANTI-PADRÕES ==================== -->
 
       <section class="content-section">

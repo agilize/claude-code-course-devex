@@ -1009,7 +1009,7 @@ a.btn-next:hover {
   font-size: 13px;
   color: var(--text-muted);
   transition: border-color 0.2s, background 0.2s;
-  margin-bottom: 28px;
+  margin-bottom: 48px;
 }
 .hero-xref:hover {
   border-color: color-mix(in srgb, #C9A87C 45%, var(--border));

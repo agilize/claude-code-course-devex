@@ -899,9 +899,8 @@ html.light .agilize-logo-light { display: inline; }
 .sidebar-by {
   display: flex;
   align-items: center;
-  padding: 0 16px 14px;
 }
-.sidebar-by .agilize-logo { height: 20px; opacity: 0.6; transition: opacity 0.2s; }
+.sidebar-by .agilize-logo { height: 18px; opacity: 0.5; transition: opacity 0.2s; }
 .sidebar-by:hover .agilize-logo { opacity: 1; }
 .hero-by {
   display: inline-flex;
@@ -914,18 +913,18 @@ html.light .agilize-logo-light { display: inline; }
 }
 .hero-by .agilize-logo { height: 20px; }
 .hero-by:hover { color: var(--text-primary); }
-.sidebar-version {
+.sidebar-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 10px 16px 14px;
   border-top: 1px solid var(--border);
   margin-top: auto;
+}
+.sidebar-bottom .version-tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.sidebar-version span {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 4px;

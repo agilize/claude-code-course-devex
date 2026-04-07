@@ -880,36 +880,40 @@ a.btn-next:hover {
   padding: 2px 8px;
   color: var(--text-muted);
 }
+/* Agilize logo — dark/light switching */
+.agilize-logo { height: 18px; width: auto; vertical-align: middle; }
+.agilize-logo-light { display: none; }
+html.light .agilize-logo-dark { display: none; }
+html.light .agilize-logo-light { display: inline; }
 .footer-by {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   margin-bottom: 8px;
   font-size: 12px;
   color: var(--text-muted);
-}
-.footer-by a {
-  color: var(--accent);
   text-decoration: none;
-  font-weight: 500;
 }
+.footer-by .agilize-logo { height: 16px; }
 .sidebar-by {
+  display: flex;
+  align-items: center;
   padding: 0 16px 14px;
-  font-size: 11px;
-  color: var(--text-muted);
 }
-.sidebar-by a {
-  color: var(--accent);
-  text-decoration: none;
-}
+.sidebar-by .agilize-logo { height: 20px; opacity: 0.6; transition: opacity 0.2s; }
+.sidebar-by:hover .agilize-logo { opacity: 1; }
 .hero-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 16px;
   font-size: 13px;
   color: var(--text-muted);
-}
-.hero-by a {
-  color: var(--accent);
   text-decoration: none;
-  font-weight: 500;
 }
+.hero-by .agilize-logo { height: 20px; }
+.hero-by:hover { color: var(--text-primary); }
 .sidebar-version {
   padding: 10px 16px 14px;
   border-top: 1px solid var(--border);

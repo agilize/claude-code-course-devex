@@ -97,11 +97,13 @@
 
     <!-- Hero -->
     <section class="hero">
-      <a href="https://building-like-anthropic.vercel.app/" target="_blank" rel="noopener" class="hero-xref">
-        <span class="hero-xref-badge">Deep Study</span>
-        <span class="hero-xref-text">How Anthropic Engineers Build Software — 100+ referências oficiais</span>
-        <i class="uil uil-external-link-alt"></i>
-      </a>
+      <span class="hero-xref-wrap" id="heroXrefWrap">
+        <a href="https://building-like-anthropic.vercel.app/" target="_blank" rel="noopener" class="hero-xref">
+          <span class="hero-xref-badge">Deep Study</span>
+          <span class="hero-xref-text">How Anthropic Engineers Build Software &mdash; 100+ refer&ecirc;ncias oficiais</span>
+          <svg class="hero-xref-ext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </span>
       <div class="hero-badge"><i class="uil uil-bolt-alt"></i> Guia Completo</div>
       <h1 class="hero-title">Claude Code<br><span class="accent">para Engenheiros</span></h1>
       <p class="hero-subtitle">Domine o Claude Code como engenheiro de software profissional. 21 módulos, exemplos reais, exercícios práticos.</p>
@@ -319,5 +321,39 @@
   </div>
 
   <script src="/assets/js/app.js"></script>
+  <script>
+  (function(){
+    var w = document.getElementById('heroXrefWrap');
+    if (!w) return;
+    var angle = 0, spinning = true, raf;
+    function spin() {
+      if (!spinning) return;
+      angle = (angle + 1.5) % 360;
+      w.style.background = 'conic-gradient(from ' + angle + 'deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a)';
+      raf = requestAnimationFrame(spin);
+    }
+    spin();
+    var fa = 0, loops = 0;
+    function flash() {
+      fa = (fa + 10) % 360;
+      if (fa < 10) loops++;
+      if (loops >= 1) {
+        w.style.background = 'conic-gradient(from 0deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a)';
+        return;
+      }
+      w.style.background =
+        'conic-gradient(from ' + fa + 'deg at 50% 50%, transparent 0deg, transparent 330deg, #fff 350deg, transparent 360deg),' +
+        'conic-gradient(from 0deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a)';
+      raf = requestAnimationFrame(flash);
+    }
+    w.addEventListener('mouseenter', function() {
+      spinning = false; cancelAnimationFrame(raf);
+      fa = 0; loops = 0; flash();
+    });
+    w.addEventListener('mouseleave', function() {
+      spinning = true; cancelAnimationFrame(raf); spin();
+    });
+  })();
+  </script>
 </body>
 </html>

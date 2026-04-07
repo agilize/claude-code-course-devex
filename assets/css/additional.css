@@ -996,42 +996,54 @@ a.btn-next:hover {
   gap: 10px;
 }
 
-/* Hero cross-reference link (top bar) */
+/* Hero cross-reference link — animated gradient border */
+.hero-xref-wrap {
+  display: inline-block;
+  border-radius: 7px;
+  padding: 1px;
+  margin-bottom: 48px;
+  background: conic-gradient(from 0deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a);
+}
 .hero-xref {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: color-mix(in srgb, #C9A87C 6%, var(--bg-card));
-  border: 1px solid color-mix(in srgb, #C9A87C 22%, var(--border));
-  text-decoration: none;
-  font-size: 13px;
+  gap: 0.7rem;
+  padding: 0.6rem 1.1rem 0.6rem 0.6rem;
+  background: var(--bg-primary);
+  border: none;
+  border-radius: 6px;
   color: var(--text-muted);
-  transition: border-color 0.2s, background 0.2s;
-  margin-bottom: 48px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background 0.25s, color 0.25s;
 }
-.hero-xref:hover {
-  border-color: color-mix(in srgb, #C9A87C 45%, var(--border));
-  background: color-mix(in srgb, #C9A87C 12%, var(--bg-card));
+.hero-xref-wrap:hover .hero-xref {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--bg-primary) 92%, transparent);
 }
 .hero-xref-badge {
-  font-size: 10px;
+  background: rgba(232, 147, 122, 0.15);
+  color: #e8937a;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #C9A87C;
-  background: color-mix(in srgb, #C9A87C 15%, transparent);
-  padding: 3px 8px;
+  padding: 0.3em 0.6em;
   border-radius: 4px;
-  white-space: nowrap;
+  flex-shrink: 0;
 }
 .hero-xref-text {
+  font-weight: 500;
   color: var(--text-secondary);
 }
-.hero-xref i {
-  color: color-mix(in srgb, #C9A87C 60%, var(--text-muted));
-  font-size: 14px;
+.hero-xref-ext {
+  color: #e8937a;
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+.hero-xref:hover .hero-xref-ext {
+  opacity: 1;
 }
 
 /* ============================================================
@@ -1644,12 +1656,15 @@ html {
 
   /* Hero cross-reference */
   .hero-xref {
-    font-size: 12px;
-    padding: 8px 12px;
-    gap: 8px;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.8rem 0.5rem 0.5rem;
+    gap: 0.5rem;
   }
   .hero-xref-badge {
-    font-size: 9px;
+    font-size: 0.55rem;
+  }
+  .hero-xref-wrap {
+    margin-bottom: 32px;
   }
 
   /* Site footer */

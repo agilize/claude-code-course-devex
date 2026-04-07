@@ -986,6 +986,82 @@ html.light .anthropic-logo-light { display: inline; }
 }
 
 /* Deep Study banner */
+/* Recommended Courses */
+.recommended-courses {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 32px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.recommended-courses .section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.recommended-courses .section-title i { color: #ff0000; font-size: 22px; }
+.recommended-courses .section-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+.recommended-courses .section-subtitle a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.recommended-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.recommended-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.recommended-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.recommended-card-icon {
+  font-size: 24px;
+  color: #ff0000;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.recommended-card-icon .uil-robot { color: #a78bfa; }
+.recommended-card-body h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+.recommended-card-body p {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+.recommended-card-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.recommended-card-meta .badge { font-size: 10px; padding: 2px 6px; }
+@media (max-width: 768px) {
+  .recommended-grid { grid-template-columns: 1fr; }
+}
+
 .deep-study-banner {
   max-width: 860px;
   margin: 0 auto;

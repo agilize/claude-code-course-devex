@@ -1046,11 +1046,11 @@ a.btn-next:hover {
   opacity: 1;
 }
 html.light .hero-xref-badge {
-  background: rgba(154, 120, 60, 0.15);
-  color: #7a5c2e;
+  background: rgba(180, 110, 20, 0.12);
+  color: #9B5E0E;
 }
 html.light .hero-xref-ext {
-  color: #7a5c2e;
+  color: #9B5E0E;
 }
 
 /* ============================================================

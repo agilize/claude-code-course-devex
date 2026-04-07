@@ -333,6 +333,9 @@ body {
 
 /* Hero */
 .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 64px 32px 48px;
   width: 100%;
   max-width: 860px;

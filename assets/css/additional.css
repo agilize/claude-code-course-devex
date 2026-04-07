@@ -916,17 +916,21 @@ html.light .agilize-logo-light { display: inline; }
 }
 .sidebar-by .agilize-logo { height: 18px; opacity: 0.5; transition: opacity 0.2s; }
 .sidebar-by:hover .agilize-logo { opacity: 1; }
-.hero-by {
+.hero-credits {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 20px;
   font-size: 13px;
   color: var(--text-muted);
-  text-decoration: none;
 }
-.hero-by .agilize-logo { height: 20px; }
-.hero-by:hover { color: var(--text-primary); }
+.hero-credits-logo { height: 14px; width: auto; }
+.anthropic-logo-light { display: none; }
+html.light .anthropic-logo-dark { display: none; }
+html.light .anthropic-logo-light { display: inline; }
+.hero-credits-sep { opacity: 0.4; }
+.hero-credits-by { display: inline-flex; align-items: center; }
+.hero-credits-by .agilize-logo { height: 18px; }
 .sidebar-bottom {
   display: flex;
   align-items: center;

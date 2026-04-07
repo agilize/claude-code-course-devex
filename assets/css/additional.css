@@ -210,8 +210,7 @@ body {
 /* Progress bar */
 .progress-overview {
   padding: 24px 32px 0;
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: 100%;
   width: 100%;
 }
 .progress-header {
@@ -338,8 +337,7 @@ body {
   align-items: flex-start;
   padding: 64px 32px 48px;
   width: 100%;
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
 }
@@ -406,8 +404,7 @@ body {
 .part-section {
   padding: 0 32px 48px;
   width: 100%;
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
 }
@@ -568,8 +565,7 @@ a.btn-next:hover {
 
 /* Module body */
 .module-body {
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: 100%;
   padding: 32px 32px 64px;
 }
 .module-header {
@@ -860,8 +856,7 @@ a.btn-next:hover {
   border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-size: 13px;
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: 100%;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
@@ -937,8 +932,7 @@ a.btn-next:hover {
 
 /* Deep Study banner */
 .deep-study-banner {
-  max-width: 860px;
-  margin: 0 auto;
+  max-width: 100%;
   padding: 48px 32px;
   width: 100%;
   box-sizing: border-box;

@@ -989,8 +989,8 @@ html.light .anthropic-logo-light { display: inline; }
   padding-top: 12px;
   border-top: 1px solid var(--border);
 }
-.nav-part-courses .nav-num i.uil-youtube { color: #c4302b; }
-html.light .nav-part-courses .nav-num i.uil-youtube { color: #b7271f; }
+/* YouTube custom icon */
+.icon-yt { width: 1em; height: 1em; vertical-align: -0.125em; }
 .nav-part-courses .nav-num i.uil-robot { color: #a78bfa; }
 
 /* Deep Study banner */
@@ -1010,8 +1010,8 @@ html.light .nav-part-courses .nav-num i.uil-youtube { color: #b7271f; }
   align-items: center;
   gap: 8px;
 }
-.recommended-courses .section-title i { color: #c4302b; font-size: 22px; }
-html.light .recommended-courses .section-title i { color: #b7271f; }
+.recommended-courses .section-title i { font-size: 22px; }
+.recommended-courses .section-title .icon-yt { width: 22px; height: 22px; }
 .recommended-courses .section-subtitle {
   font-size: 14px;
   color: var(--text-muted);
@@ -1044,11 +1044,10 @@ html.light .recommended-courses .section-title i { color: #b7271f; }
 }
 .recommended-card-icon {
   font-size: 24px;
-  color: #c4302b;
   flex-shrink: 0;
   line-height: 1;
 }
-html.light .recommended-card-icon { color: #b7271f; }
+.recommended-card-icon .icon-yt { width: 24px; height: 24px; }
 .recommended-card-icon .uil-robot { color: #a78bfa; }
 .recommended-card-body h3 {
   font-size: 14px;

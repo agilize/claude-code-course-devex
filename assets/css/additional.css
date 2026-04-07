@@ -372,6 +372,13 @@ body {
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
+.hero-cc-logo {
+  width: 52px;
+  height: 52px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  margin-right: 10px;
+}
 .hero-title .accent {
   color: var(--accent);
 }

@@ -732,8 +732,7 @@ a.btn-next:hover {
 }
 .callout code {
   display: inline;
-  white-space: normal;
-  overflow-wrap: break-word;
+  white-space: nowrap;
 }
 .callout-tip { border-color: var(--success); }
 .callout-warning { border-color: var(--warning); }
@@ -1410,10 +1409,9 @@ html {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
-/* Inline code: only break truly long tokens, never break short strings like .env */
+/* Inline code: never break mid-word, keep readable */
 .module-body code:not(pre code) {
-  overflow-wrap: break-word;
-  word-break: break-word;
+  white-space: nowrap;
 }
 /* Table wrapper: tables scroll inside their wrapper, not the page */
 .table-wrapper {

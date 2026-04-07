@@ -112,8 +112,7 @@
   font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "SF Mono", monospace;
   font-size: 0.875em;
   color: var(--accent);
-  white-space: normal;
-  overflow-wrap: break-word;
+  white-space: nowrap;
 }
 
 /* ---------------------------------------------------------------

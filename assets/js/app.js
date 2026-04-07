@@ -55,25 +55,40 @@
   };
 
   // ============================================================
-  // THEME
+  // THEME (3-theme: dark / light / terminal)
   // ============================================================
-  function initTheme() {
-    const saved = localStorage.getItem('cc-theme') || 'dark';
-    document.documentElement.className = saved;
-    updateThemeToggle(saved);
+  let currentTheme = 'dark';
+  // Track which non-terminal theme was last used
+  let lastBaseTheme = 'dark';
+
+  function applyTheme(t) {
+    currentTheme = t;
+    document.documentElement.className = t;
+    localStorage.setItem('cc-theme', t);
+    if (t !== 'terminal') {
+      lastBaseTheme = t;
+      localStorage.setItem('cc-theme-base', t);
+    }
   }
 
-  function updateThemeToggle(theme) {
-    const btn = document.querySelector('[data-testid="theme-toggle"]');
-    if (btn) btn.innerHTML = theme === 'dark' ? '<i class="uil uil-sun"></i>' : '<i class="uil uil-moon"></i>';
+  function initTheme() {
+    const saved = localStorage.getItem('cc-theme') || 'dark';
+    lastBaseTheme = (saved === 'terminal')
+      ? (localStorage.getItem('cc-theme-base') || 'dark')
+      : saved;
+    applyTheme(saved);
   }
 
   function toggleTheme() {
-    const current = document.documentElement.className === 'dark' ? 'dark' : 'light';
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.className = next;
-    localStorage.setItem('cc-theme', next);
-    updateThemeToggle(next);
+    if (currentTheme === 'terminal') {
+      applyTheme(lastBaseTheme === 'dark' ? 'light' : 'dark');
+    } else {
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    }
+  }
+
+  function activateTerminal() {
+    if (currentTheme !== 'terminal') applyTheme('terminal');
   }
 
   // ============================================================
@@ -152,48 +167,48 @@
   // SEARCH
   // ============================================================
   function initSearch() {
-    const input = document.querySelector('[data-testid="search-input"]');
-    const results = document.querySelector('[data-testid="search-results"]');
-    if (!input || !results) return;
+    document.querySelectorAll('.search-container').forEach(function(container) {
+      var input = container.querySelector('.search-input');
+      var results = container.querySelector('.search-results');
+      if (!input || !results) return;
 
-    input.addEventListener('input', function() {
-      const query = this.value.trim().toLowerCase();
-      if (!query) {
-        results.style.display = 'none';
-        results.innerHTML = '';
-        return;
-      }
-      const matches = MODULES.filter(m => {
-        const keywords = SEARCH_KEYWORDS[m.id] || [];
-        return m.title.toLowerCase().includes(query) ||
-          keywords.some(k => k.toLowerCase().includes(query));
+      input.addEventListener('input', function() {
+        var query = this.value.trim().toLowerCase();
+        if (!query) {
+          results.style.display = 'none';
+          results.innerHTML = '';
+          return;
+        }
+        var matches = MODULES.filter(function(m) {
+          var keywords = SEARCH_KEYWORDS[m.id] || [];
+          return m.title.toLowerCase().includes(query) ||
+            keywords.some(function(k) { return k.toLowerCase().includes(query); });
+        });
+        if (matches.length === 0) {
+          results.style.display = 'none';
+          return;
+        }
+        results.innerHTML = matches.slice(0, 6).map(function(m) {
+          return '<a data-testid="search-result-item" href="' + m.path + '" class="search-result-item">' +
+            '<span class="result-num">' + String(m.id).padStart(2, '0') + '</span>' +
+            '<span class="result-title">' + m.title + '</span>' +
+            '</a>';
+        }).join('');
+        results.style.display = 'block';
       });
-      if (matches.length === 0) {
-        results.style.display = 'none';
-        return;
-      }
-      results.innerHTML = matches.slice(0, 6).map(m =>
-        '<a data-testid="search-result-item" href="' + m.path + '" class="search-result-item">' +
-        '<span class="result-num">' + String(m.id).padStart(2, '0') + '</span>' +
-        '<span class="result-title">' + m.title + '</span>' +
-        '</a>'
-      ).join('');
-      results.style.display = 'block';
-    });
 
-    // Close on outside click
-    document.addEventListener('click', function(e) {
-      if (!input.contains(e.target) && !results.contains(e.target)) {
-        results.style.display = 'none';
-      }
-    });
+      document.addEventListener('click', function(e) {
+        if (!input.contains(e.target) && !results.contains(e.target)) {
+          results.style.display = 'none';
+        }
+      });
 
-    // Navigate on enter
-    input.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        results.style.display = 'none';
-        input.value = '';
-      }
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          results.style.display = 'none';
+          input.value = '';
+        }
+      });
     });
   }
 
@@ -281,9 +296,33 @@
     // Also re-init after Prism highlights (doesn't re-add listeners if already added)
     setTimeout(initCopyButtons, 200);
 
-    // Theme toggle
-    const themeBtn = document.querySelector('[data-testid="theme-toggle"]');
-    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+    // Theme toggle (sun/moon button)
+    const themeToggleBar = document.getElementById('themeToggleBar');
+    if (themeToggleBar) themeToggleBar.addEventListener('click', toggleTheme);
+
+    // Terminal toggle button
+    const terminalToggle = document.getElementById('terminalToggle');
+    if (terminalToggle) terminalToggle.addEventListener('click', activateTerminal);
+
+    // CLI typing animation for terminal button
+    (function typeCliLabel() {
+      var el = document.querySelector('.cli-text');
+      if (!el) return;
+      var word = 'CLI', i = 0, erasing = false;
+      function tick() {
+        if (!erasing) {
+          el.textContent = word.slice(0, i);
+          if (i < word.length) { i++; setTimeout(tick, 150); }
+          else { erasing = true; setTimeout(tick, 2000); }
+        } else {
+          i--;
+          el.textContent = word.slice(0, i);
+          if (i > 0) setTimeout(tick, 100);
+          else { erasing = false; setTimeout(tick, 800); }
+        }
+      }
+      tick();
+    })();
 
     // Mobile sidebar toggle with backdrop
     const hamburger = document.getElementById('hamburger');
@@ -320,5 +359,5 @@
   });
 
   // Expose for inline handlers
-  window.ccApp = { toggleTheme, toggleComplete, markComplete };
+  window.ccApp = { toggleTheme, activateTerminal, toggleComplete, markComplete };
 })();

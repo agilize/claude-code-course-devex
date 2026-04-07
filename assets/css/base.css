@@ -83,6 +83,37 @@ html.light {
 }
 
 /* ---------------------------------------------------------------
+   Terminal Theme (Claude Code CRT)
+--------------------------------------------------------------- */
+html.terminal {
+  --bg-primary:   #1a1a2e;
+  --bg-secondary: #1e1e32;
+  --bg-card:      #24243a;
+
+  --text-primary:   #e0ddd5;
+  --text-secondary: #9a9690;
+  --text-muted:     #5a5750;
+
+  --accent:       #e8937a;
+  --accent-hover: #f0a58e;
+
+  --border:  #33334d;
+  --code-bg: #1e1e32;
+
+  --success: #7ec9a0;
+  --warning: #dac87e;
+  --info:    #7eb8da;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.7);
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+}
+
+/* ---------------------------------------------------------------
    Box-Sizing Reset
 --------------------------------------------------------------- */
 *,

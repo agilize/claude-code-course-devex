@@ -11,8 +11,34 @@
   <link rel="stylesheet" href="/assets/css/additional.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    /* Apply saved theme before paint to prevent flash */
+    (function(){var t=localStorage.getItem('cc-theme')||'dark';document.documentElement.className=t})();
+  </script>
 </head>
 <body>
+  <!-- CRT Effects (terminal theme only) -->
+  <div class="crt-interference"></div>
+  <div class="crt-tear"></div>
+
+  <!-- Terminal Bar (visible only in terminal theme) -->
+  <div class="terminal-bar">
+    <div class="terminal-dots"><span></span><span></span><span></span></div>
+    <div class="terminal-title">claude-code-course &mdash; terminal &mdash; 120&times;48</div>
+    <div class="terminal-bar-search search-container">
+      <input type="text" class="search-input terminal-search-input" placeholder="Buscar módulos, comandos, conceitos...">
+      <div class="search-results terminal-search-results"></div>
+    </div>
+    <div class="theme-switcher" id="themeSwitcherBar">
+      <button class="theme-toggle" id="themeToggleBar" title="Alternar claro/escuro">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="theme-btn-terminal" id="terminalToggle" title="Terminal mode">
+        <span>&gt;</span><span class="cli-typing"><span class="cli-text"></span><span class="cli-cursor">_</span></span>
+      </button>
+    </div>
+  </div>
   <aside data-testid="sidebar" class="sidebar">
     <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><img src="/assets/img/claudecode.png" alt="Claude Code" class="cc-logo"></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 29</span></div>
     <nav class="sidebar-nav">
@@ -72,7 +98,6 @@
     <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">Seleção de Modelos</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
     <div class="topbar">
       <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> <span>Parte 5 — Avançado</span> <span>Seleção de Modelos</span></nav>
-      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
     </div>
     <article class="module-body">
 

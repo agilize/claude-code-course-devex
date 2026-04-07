@@ -26,6 +26,7 @@
     { id: 18, title: 'Claude API & Agent SDK', path: '/modules/05-avancado/api-sdk.html', part: 5 },
     { id: 19, title: 'Boas Práticas', path: '/modules/05-avancado/best-practices.html', part: 5 },
     { id: 20, title: 'Recursos & Referências', path: '/modules/05-avancado/resources.html', part: 5 },
+    { id: 21, title: 'RTK — Economia de Tokens', path: '/modules/05-avancado/rtk.html', part: 5 },
   ];
 
   // Search keywords per module
@@ -50,6 +51,7 @@
     18: ['api', 'sdk', 'anthropic sdk', 'agent sdk', 'tool use', 'streaming'],
     19: ['boas práticas', 'patterns', 'segurança', 'dicas', 'prompt', 'eficiente'],
     20: ['recursos', 'referências', 'documentação', 'docs', 'vídeos', 'comunidade', 'links'],
+    21: ['rtk', 'tokens', 'economia', 'proxy', 'rust', 'otimização', 'savings', 'hook', 'filtro', 'gain'],
   };
 
   // ============================================================

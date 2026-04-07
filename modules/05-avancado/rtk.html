@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RTK — Economia de Tokens — Claude Code Course</title>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/modules.css">
+  <link rel="stylesheet" href="/assets/css/prism.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="/assets/css/additional.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <aside data-testid="sidebar" class="sidebar">
+    <div class="sidebar-logo"><a href="/" class="logo-link"><span class="logo-icon"><i class="uil uil-bolt-alt"></i></span><span class="logo-text">Claude Code<br><small>Course</small></span></a><div class="progress-mini"><div class="progress-mini-bar" id="sidebar-progress-bar"></div></div><span class="progress-mini-text" id="sidebar-progress-text">0 / 29</span></div>
+    <nav class="sidebar-nav">
+      <div class="nav-part"><span class="nav-part-label">PARTE 1 — FUNDAÇÕES</span>
+        <a data-testid="nav-module-1" href="/modules/01-fundacoes/" class="nav-link"><span class="nav-num">01</span><span class="nav-title">O que é Claude Code</span></a>
+        <a data-testid="nav-module-2" href="/modules/01-fundacoes/02-cli.html" class="nav-link"><span class="nav-num">02</span><span class="nav-title">CLI Completo</span></a>
+        <a data-testid="nav-module-3" href="/modules/01-fundacoes/claude-md.html" class="nav-link"><span class="nav-num">03</span><span class="nav-title">CLAUDE.md</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 2 — CONFIGURAÇÃO</span>
+        <a data-testid="nav-module-4" href="/modules/02-config/tools.html" class="nav-link"><span class="nav-num">04</span><span class="nav-title">Ferramentas (Tools)</span></a>
+        <a data-testid="nav-module-5" href="/modules/02-config/settings.html" class="nav-link"><span class="nav-num">05</span><span class="nav-title">Settings &amp; Permissões</span></a>
+        <a data-testid="nav-module-6" href="/modules/02-config/skills.html" class="nav-link"><span class="nav-num">06</span><span class="nav-title">Skills (Slash Commands)</span></a>
+        <a data-testid="nav-module-7" href="/modules/02-config/hooks.html" class="nav-link"><span class="nav-num">07</span><span class="nav-title">Hooks</span></a>
+        <a data-testid="nav-module-8" href="/modules/02-config/keybindings.html" class="nav-link"><span class="nav-num">08</span><span class="nav-title">Keybindings</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 3 — MEMÓRIA &amp; CONTEXTO</span>
+        <a data-testid="nav-module-9" href="/modules/03-memoria-contexto/memory.html" class="nav-link"><span class="nav-num">09</span><span class="nav-title">Sistema de Memória</span></a>
+        <a data-testid="nav-module-10" href="/modules/03-memoria-contexto/context.html" class="nav-link"><span class="nav-num">10</span><span class="nav-title">Gestão de Contexto</span></a>
+        <a data-testid="nav-module-11" href="/modules/03-memoria-contexto/mcp.html" class="nav-link"><span class="nav-num">11</span><span class="nav-title">MCP Servers</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 4 — AGENTES</span>
+        <a data-testid="nav-module-12" href="/modules/04-agentes/agent-tool.html" class="nav-link"><span class="nav-num">12</span><span class="nav-title">Agent Tool</span></a>
+        <a data-testid="nav-module-13" href="/modules/04-agentes/subagents.html" class="nav-link"><span class="nav-num">13</span><span class="nav-title">Subagentes &amp; Agent Teams</span></a>
+        <a data-testid="nav-module-14" href="/modules/04-agentes/plan-mode.html" class="nav-link"><span class="nav-num">14</span><span class="nav-title">Plan Mode</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 5 — AVANÇADO</span>
+        <a data-testid="nav-module-15" href="/modules/05-avancado/cli-corporate.html" class="nav-link"><span class="nav-num">15</span><span class="nav-title">CLI Corporativo</span></a>
+        <a data-testid="nav-module-16" href="/modules/05-avancado/ide.html" class="nav-link"><span class="nav-num">16</span><span class="nav-title">IDE Integration</span></a>
+        <a data-testid="nav-module-17" href="/modules/05-avancado/models.html" class="nav-link"><span class="nav-num">17</span><span class="nav-title">Seleção de Modelos</span></a>
+        <a data-testid="nav-module-18" href="/modules/05-avancado/api-sdk.html" class="nav-link"><span class="nav-num">18</span><span class="nav-title">Claude API &amp; Agent SDK</span></a>
+        <a data-testid="nav-module-19" href="/modules/05-avancado/best-practices.html" class="nav-link"><span class="nav-num">19</span><span class="nav-title">Boas Práticas</span></a>
+        <a data-testid="nav-module-20" href="/modules/05-avancado/resources.html" class="nav-link"><span class="nav-num">20</span><span class="nav-title">Recursos &amp; Referências</span></a>
+        <a data-testid="nav-module-21" href="/modules/05-avancado/rtk.html" class="nav-link"><span class="nav-num">21</span><span class="nav-title">RTK — Economia de Tokens</span></a><a href="/modules/05-avancado/anthropic-academy.html" class="nav-link nav-link-academy"><span class="nav-num"><i class="uil uil-university"></i></span><span class="nav-title">Anthropic Academy</span></a>
+      </div>
+      <div class="nav-part"><span class="nav-part-label">PARTE 6 — WORKFLOWS</span>
+        <a data-testid="nav-module-22" href="/modules/06-workflows/" class="nav-link"><span class="nav-num">22</span><span class="nav-title">Visão Geral</span></a>
+        <a data-testid="nav-module-23" href="/modules/06-workflows/00-fundamentos.html" class="nav-link"><span class="nav-num">23</span><span class="nav-title">Fundamentos de Qualidade</span></a>
+        <a data-testid="nav-module-24" href="/modules/06-workflows/01-solo.html" class="nav-link"><span class="nav-num">24</span><span class="nav-title">W1: Claude Code Solo</span></a>
+        <a data-testid="nav-module-25" href="/modules/06-workflows/02-gsd.html" class="nav-link"><span class="nav-num">25</span><span class="nav-title">W2: GSD</span></a>
+        <a data-testid="nav-module-26" href="/modules/06-workflows/03-cortex.html" class="nav-link"><span class="nav-num">26</span><span class="nav-title">W3: Cortex</span></a>
+        <a data-testid="nav-module-27" href="/modules/06-workflows/04-feature-dev.html" class="nav-link"><span class="nav-num">27</span><span class="nav-title">W4: Feature Dev</span></a>
+        <a data-testid="nav-module-28" href="/modules/06-workflows/05-agentic.html" class="nav-link"><span class="nav-num">28</span><span class="nav-title">W5: 100% Agentic</span></a>
+        <a data-testid="nav-module-29" href="/modules/06-workflows/06-ideal-stack.html" class="nav-link"><span class="nav-num">29</span><span class="nav-title">W6: Stack Ideal</span></a>
+      </div>
+    </nav>
+    <div class="sidebar-version"><i class="uil uil-tag-alt"></i><span>v2.1.0</span></div>
+  </aside>
+  <div class="main-content">
+    <header class="mobile-header"><button id="hamburger" class="hamburger"><i class="uil uil-bars"></i></button><span class="mobile-title">RTK — Economia de Tokens</span><button data-testid="theme-toggle" class="theme-toggle"><i class="uil uil-moon"></i></button></header>
+    <div class="topbar">
+      <nav data-testid="breadcrumb" class="breadcrumb"><a href="/">Início</a> › <span>Parte 5 — Avançado</span> › <span>RTK — Economia de Tokens</span></nav>
+      <div class="topbar-right"><div class="search-container"><input data-testid="search-input" type="text" class="search-input" placeholder="Buscar..."><div data-testid="search-results" class="search-results"></div></div><button data-testid="theme-toggle" class="theme-toggle desktop-only"><i class="uil uil-moon"></i></button></div>
+    </div>
+    <article class="module-body">
+
+      <div class="module-header">
+        <div class="module-number">Módulo 21</div>
+        <h1 class="module-title">RTK — Economia de Tokens</h1>
+        <p class="module-description">O RTK (Rust Token Killer) é um proxy CLI open-source que reduz o consumo de tokens em 60-90% nas sessões de desenvolvimento com Claude Code. Aprenda a instalar, configurar e otimizar suas sessões.</p>
+        <span class="module-badge">Parte 5</span>
+      </div>
+
+      <div class="objectives-box">
+        <h3>Objetivos</h3>
+        <ul>
+          <li>Entender o problema do consumo de tokens em sessões de desenvolvimento</li>
+          <li>Instalar e configurar o RTK com Claude Code</li>
+          <li>Dominar os comandos principais e analytics</li>
+          <li>Avaliar benefícios e tradeoffs para seu workflow</li>
+        </ul>
+      </div>
+
+      <section class="content-section">
+        <h2>O problema: tokens desperdiçados</h2>
+        <p>Em uma sessão típica de 30 minutos com Claude Code, o agente executa dezenas de comandos CLI — <code>git status</code>, <code>git diff</code>, <code>npm test</code>, <code>ls</code>, <code>grep</code>, etc. Cada saída desses comandos consome tokens da janela de contexto.</p>
+        <p>O problema é que a <strong>maior parte dessa saída é ruído</strong>: barras de progresso, códigos ANSI, mensagens verbosas de sucesso, formatação decorativa. Em uma sessão com ~60 comandos, o agente pode gerar ~150K tokens de saída CLI — quase toda a janela de contexto de 200K.</p>
+
+        <div class="callout callout-info">
+          <strong>Impacto real:</strong> Quando a janela de contexto enche, o Claude precisa compactar mensagens anteriores, perdendo contexto sobre decisões e código já discutido. Reduzir o consumo de tokens nos comandos CLI mantém a janela de contexto focada no que importa: seu código.
+        </div>
+
+        <p>Considere a diferença na saída de um simples <code>git push</code>:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Sem RTK — saída padrão (~200 tokens)
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 2.34 KiB | 2.34 MiB/s, done.
+Total 8 (delta 6), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
+To github.com:user/repo.git
+   abc1234..def5678  main -> main
+
+# Com RTK — saída filtrada (~10 tokens)
+ok main</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+        <p>O LLM não precisa saber quantos objetos foram enumerados ou comprimidos — precisa apenas saber que o push foi bem-sucedido e para qual branch.</p>
+      </section>
+
+      <section class="content-section">
+        <h2>O que é o RTK</h2>
+        <p><strong>RTK (Rust Token Killer)</strong> é um proxy CLI open-source escrito em Rust que intercepta a saída de comandos e a filtra antes que chegue ao LLM. Em vez de o Claude Code receber a saída bruta de cada comando, recebe apenas a informação essencial para raciocinar.</p>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Atributo</th><th>Detalhe</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Linguagem</td><td>100% Rust — binário único, zero dependências</td></tr>
+              <tr><td>Licença</td><td>Apache-2.0 (open-source)</td></tr>
+              <tr><td>Overhead</td><td>&lt;10ms por comando</td></tr>
+              <tr><td>Memória</td><td>&lt;5MB</td></tr>
+              <tr><td>Comandos suportados</td><td>100+ (git, JS/TS, Python, Go, Ruby, Docker, K8s, etc.)</td></tr>
+              <tr><td>Economia média</td><td>60-90% de tokens por comando</td></tr>
+              <tr><td>GitHub</td><td><a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noopener">github.com/rtk-ai/rtk</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>Como funciona</h2>
+        <p>O RTK opera como um <strong>proxy transparente</strong> entre o Claude Code e o shell. Quando o Claude executa um comando via Bash tool, o hook do RTK intercepta e reescreve o comando:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-text"># Fluxo sem RTK:
+Claude Code  --git status-->  shell  -->  git
+     ^          ~2.000 tokens              |
+     +-------------------------------------+
+
+# Fluxo com RTK:
+Claude Code  --git status-->  RTK  -->  git
+     ^          ~200 tokens    |filter   |
+     +---------(filtrado)------+---------+</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>O RTK aplica <strong>quatro estratégias de filtragem</strong> conforme o tipo de comando:</p>
+        <ol>
+          <li><strong>Smart Filtering</strong> — Remove ruído: comentários, whitespace, boilerplate, códigos ANSI, barras de progresso</li>
+          <li><strong>Grouping</strong> — Agrupa itens similares: arquivos por diretório, erros por tipo, lint por regra</li>
+          <li><strong>Truncation</strong> — Mantém contexto relevante, corta redundância</li>
+          <li><strong>Deduplication</strong> — Colapsa linhas repetidas com contadores (ex: <code>error x42</code>)</li>
+        </ol>
+
+        <div class="callout callout-tip">
+          <strong>Fail-safe:</strong> Se qualquer filtro falhar, o RTK repassa a saída bruta sem modificação. Códigos de saída (exit codes) são sempre preservados fielmente. Comandos desconhecidos passam sem alteração.
+        </div>
+
+        <h3>Integração via Hook</h3>
+        <p>A integração com Claude Code funciona via <strong>PreToolUse hook</strong> (veja <a href="/modules/02-config/hooks.html">Módulo 07 — Hooks</a>). Quando o Claude Code invoca a ferramenta Bash com um comando como <code>git status</code>, o hook chama <code>rtk rewrite "git status"</code> que retorna <code>rtk git status</code>. O agente nunca vê a reescrita — recebe apenas saída comprimida.</p>
+
+        <div class="callout callout-warning">
+          <strong>Limitação importante:</strong> O hook só funciona para chamadas à ferramenta <strong>Bash</strong>. As ferramentas built-in do Claude Code (Read, Grep, Glob) não passam pelo hook e não são filtradas pelo RTK.
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>Instalação</h2>
+        <h3>Via Homebrew (recomendado)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">brew install rtk</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Via script de instalação (Linux/macOS)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Via Cargo (do fonte)</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash">cargo install --git https://github.com/rtk-ai/rtk</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Verificação</h3>
+        <p>Após instalar, verifique que é o pacote correto:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Deve mostrar a versão do RTK
+rtk --version
+
+# Deve funcionar (mostra analytics de economia)
+rtk gain</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <div class="callout callout-warning">
+          <strong>Colisão de nomes:</strong> Existe outro pacote chamado "rtk" (Rust Type Kit) no crates.io. Se <code>rtk gain</code> falhar com "not a command", você tem o pacote errado. Use <code>cargo install --git</code> para obter o correto.
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>Configuração com Claude Code</h2>
+        <p>O comando <code>rtk init</code> automatiza toda a configuração:</p>
+
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Instalação global com hook (recomendado)
+rtk init -g
+
+# Reinicie o Claude Code após a instalação</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <p>O comando <code>rtk init -g</code> executa as seguintes ações:</p>
+        <ol>
+          <li>Instala o hook script em <code>~/.claude/hooks/rtk-rewrite.sh</code></li>
+          <li>Cria <code>~/.claude/RTK.md</code> (referência de meta-comandos, ~10 linhas)</li>
+          <li>Adiciona <code>@RTK.md</code> no <code>~/.claude/CLAUDE.md</code></li>
+          <li>Registra o hook PreToolUse em <code>~/.claude/settings.json</code></li>
+          <li>Cria backup em <code>~/.claude/settings.json.bak</code></li>
+        </ol>
+
+        <h3>Modos de instalação</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Modo</th><th>Comando</th><th>Descrição</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Global com hook</td><td><code>rtk init -g</code></td><td>Hook + RTK.md (~10 tokens no contexto)</td></tr>
+              <tr><td>Hook only</td><td><code>rtk init -g --hook-only</code></td><td>Apenas hook, zero tokens no contexto</td></tr>
+              <tr><td>Auto-patch (CI)</td><td><code>rtk init -g --auto-patch</code></td><td>Não-interativo, sem prompts</td></tr>
+              <tr><td>Por projeto</td><td><code>rtk init</code></td><td>Apenas CLAUDE.md local (sem hook)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>O que o hook faz na prática</h3>
+        <p>Com o hook ativo, o Claude Code continua escrevendo comandos normais. O hook reescreve automaticamente:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># O Claude escreve:
+git status
+
+# O hook reescreve para:
+rtk git status
+
+# O Claude recebe saída comprimida:
+M src/app.ts
+M tests/app.test.ts
+? src/utils/helper.ts</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Comandos principais</h2>
+        <p>O RTK suporta 100+ comandos organizados por ecossistema. Aqui estão os mais relevantes para uso diário:</p>
+
+        <h3>Git</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Comando</th><th>Descrição</th><th>Economia</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>rtk git status</code></td><td>Status compacto</td><td>~80%</td></tr>
+              <tr><td><code>rtk git log -n 10</code></td><td>Commits em uma linha</td><td>~80%</td></tr>
+              <tr><td><code>rtk git diff</code></td><td>Diff condensado</td><td>~75%</td></tr>
+              <tr><td><code>rtk git add/commit/push</code></td><td>Retorna <code>ok</code> + info mínima</td><td>~92%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Testes</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Comando</th><th>Descrição</th><th>Economia</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>rtk cargo test</code></td><td>Mostra apenas falhas</td><td>~90%</td></tr>
+              <tr><td><code>rtk pytest</code></td><td>Python — apenas falhas</td><td>~90%</td></tr>
+              <tr><td><code>rtk vitest run</code></td><td>Vitest compacto</td><td>até 99.6%</td></tr>
+              <tr><td><code>rtk go test</code></td><td>Go tests (NDJSON)</td><td>~90%</td></tr>
+              <tr><td><code>rtk npm test</code></td><td>npm/Jest compacto</td><td>~90%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Arquivos e busca</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Comando</th><th>Descrição</th><th>Economia</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>rtk ls .</code></td><td>Árvore de diretórios otimizada</td><td>~80%</td></tr>
+              <tr><td><code>rtk read file.ts</code></td><td>Leitura inteligente de arquivo</td><td>~70%</td></tr>
+              <tr><td><code>rtk grep "pattern" .</code></td><td>Resultados agrupados</td><td>~70-80%</td></tr>
+              <tr><td><code>rtk find "*.ts" .</code></td><td>Busca compacta</td><td>~75%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Build e lint</h3>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Comando</th><th>Descrição</th><th>Economia</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>rtk tsc</code></td><td>Erros TypeScript agrupados por arquivo</td><td>~80%</td></tr>
+              <tr><td><code>rtk eslint .</code></td><td>ESLint agrupado por regra/arquivo</td><td>~80%</td></tr>
+              <tr><td><code>rtk cargo clippy</code></td><td>Clippy comprimido</td><td>~80%</td></tr>
+              <tr><td><code>rtk ruff check</code></td><td>Python linting</td><td>~80%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>Analytics e monitoramento</h2>
+        <p>O RTK registra cada comando em um banco SQLite local, permitindo analisar a economia real de tokens:</p>
+
+        <h3>rtk gain — relatório de economia</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Resumo geral
+rtk gain
+
+# Gráfico ASCII dos últimos 30 dias
+rtk gain --graph
+
+# Histórico recente com economia por comando
+rtk gain --history
+
+# Breakdown diário/semanal/mensal
+rtk gain --daily
+rtk gain --weekly
+rtk gain --monthly
+
+# Exportar para JSON ou CSV (dashboards)
+rtk gain --all --format json
+rtk gain --all --format csv</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>rtk discover — oportunidades perdidas</h3>
+        <p>Analisa o histórico do Claude Code e identifica comandos que poderiam ter sido otimizados:</p>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Descobrir oportunidades no projeto atual
+rtk discover
+
+# Todos os projetos, últimos 7 dias
+rtk discover --all --since 7</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>rtk session — adoção por sessão</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Ver taxa de adoção do RTK nas sessões recentes
+rtk session</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Comandos utilitários</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Bypass — executar comando sem filtros (debug)
+rtk proxy git status
+
+# Resumo heurístico de qualquer comando
+rtk summary &lt;comando&gt;
+
+# Leitura agressiva — apenas assinaturas de funções
+rtk read file.ts -l aggressive</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section class="content-section">
+        <h2>Economia real: números de uma sessão típica</h2>
+        <p>Dados de uma sessão de 30 minutos em um projeto TypeScript/Rust médio:</p>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Operação</th><th>Freq.</th><th>Tokens padrão</th><th>Tokens com RTK</th><th>Economia</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>ls</code> / <code>tree</code></td><td>10x</td><td>2.000</td><td>400</td><td>-80%</td></tr>
+              <tr><td><code>cat</code> / <code>read</code></td><td>20x</td><td>40.000</td><td>12.000</td><td>-70%</td></tr>
+              <tr><td><code>grep</code> / <code>rg</code></td><td>8x</td><td>16.000</td><td>3.200</td><td>-80%</td></tr>
+              <tr><td><code>git status</code></td><td>10x</td><td>3.000</td><td>600</td><td>-80%</td></tr>
+              <tr><td><code>git diff</code></td><td>5x</td><td>10.000</td><td>2.500</td><td>-75%</td></tr>
+              <tr><td><code>git add/commit/push</code></td><td>8x</td><td>1.600</td><td>120</td><td>-92%</td></tr>
+              <tr><td><code>npm test</code> / <code>cargo test</code></td><td>5x</td><td>25.000</td><td>2.500</td><td>-90%</td></tr>
+              <tr><td><strong>Total</strong></td><td></td><td><strong>~97.600</strong></td><td><strong>~21.320</strong></td><td><strong>-78%</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-tip">
+          <strong>Caso extremo:</strong> Em um projeto T3 Stack validado, o <code>vitest run</code> passou de 102.199 caracteres para 377 — uma economia de <strong>99,6%</strong>.
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>Benefícios</h2>
+        <ul>
+          <li><strong>Sessões mais longas</strong> — Menos tokens por comando = mais espaço na janela de contexto para código e raciocínio</li>
+          <li><strong>Menor custo</strong> — Menos tokens consumidos = menor custo em plataformas pay-per-token</li>
+          <li><strong>Zero fricção</strong> — O hook reescreve comandos automaticamente; o LLM não sabe que está usando RTK</li>
+          <li><strong>Extremamente rápido</strong> — &lt;10ms de overhead, binário Rust single-threaded, &lt;5MB de memória</li>
+          <li><strong>Analytics integrados</strong> — <code>rtk gain</code> dá visibilidade total sobre economia real com exports em JSON/CSV</li>
+          <li><strong>Fail-safe</strong> — Se o filtro falhar, a saída bruta passa sem alteração; exit codes sempre preservados</li>
+          <li><strong>Multi-ferramenta</strong> — Funciona com Claude Code, Cursor, Copilot, Gemini CLI, Codex e mais 5 ferramentas</li>
+          <li><strong>Tee recovery</strong> — Quando comandos falham, o RTK salva a saída completa em log para o LLM ler sem re-executar</li>
+        </ul>
+      </section>
+
+      <section class="content-section">
+        <h2>Tradeoffs e limitações</h2>
+        <p>Como qualquer ferramenta de otimização, o RTK faz tradeoffs que você precisa conhecer:</p>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>Tradeoff</th><th>Impacto</th><th>Mitigação</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Compressão com perda</strong></td>
+                <td>Filtros removem informação. Em casos raros, o LLM pode precisar de detalhes que foram removidos.</td>
+                <td>Use <code>rtk proxy &lt;cmd&gt;</code> para saída completa, ou flags <code>-v</code>/<code>-vv</code> para modo verboso.</td>
+              </tr>
+              <tr>
+                <td><strong>Apenas Bash tool</strong></td>
+                <td>Ferramentas built-in do Claude Code (Read, Grep, Glob) não passam pelo hook.</td>
+                <td>Para esses casos, o Claude já usa ferramentas otimizadas nativamente.</td>
+              </tr>
+              <tr>
+                <td><strong>Estimativa aproximada</strong></td>
+                <td>Usa ~4 chars = 1 token. Suficiente para tendências, não para billing exato.</td>
+                <td>Use para análise de tendências, não para contabilidade precisa.</td>
+              </tr>
+              <tr>
+                <td><strong>Telemetria</strong></td>
+                <td>Envia ping anônimo diário (versão, OS, contagem de comandos). Opt-out disponível.</td>
+                <td>Desabilite via variável de ambiente ou config TOML.</td>
+              </tr>
+              <tr>
+                <td><strong>Retenção de 90 dias</strong></td>
+                <td>O banco SQLite de tracking limpa automaticamente registros com mais de 90 dias.</td>
+                <td>Exporte com <code>rtk gain --all --format csv</code> antes se precisar de histórico longo.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>Configuração avançada</h2>
+        <p>O RTK pode ser customizado via arquivo de configuração TOML:</p>
+        <div class="code-block-wrapper"><pre><code class="language-toml"># macOS: ~/Library/Application Support/rtk/config.toml
+# Linux: ~/.config/rtk/config.toml
+
+[tracking]
+database_path = "/path/to/custom.db"
+
+[hooks]
+# Comandos que o hook não deve reescrever
+exclude_commands = ["curl", "playwright"]
+
+[tee]
+enabled = true          # Salvar saída bruta em caso de falha
+mode = "failures"       # "failures", "always" ou "never"
+max_files = 20          # Limite de rotação de arquivos</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+
+        <h3>Desinstalação</h3>
+        <div class="code-block-wrapper"><pre><code class="language-bash"># Remove hook, RTK.md e entrada no settings.json
+rtk init -g --uninstall
+
+# Remove o binário
+brew uninstall rtk       # se instalou via Homebrew
+cargo uninstall rtk      # se instalou via Cargo</code></pre><button data-testid="copy-btn" class="copy-btn">Copiar</button></div>
+      </section>
+
+      <section data-testid="exercise" class="exercise-section">
+        <h2>Exercício</h2>
+        <p>Configure o RTK no seu ambiente e meça a economia real:</p>
+        <ol>
+          <li><strong>Instale o RTK:</strong> Use <code>brew install rtk</code> e verifique com <code>rtk --version</code> e <code>rtk gain</code>.</li>
+          <li><strong>Configure com Claude Code:</strong> Execute <code>rtk init -g</code> e reinicie o Claude Code. Verifique que o hook está ativo em <code>~/.claude/settings.json</code>.</li>
+          <li><strong>Use normalmente:</strong> Faça uma sessão de desenvolvimento de 15-30 minutos como faria normalmente.</li>
+          <li><strong>Meça:</strong> Execute <code>rtk gain --history</code> e analise a economia real. Compare com as estimativas da tabela deste módulo.</li>
+          <li><strong>Descubra oportunidades:</strong> Execute <code>rtk discover</code> para identificar comandos que poderiam ser otimizados mas não foram.</li>
+        </ol>
+      </section>
+
+      <section class="resources-section">
+        <h2>Recursos</h2>
+        <ul class="resources-list">
+          <li><a href="https://github.com/rtk-ai/rtk" target="_blank" rel="noopener">RTK no GitHub — Código-fonte e documentação</a></li>
+          <li><a href="https://rtk.sh" target="_blank" rel="noopener">rtk.sh — Site oficial do RTK</a></li>
+          <li><a href="/modules/02-config/hooks.html">Módulo 07 — Hooks (PreToolUse)</a></li>
+          <li><a href="/modules/03-memoria-contexto/context.html">Módulo 10 — Gestão de Contexto</a></li>
+        </ul>
+      </section>
+
+      <nav class="module-nav-bottom">
+        <button data-testid="btn-complete" class="btn btn-complete"><i class="uil uil-check-circle"></i> Marcar como concluído</button>
+        <div class="nav-prev-next"><a data-testid="btn-prev" href="resources.html" class="btn btn-prev"><i class="uil uil-arrow-left"></i> Anterior</a></div>
+      </nav>
+      <div style="display:none"><div data-testid="progress-bar"><div class="progress-fill"></div></div><div data-testid="progress-text">0%</div></div>
+    </article>
+    <footer class="site-footer"><span class="version-tag">v2.1.0</span></footer>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>

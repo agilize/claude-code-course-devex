@@ -329,7 +329,7 @@
     function spin() {
       if (!spinning) return;
       angle = (angle + 1.5) % 360;
-      w.style.background = 'conic-gradient(from ' + angle + 'deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a)';
+      w.style.background = 'conic-gradient(from ' + angle + 'deg, #C9A87C, #d4a574, #b07eda, #7eb8da, #7ec9a0, #C9A87C)';
       raf = requestAnimationFrame(spin);
     }
     spin();
@@ -338,12 +338,12 @@
       fa = (fa + 10) % 360;
       if (fa < 10) loops++;
       if (loops >= 1) {
-        w.style.background = 'conic-gradient(from 0deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a)';
+        w.style.background = 'conic-gradient(from 0deg, #C9A87C, #d4a574, #b07eda, #7eb8da, #7ec9a0, #C9A87C)';
         return;
       }
       w.style.background =
         'conic-gradient(from ' + fa + 'deg at 50% 50%, transparent 0deg, transparent 330deg, #fff 350deg, transparent 360deg),' +
-        'conic-gradient(from 0deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a)';
+        'conic-gradient(from 0deg, #C9A87C, #d4a574, #b07eda, #7eb8da, #7ec9a0, #C9A87C)';
       raf = requestAnimationFrame(flash);
     }
     w.addEventListener('mouseenter', function() {

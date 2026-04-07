@@ -1002,7 +1002,7 @@ a.btn-next:hover {
   border-radius: 7px;
   padding: 1px;
   margin-bottom: 48px;
-  background: conic-gradient(from 0deg, #e8937a, #d4a574, #b07eda, #7eb8da, #7ec9a0, #e8937a);
+  background: conic-gradient(from 0deg, #C9A87C, #d4a574, #b07eda, #7eb8da, #7ec9a0, #C9A87C);
 }
 .hero-xref {
   display: inline-flex;
@@ -1023,7 +1023,7 @@ a.btn-next:hover {
 }
 .hero-xref-badge {
   background: rgba(232, 147, 122, 0.15);
-  color: #e8937a;
+  color: #C9A87C;
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -1037,7 +1037,7 @@ a.btn-next:hover {
   color: var(--text-secondary);
 }
 .hero-xref-ext {
-  color: #e8937a;
+  color: #C9A87C;
   opacity: 0.6;
   flex-shrink: 0;
   transition: opacity 0.2s;

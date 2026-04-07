@@ -951,7 +951,7 @@ html.light .anthropic-logo-light { display: inline; }
 
 /* Academy sidebar link highlight */
 .nav-link-academy {
-  margin-top: 8px;
+  margin: 8px 12px 0;
   background: color-mix(in srgb, var(--accent) 10%, transparent);
   border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   border-radius: 6px;
@@ -969,7 +969,7 @@ html.light .anthropic-logo-light { display: inline; }
 
 /* Deep Study sidebar link */
 .nav-link-deepstudy {
-  margin-top: 12px;
+  margin: 12px 12px 0;
   background: color-mix(in srgb, #C9A87C 8%, transparent);
   border: 1px solid color-mix(in srgb, #C9A87C 22%, var(--border));
   border-radius: 6px;
@@ -984,6 +984,14 @@ html.light .anthropic-logo-light { display: inline; }
 .nav-link-deepstudy:hover {
   background: color-mix(in srgb, #C9A87C 18%, transparent);
 }
+.nav-part-courses {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.nav-part-courses .nav-num i.uil-youtube { color: #c4302b; }
+html.light .nav-part-courses .nav-num i.uil-youtube { color: #b7271f; }
+.nav-part-courses .nav-num i.uil-robot { color: #a78bfa; }
 
 /* Deep Study banner */
 /* Recommended Courses */
@@ -1002,7 +1010,8 @@ html.light .anthropic-logo-light { display: inline; }
   align-items: center;
   gap: 8px;
 }
-.recommended-courses .section-title i { color: #ff0000; font-size: 22px; }
+.recommended-courses .section-title i { color: #c4302b; font-size: 22px; }
+html.light .recommended-courses .section-title i { color: #b7271f; }
 .recommended-courses .section-subtitle {
   font-size: 14px;
   color: var(--text-muted);
@@ -1035,10 +1044,11 @@ html.light .anthropic-logo-light { display: inline; }
 }
 .recommended-card-icon {
   font-size: 24px;
-  color: #ff0000;
+  color: #c4302b;
   flex-shrink: 0;
   line-height: 1;
 }
+html.light .recommended-card-icon { color: #b7271f; }
 .recommended-card-icon .uil-robot { color: #a78bfa; }
 .recommended-card-body h3 {
   font-size: 14px;

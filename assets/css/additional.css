@@ -1045,6 +1045,13 @@ a.btn-next:hover {
 .hero-xref:hover .hero-xref-ext {
   opacity: 1;
 }
+html.light .hero-xref-badge {
+  background: rgba(154, 120, 60, 0.15);
+  color: #7a5c2e;
+}
+html.light .hero-xref-ext {
+  color: #7a5c2e;
+}
 
 /* ============================================================
    RESPONSIVE — Mobile First

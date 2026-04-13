@@ -309,6 +309,10 @@ hr {
 /* ---------------------------------------------------------------
    Password Gate
 --------------------------------------------------------------- */
+html.cc-locked > body > *:not(.cc-gate) {
+  display: none !important;
+}
+
 .cc-gate {
   position: fixed;
   inset: 0;
@@ -339,9 +343,16 @@ hr {
 
 .cc-gate-logo img {
   border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.cc-gate-logo-text {
+  text-align: left;
+  line-height: 1.2;
 }
 
 .cc-gate-logo small {
+  display: block;
   font-weight: 400;
   font-size: 0.75rem;
   color: var(--text-secondary);

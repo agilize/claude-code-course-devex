@@ -6,7 +6,7 @@
       '<div class="cc-gate-box">' +
         '<div class="cc-gate-logo">' +
           '<img src="/assets/img/claudecode.png" alt="Claude Code" width="48" height="48">' +
-          '<span>Claude Code<br><small>Course</small></span>' +
+          '<div class="cc-gate-logo-text">Claude Code<small>Course</small></div>' +
         '</div>' +
         '<form class="cc-gate-form" id="cc-gate-form">' +
           '<input type="password" id="cc-gate-pwd" class="cc-gate-input" placeholder="Senha de acesso" autocomplete="current-password" autofocus>' +
